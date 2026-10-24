@@ -409,7 +409,7 @@ def limpiar_cargo(cargo: str) -> str:
     SERVICIOS DE UN(A) ASESOR(A)...' -> 'ASESOR(A)...'; '(01) ESPECIALISTA' ->
     'ESPECIALISTA'. No toca el resto."""
     c = re.sub(r"\s+", " ", (cargo or "").replace('"', " ").replace("“", " ").replace("”", " ")).strip()
-    c = c.lstrip(" .,;:-–•*")
+    c = c.lstrip(" .,;:-–•*)")
     original = c
     c = PREFIJOS_CARGO.sub("", c).strip(" -:")
     c = CANTIDAD_CARGO.sub("", c).strip(" -:")
@@ -420,6 +420,11 @@ def cargo_titulo(cargo_legible: str, maximo: int = 70) -> str:
     """Versión corta para títulos: varios cargos -> 'X y otros cargos'; si es
     muy largo, se corta antes de 'para la/el...' o de un guion."""
     c = cargo_legible
+    # Paréntesis largos con detalles del trámite ("(Aplicable para Procesos CAS
+    # por Suplencia – Temporal)") no van en el título.
+    sin_paren = re.sub(r"\s*\([^)]{18,}\)", "", c).strip()
+    if len(sin_paren) >= 3:
+        c = sin_paren
     if ", " in c:
         primero = re.split(r",\s+", c)[0].strip(" .-")
         if len(primero) >= 3:

@@ -214,6 +214,12 @@ def con_articulo(entidad: str) -> str:
     return entidad
 
 
+def de_articulo(entidad: str) -> str:
+    """'de la Municipalidad...', 'del Ministerio...' (nunca 'de el')."""
+    con = con_articulo(entidad)
+    return "del " + con[3:] if con.startswith("el ") else "de " + con
+
+
 # ---------------------------------------------------------------- estado
 
 def cargar_json(path: Path, defecto):
@@ -556,6 +562,7 @@ def construir(sitio: Sitio, out: Path) -> None:
         total_entidades=len(sitio.por_entidad),
         entidad_indexable=sitio.entidad_indexable,
         con_articulo=con_articulo,
+        de_articulo=de_articulo,
         reportar=lambda o: (f"{REPO}/issues/new?title=" + quote(f"Reporte: oferta {o['id']}") + "&body="
                             + quote(f"Oferta: {sitio.abs(o['path'])}\nN.° SERVIR: {o['id']}\n\nQué está mal:\n")),
     )
@@ -738,6 +745,7 @@ def construir(sitio: Sitio, out: Path) -> None:
     indice = [{"u": o["path"], "c": o["cargo_txt"], "e": o["entidad_txt"], "d": o["dep_slug"],
                "l": o["lugar_txt"], "s": o.get("sueldo") or 0, "f": o.get("fin") or "",
                "x": 1 if o["req"]["sin_experiencia"] else 0, "q": 1 if o["req"]["solo_secundaria"] else 0,
+               "h": 1 if o["req"]["hasta_un_anio"] else 0,
                "r": o["req"]["frase"]}
               for o in sitio.vigentes]
     (out / "buscar.json").write_text(json.dumps(indice, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")

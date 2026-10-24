@@ -20,7 +20,7 @@
   {% if not o.cerrada %}
   {% if o.url_bases %}
   <p class="o-cta"><a class="boton" href="{{ o.url_bases }}" rel="noopener" target="_blank">Ver convocatoria y postular</a>
-  <span class="o-cta-nota">Sale a la web de {{ con_articulo(o.entidad_txt) }}, donde están las bases y se postula (se abre en otra pestaña).</span></p>
+  <span class="o-cta-nota">Sale a la web {{ de_articulo(o.entidad_txt) }}, donde están las bases y se postula (se abre en otra pestaña).</span></p>
   {% else %}
   <p class="o-cta"><a class="boton" href="{{ fuente_url }}" rel="noopener" target="_blank">Ver en Talento Perú</a>
   <span class="o-cta-nota">Busca el N.° {{ o.id }} en el portal de SERVIR para ver las bases.</span></p>

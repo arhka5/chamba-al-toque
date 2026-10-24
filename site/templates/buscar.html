@@ -3,7 +3,7 @@
 <h1>{{ h1 }}</h1>
 <form class="buscador" id="buscador" action="{{ url('/buscar/') }}" method="get" role="search">
   <label class="oculto" for="q">Cargo o entidad</label>
-  <input id="q" name="q" type="search" placeholder="Cargo o entidad: chofer, enfermera, UGEL" autocomplete="off">
+  <input id="q" name="q" type="search" placeholder="Cargo o entidad: chofer, enfermera, UGEL…" autocomplete="off" enterkeyhint="search">
   <label class="oculto" for="d">Departamento</label>
   <select id="d" name="d">
     <option value="">Todo el Perú</option>
@@ -12,9 +12,9 @@
   <button type="submit">Buscar</button>
 </form>
 <div class="filtros" id="filtros" hidden>
-  <label><input type="checkbox" id="fx"> Sin experiencia</label>
-  <label><input type="checkbox" id="fq"> Solo secundaria</label>
-  <label><input type="checkbox" id="fs"> Más de S/ 3,000</label>
+  <label><input type="checkbox" id="fx" data-param="exp"> Hasta 1 año de experiencia</label>
+  <label><input type="checkbox" id="fq" data-param="sec"> Solo secundaria</label>
+  <label><input type="checkbox" id="fs" data-param="sueldo"> Más de S/ 3,000</label>
 </div>
 <p class="b-estado" id="estado" role="status" aria-live="polite"></p>
 <div class="rejilla" id="resultados"></div>
@@ -31,7 +31,17 @@
   var params = new URLSearchParams(location.search);
   $("q").value = params.get("q") || "";
   $("d").value = params.get("d") || "";
+  ["fx", "fq", "fs"].forEach(function (id) { $(id).checked = params.get($(id).dataset.param) === "1"; });
   $("filtros").hidden = false;
+  // El estado de la búsqueda vive en la URL: se puede compartir o guardar.
+  function guardarURL() {
+    var u = new URL(location.href);
+    u.searchParams.set("q", $("q").value); u.searchParams.set("d", $("d").value);
+    ["fx", "fq", "fs"].forEach(function (id) {
+      if ($(id).checked) u.searchParams.set($(id).dataset.param, "1"); else u.searchParams.delete($(id).dataset.param);
+    });
+    history.replaceState(null, "", u);
+  }
   var datos = null;
   var fold = function (s) { return (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase(); };
   var soles = function (n) { return "S/ " + Math.round(n).toLocaleString("en-US"); };
@@ -50,7 +60,7 @@
     var q = fold($("q").value.trim()), d = $("d").value;
     var r = datos.filter(function (o) {
       if (d && o.d !== d) return false;
-      if ($("fx").checked && !o.x) return false;
+      if ($("fx").checked && !o.h) return false;
       if ($("fq").checked && !o.q) return false;
       if ($("fs").checked && !(o.s > 3000)) return false;
       return !q || q.split(/\s+/).every(function (w) { return fold(o.c + " " + o.e + " " + o.l).indexOf(w) >= 0; });
@@ -81,10 +91,9 @@
     .catch(function () { $("estado").textContent = "No se pudo cargar la búsqueda. Prueba por departamento."; });
   $("buscador").addEventListener("submit", function (e) {
     e.preventDefault();
-    var u = new URL(location.href); u.searchParams.set("q", $("q").value); u.searchParams.set("d", $("d").value);
-    history.replaceState(null, "", u); if (datos) pintar();
+    guardarURL(); if (datos) pintar();
   });
-  ["fx", "fq", "fs", "d"].forEach(function (id) { $(id).addEventListener("change", function () { if (datos) pintar(); }); });
+  ["fx", "fq", "fs", "d"].forEach(function (id) { $(id).addEventListener("change", function () { guardarURL(); if (datos) pintar(); }); });
 })();
 </script>
 {% endblock %}

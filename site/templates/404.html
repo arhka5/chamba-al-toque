@@ -3,5 +3,5 @@
 <h1>{{ h1 }}</h1>
 <p>Las convocatorias se retiran del sitio unos días después de cerrar. Busca otras parecidas por departamento o por tema:</p>
 <ul class="deps">{% for d in departamentos %}<li><a href="{{ url(d.path) }}">{{ d.nombre }} <span>{{ miles(d.n) }}</span></a></li>{% endfor %}</ul>
-<p><a href="{{ url('/') }}">Ir a la portada</a> · <a href="{{ url('/sin-experiencia/') }}">Sin experiencia</a> · <a href="{{ url('/buscar/') }}">Buscar</a></p>
+<p><a href="{{ url('/') }}">Ir a la portada</a> · <a href="{{ url('/hasta-un-ano-de-experiencia/') }}">Poca experiencia</a> · <a href="{{ url('/buscar/') }}">Buscar</a></p>
 {% endblock %}

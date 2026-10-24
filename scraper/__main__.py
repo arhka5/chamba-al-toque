@@ -88,7 +88,7 @@ def main(argv=None) -> int:
         error = f"{type(exc).__name__}: {exc}"
         print(f"ERROR en la página {pages + 1}: {error}", file=sys.stderr)
 
-    complete = error is None and pages == total
+    complete = error is None and (pages == total or talento.total_reducido)
     if not complete:
         # Corrida incompleta: se completa con lo anterior que siga vigente.
         for key, o in prev_by_key.items():

@@ -15,7 +15,7 @@
   </form>
   <p class="contador">{{ miles(total_vigentes) }} convocatorias vigentes de {{ miles(total_entidades) }} entidades. Actualizado el {{ actualizado_txt }}.</p>
   <ul class="atajos" aria-label="Atajos">
-    <li><a href="{{ url('/sin-experiencia/') }}">Sin experiencia</a></li>
+    <li><a href="{{ url('/hasta-un-ano-de-experiencia/') }}">Hasta 1 año de experiencia</a></li>
     <li><a href="{{ url('/secundaria-completa/') }}">Solo secundaria</a></li>
     <li><a href="{{ url('/convocatorias-cas/') }}">CAS</a></li>
     {% if por_vencer %}<li><a href="{{ url('/por-vencer/') }}">Cierran pronto ({{ miles(por_vencer) }})</a></li>{% endif %}

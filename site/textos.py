@@ -75,6 +75,9 @@ TILDES = {
     "medicos": "médicos", "basicos": "básicos", "tecnicas": "técnicas", "unidad": "unidad",
     "numero": "número", "despues": "después", "telefono": "teléfono", "tactico": "táctico",
     "transito": "tránsito", "rapido": "rápido", "rapida": "rápida", "util": "útil",
+    "aerea": "aérea", "aereo": "aéreo", "tecnologico": "tecnológico", "tecnologica": "tecnológica",
+    "organico": "orgánico", "patrimonio": "patrimonio", "arqueologico": "arqueológico",
+    "geologico": "geológico", "hidrografico": "hidrográfico", "periodico": "periódico",
     # Departamentos y topónimos frecuentes
     "ancash": "Áncash", "apurimac": "Apurímac", "huanuco": "Huánuco", "junin": "Junín",
     "martin": "Martín", "pachacamac": "Pachacámac", "canete": "Cañete", "rimac": "Rímac",
@@ -118,8 +121,11 @@ def _es_sigla(w: str) -> bool:
     bare = w.strip("()[],;:\"'-/")
     if not bare or bare.lower() in MINUSCULAS:  # "Y", "O", "E" no son siglas
         return False
-    if bare.upper() in SIGLAS or re.search(r"\d", bare) or "." in bare.strip("."):
+    if bare.upper() in SIGLAS or re.search(r"\d", bare):
         return True
+    if "." in bare.strip("."):
+        # "R.D.", "S.A.C." sí; "DIREC.REGIONAL" no (son palabras abreviadas).
+        return all(len(s) <= 3 for s in bare.split(".") if s)
     # Siglas sin vocales: "PJ", "MPL", "DGPR".
     return len(bare) <= 5 and not re.search(r"[AEIOUÁÉÍÓÚaeiouáéíóú]", bare)
 
@@ -161,6 +167,26 @@ def _sigla(w: str) -> str:
     return w.replace(w.strip("()[],;:\"'-/"), FORMAS[bare]) if bare in FORMAS else w.upper()
 
 
+def _titulo_palabra(w: str, primera: bool, prev: str) -> str:
+    # Palabras unidas por guion o punto ("PUBLICO-GERENCIA", "DIREC.REGIONAL"):
+    # cada parte se trata por separado.
+    for sep in ("-", "."):
+        if sep in w.strip(sep) and not _es_sigla(w):
+            partes = w.split(sep)
+            return sep.join(_titulo_palabra(p, primera and k == 0, prev) if p else p
+                            for k, p in enumerate(partes))
+    bare = w.strip("()[],;:\"'")
+    if _es_sigla(w) or bare.lower() in FORMAS:
+        return _sigla(w)
+    # Sigla corta tras un guion al final de un cargo: "... - ODM".
+    if (prev in {"-", "–"} and 2 <= len(bare) <= 4 and bare.isalpha() and bare.lower() not in TILDES
+            and len(re.findall(r"[AEIOUaeiou]", bare)) <= 1):
+        return w.upper()
+    if not primera and w.lower() in MINUSCULAS and not prev.endswith(("-", "(")):
+        return w.lower()
+    return _capital(w)
+
+
 def nombre_propio(texto: str) -> str:
     """Formato título: 'MUNICIPALIDAD  DISTRITAL DE PACHACAMAC' ->
     'Municipalidad Distrital de Pachacámac'. Se usa para cargos y entidades."""
@@ -169,12 +195,7 @@ def nombre_propio(texto: str) -> str:
     for i, w in enumerate(_palabras(texto)):
         if not w:
             continue
-        if _es_sigla(w) or w.strip("()").lower() in FORMAS:
-            out.append(_sigla(w))
-        elif i > 0 and w.lower() in MINUSCULAS and not prev.endswith(("-", "(")):
-            out.append(w.lower())
-        else:
-            out.append(_capital(w))
+        out.append(_titulo_palabra(w, i == 0, prev))
         prev = w
     return " ".join(out)
 
@@ -259,21 +280,36 @@ def slug_oferta(cargo: str, entidad: str, id_: str) -> str:
     return "-".join(x for x in (c, e, id_) if x)
 
 
+def _vacio(t: str | None) -> bool:
+    """Campo sin llenar ('-', '.', '1', 'según las bases'): no se sabe qué piden."""
+    t = re.sub(r"\s+", " ", (t or "")).strip().upper().strip(".-_ \"'")
+    return (not t or t.isdigit() or len(t) < 3
+            or bool(re.match(r"^(SEG[UÚ]N|CONFORME|DE ACUERDO)\b.*\b(PERFIL|BASES?|T[EÉ]RMINOS)", t)))
+
+
 def _no_aplica(t: str | None) -> bool:
+    """Dice expresamente que no se pide (o el campo está vacío)."""
+    if _vacio(t):
+        return True
     t = re.sub(r"[.\s]+$", "", (t or "").strip().upper())
-    return not t or t in {"NO APLICA", "NO", "NINGUNA", "NINGUNO", "N/A", "NA", "-", "NO REQUIERE",
-                          "SIN EXPERIENCIA", "NO SE REQUIERE", "NO INDISPENSABLE"}
+    return t in {"NO APLICA", "NO", "NINGUNA", "NINGUNO", "N/A", "NA", "NO REQUIERE",
+                 "SIN EXPERIENCIA", "NO SE REQUIERE", "NO INDISPENSABLE", "NO APLICA."}
 
 
 def experiencia_resumen(texto: str | None) -> tuple[str, bool, int | None]:
-    """('Sin experiencia', True, 0) o ('2 años de experiencia', False, 24)."""
+    """('Sin experiencia', True, 0), ('2 años de experiencia', False, 24) o,
+    si el campo está vacío, ('', False, None): no se sabe y no se adivina."""
+    if _vacio(texto):
+        return "", False, None
     if _no_aplica(texto):
         return "Sin experiencia", True, 0
     t = texto.upper()
     anios = [int(x) for x in re.findall(r"(\d+)\s*\(?[A-Z]*\)?\s*AÑOS?", t)]
     meses = [int(x) for x in re.findall(r"(\d+)\s*\(?[A-Z]*\)?\s*MES(?:ES)?", t)]
     # La experiencia general suele ser la mayor; se muestra esa.
-    if anios:
+    if anios and max(anios) == 0 and not meses:
+        return "Sin experiencia", True, 0
+    if anios and max(anios) > 0:
         n = max(anios)
         return f"{n} año{'s' if n != 1 else ''} de experiencia", False, n * 12
     if meses:
@@ -290,7 +326,12 @@ NIVELES = [
     (r"ESTUDIANTE|ESTUDIOS UNIVERSITARIOS", "Estudios universitarios", 3),
     (r"EGRESAD", "Egresado universitario", 3),
     (r"BACHILLER", "Bachiller", 4),
-    (r"T[IÍ]TULO|TITULAD|LICENCIAD", "Título profesional", 5),
+    (r"T[IÍ]TULO|TITULAD|LICENCIAD|PROFESIONAL", "Título profesional", 5),
+    # Profesiones que en la práctica exigen título universitario.
+    (r"M[EÉ]DICO|CIRUJANO|ABOGAD|OBSTETR|ENFERMER[OA]|BI[OÓ]LOG|INGENIER[OA]|QU[IÍ]MICO|"
+     r"PSIC[OÓ]LOG|CONTADOR|ECONOMISTA|ARQUITECT|NUTRICIONISTA|TECN[OÓ]LOGO M[EÉ]DICO|ODONT[OÓ]LOG|"
+     r"VETERINARI|TRABAJADOR[A]? SOCIAL|COMUNICADOR|DOCENTE|PROFESOR", "Título profesional", 5),
+    (r"SECRETARIAD", "Técnico", 2),
     (r"MAESTR|MAGISTER", "Maestría", 6),
     (r"DOCTOR", "Doctorado", 7),
 ]
@@ -298,7 +339,7 @@ NIVELES = [
 
 def formacion_resumen(texto: str | None) -> tuple[str, int | None]:
     """Nivel mínimo pedido: ('Secundaria completa', 1)."""
-    if _no_aplica(texto):
+    if _vacio(texto) or _no_aplica(texto):
         return "", None
     t = texto.upper()
     hits = [(label, nivel) for pat, label, nivel in NIVELES if re.search(pat, t)]
@@ -323,14 +364,21 @@ def requisitos(o: dict) -> dict:
     """Resumen simple y banderas para los temas. Solo con datos de detalle."""
     exp, sin_exp, meses = experiencia_resumen(o.get("experiencia"))
     form, nivel = formacion_resumen(o.get("formacion"))
-    sin_formacion = _no_aplica(o.get("formacion"))
+    # "Solo secundaria" exige que lo digan; un campo vacío no cuenta.
+    sin_formacion = _no_aplica(o.get("formacion")) and not _vacio(o.get("formacion"))
     f = FRASE_FORMACION.get(form, form.lower())
     if form and sin_exp:
         frase = f"Pide {f} y no exige experiencia."
+    elif form and exp and exp != "Con experiencia":
+        frase = f"Pide {f} y {exp.lower()}."
+    elif form and exp:
+        frase = f"Pide {f} y experiencia."
     elif form:
-        frase = f"Pide {f} y {exp.lower()}." if exp != "Con experiencia" else f"Pide {f} y experiencia."
+        frase = f"Pide {f}."
     elif sin_exp:
         frase = "No exige experiencia."
+    elif exp and exp != "Con experiencia":
+        frase = f"Pide {exp.lower()}."
     else:
         frase = ""
     return {
@@ -342,4 +390,45 @@ def requisitos(o: dict) -> dict:
         "formacion": form,
         "experiencia": exp,
         "solo_secundaria": (nivel is not None and nivel <= 1) or sin_formacion,
+        "hasta_un_anio": meses is not None and meses <= 12,
+        "experiencia_vacia": _vacio(o.get("experiencia")),
+        "formacion_vacia": _vacio(o.get("formacion")),
     }
+
+
+PREFIJOS_CARGO = re.compile(
+    r"^(?:CONVOCATORIA\s+(?:PARA\s+)?(?:LA\s+)?)?(?:CONTRATACI[OÓ]N\s+(?:ADMINISTRATIVA\s+DE\s+SERVICIOS|CAS)\s+"
+    r"(?:DE\s+|PARA\s+)?)?(?:PROCESO\s+CAS\s+N[°º.]?\s*[\w-]+\s*[-:]?\s*)?", re.I)
+CANTIDAD_CARGO = re.compile(
+    r"^(?:\(?\d{1,2}\)?\s*)?(?:\(?(?:UN|UNA|UN\s*\(A\)|UN/A|UNO|DOS|TRES|CUATRO|CINCO)\)?\s+)?(?:\(?\d{1,2}\)?\s+)?",
+    re.I)
+
+
+def limpiar_cargo(cargo: str) -> str:
+    """Quita del cargo el trámite y la cantidad: 'CONTRATACIÓN ADMINISTRATIVA DE
+    SERVICIOS DE UN(A) ASESOR(A)...' -> 'ASESOR(A)...'; '(01) ESPECIALISTA' ->
+    'ESPECIALISTA'. No toca el resto."""
+    c = re.sub(r"\s+", " ", (cargo or "").replace('"', " ").replace("“", " ").replace("”", " ")).strip()
+    c = c.lstrip(" .,;:-–•*")
+    original = c
+    c = PREFIJOS_CARGO.sub("", c).strip(" -:")
+    c = CANTIDAD_CARGO.sub("", c).strip(" -:")
+    return c if len(c) >= 3 else original
+
+
+def cargo_titulo(cargo_legible: str, maximo: int = 70) -> str:
+    """Versión corta para títulos: varios cargos -> 'X y otros cargos'; si es
+    muy largo, se corta antes de 'para la/el...' o de un guion."""
+    c = cargo_legible
+    if ", " in c:
+        primero = re.split(r",\s+", c)[0].strip(" .-")
+        if len(primero) >= 3:
+            c = f"{primero} y otros cargos"
+    if len(c) > maximo:
+        m = re.search(r"\s+(?:para\s+(?:el|la|los|las)|de\s+la\s+(?:unidad|oficina|direcci[oó]n|gerencia|subgerencia))\s+|\s+[-–]\s+",
+                      c[15:], re.I)
+        if m:
+            c = c[:15 + m.start()]
+    if len(c) > maximo:
+        c = c[:maximo].rsplit(" ", 1)[0].rstrip(",;:-")
+    return c.rstrip(" .")

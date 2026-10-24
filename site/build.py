@@ -38,6 +38,7 @@ UMBRAL_DEP_TEMA = 10
 DIAS_CERRADA = 30
 MIN_PROPORCION = 0.5  # salvaguarda: no publicar si llega menos de la mitad
 PORTADA_ULTIMAS = 24
+SUELDO_MINIMO_CREIBLE = 300  # por debajo es un error de carga (hay ofertas con "S/ 1")
 
 MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre",
          "octubre", "noviembre", "diciembre"]
@@ -74,6 +75,14 @@ TEMAS = [
         "h1": "Trabajos sin experiencia en entidades públicas {anio}",
         "intro": "Convocatorias públicas donde la entidad no pide experiencia laboral previa.",
         "filtro": lambda o: o["req"]["sin_experiencia"],
+    },
+    {
+        "slug": "hasta-un-ano-de-experiencia", "nombre": "Hasta 1 año de experiencia",
+        "title": "Trabajos en el Estado con poca experiencia {anio}: hasta 1 año",
+        "h1": "Convocatorias que piden hasta 1 año de experiencia {anio}",
+        "intro": "Casi todas las plazas del Estado piden algo de experiencia. Aquí están las que piden un año "
+                 "o menos, o ninguna.",
+        "filtro": lambda o: o["req"]["hasta_un_anio"],
     },
     {
         "slug": "secundaria-completa", "nombre": "Solo secundaria",
@@ -241,9 +250,18 @@ class Sitio:
         self.paginas: list[dict] = []  # para sitemaps: {path, lastmod, indexable}
 
         crudas = {}
+        self.descartadas = 0
         for o in data.get("offers", []):
-            if o.get("id") and o["id"] not in crudas:  # sin detalle aún: se publica en la próxima
-                crudas[o["id"]] = o
+            if not o.get("id") or o["id"] in crudas:  # sin detalle aún: se publica en la próxima
+                continue
+            # Registros rotos en la fuente (cargo "1", sin letras): no se publican.
+            if not re.search(r"[A-Za-zÁÉÍÓÚÑáéíóúñ]{3,}", T.limpiar_cargo(o.get("cargo", ""))):
+                self.descartadas += 1
+                continue
+            o = dict(o)
+            if o.get("sueldo") is not None and o["sueldo"] < SUELDO_MINIMO_CREIBLE:
+                o["sueldo"] = None  # "S/ 1": dato mal cargado, se muestra como no indicado
+            crudas[o["id"]] = o
         self.sin_detalle = sum(1 for o in data.get("offers", []) if not o.get("id"))
 
         hoy_iso = hoy.isoformat()
@@ -330,14 +348,11 @@ class Sitio:
 
     def preparar(self, o: dict, cerrada: bool = False) -> dict:
         p = dict(o)
-        cargo = T.nombre_propio(o["cargo"])
+        # El título usa una versión corta y limpia del cargo; el texto completo
+        # se muestra en la página ("Puesto según la convocatoria").
+        cargo = T.nombre_propio(T.limpiar_cargo(o["cargo"]))
         p["cargo_completo"] = cargo
-        # Algunas entidades meten varios cargos en uno ("Secretario, Chofer,
-        # Especialista PAD..."): el título usa el primero.
-        if len(cargo) > 80 or ", " in cargo:
-            primero = re.split(r",\s+|\s+/\s+", cargo)[0].strip(" .-")
-            cargo = f"{primero} y otros cargos" if primero != cargo else cargo[:80].rsplit(" ", 1)[0]
-        p["cargo_txt"] = cargo
+        p["cargo_txt"] = T.cargo_titulo(cargo)
         p["entidad_txt"] = T.nombre_propio(T.normalizar_entidad(o["entidad"]))
         dep = (o.get("departamento") or "").upper().strip()
         p["dep_txt"] = DEPARTAMENTOS.get(dep, T.nombre_propio(dep) or "Perú")
@@ -352,8 +367,8 @@ class Sitio:
         p["especializacion_txt"] = "" if T._no_aplica(o.get("especializacion")) else T.oracion(o["especializacion"])
         p["conocimientos_txt"] = "" if T._no_aplica(o.get("conocimientos")) else T.oracion(o["conocimientos"])
         p["competencias_txt"] = "" if T._no_aplica(o.get("competencias")) else T.oracion(o["competencias"])
-        p["experiencia_original"] = "" if T._no_aplica(o.get("experiencia")) else T.oracion(o["experiencia"])
-        p["formacion_original"] = "" if T._no_aplica(o.get("formacion")) else T.oracion(o["formacion"])
+        p["experiencia_original"] = "" if T._no_aplica(o.get("experiencia")) else T.oracion(o["experiencia"]).strip(' "-')
+        p["formacion_original"] = "" if T._no_aplica(o.get("formacion")) else T.oracion(o["formacion"]).strip(' "-')
         p["sueldo_txt"] = soles(o.get("sueldo"))
         p["fin_txt"] = fecha_larga(o.get("fin"))
         p["inicio_txt"] = fecha_larga(o.get("inicio"))
@@ -444,7 +459,8 @@ class Sitio:
         if o["sueldo_txt"]:
             desc.append(item("Remuneración mensual", o["sueldo_txt"]))
         desc.append(item("Formación académica", o["formacion_original"] or "no indicada en la convocatoria"))
-        desc.append(item("Experiencia", o["experiencia_original"] or "no se exige"))
+        desc.append(item("Experiencia", o["experiencia_original"] or (
+            "no se exige" if o["req"]["sin_experiencia"] else "no indicada en la convocatoria")))
         if o["especializacion_txt"]:
             desc.append(item("Especialización", o["especializacion_txt"]))
         if o["conocimientos_txt"]:
@@ -664,18 +680,18 @@ def construir(sitio: Sitio, out: Path) -> None:
         listado(d["path"], ofertas, len(ofertas) > 0, titulo, f"Trabajos en el Estado en {d['nombre']} {sitio.anio}",
                 desc, [("Inicio", "/"), (d["nombre"], None)],
                 extra={"tipo": "departamento", "resumen": r, "cierran": cierran, "dep": d,
-                       "temas_dep": [t for t in sitio.temas if t["slug"] == "sin-experiencia"
-                                     and sum(1 for o in ofertas if t["filtro"](o)) >= UMBRAL_DEP_TEMA]})
-        # Departamento + sin experiencia, solo si hay suficientes
-        sin_exp = [o for o in ofertas if o["req"]["sin_experiencia"]]
-        if len(sin_exp) >= UMBRAL_DEP_TEMA:
-            listado(f"{d['path']}sin-experiencia/", sin_exp, True,
-                    f"Trabajo en {d['nombre']} sin experiencia {sitio.anio}: Estado",
-                    f"Trabajos sin experiencia en {d['nombre']} {sitio.anio}",
-                    armar([f"{miles(len(sin_exp))} convocatorias del Estado en {d['nombre']} que no piden experiencia.",
-                           "Sueldo, requisitos y fecha límite de cada una.", f"Actualizado el {hoy_txt}."]),
-                    [("Inicio", "/"), (d["nombre"], d["path"]), ("Sin experiencia", None)],
-                    extra={"tipo": "tema", "resumen": sitio.resumen_listado(sin_exp, d["nombre"])})
+                       "poca_exp": sum(1 for o in ofertas if o["req"]["hasta_un_anio"]) >= UMBRAL_DEP_TEMA})
+        # Departamento + poca experiencia, solo si hay suficientes
+        poca = [o for o in ofertas if o["req"]["hasta_un_anio"]]
+        if len(poca) >= UMBRAL_DEP_TEMA:
+            listado(f"{d['path']}hasta-un-ano-de-experiencia/", poca, True,
+                    f"Trabajo en {d['nombre']} con poca experiencia {sitio.anio}: Estado",
+                    f"Trabajos con hasta 1 año de experiencia en {d['nombre']} {sitio.anio}",
+                    armar([f"{miles(len(poca))} convocatorias del Estado en {d['nombre']} que piden un año de "
+                           "experiencia o menos.", "Sueldo, requisitos y fecha límite de cada una.",
+                           f"Actualizado el {hoy_txt}."]),
+                    [("Inicio", "/"), (d["nombre"], d["path"]), ("Hasta 1 año de experiencia", None)],
+                    extra={"tipo": "tema", "resumen": sitio.resumen_listado(poca, d["nombre"])})
 
     # Entidades
     for s, ofertas in sitio.por_entidad.items():
@@ -849,7 +865,8 @@ def main(argv=None) -> int:
     faltan = [w for w, _ in T.SIN_DICCIONARIO.most_common(50)]
     (Path(args.data).parent / "palabras-sin-diccionario.txt").write_text("\n".join(faltan), encoding="utf-8")
     n_idx = sum(1 for p in sitio.paginas if p["indexable"])
-    print(f"{len(sitio.vigentes)} ofertas vigentes · {len(sitio.cerradas)} cerradas · "
+    print(f"{len(sitio.vigentes)} ofertas vigentes · {sitio.descartadas} descartadas por datos rotos · "
+          f"{len(sitio.cerradas)} cerradas · "
           f"{len(sitio.paginas)} páginas ({n_idx} indexables) · {sitio.sin_detalle} sin detalle aún")
     return 0
 

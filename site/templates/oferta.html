@@ -14,7 +14,7 @@
     <div><dt>Lugar</dt><dd>{{ o.lugar_txt }}</dd></div>
     <div><dt>Vacantes</dt><dd>{{ o.vacantes }}</dd></div>
     <div><dt>Régimen</dt><dd>{{ o.regimen_txt or 'No indicado' }}</dd></div>
-    {% if o.cargo_completo != o.cargo_txt %}<div><dt>Cargos que convoca</dt><dd>{{ o.cargo_completo }}</dd></div>{% endif %}
+    {% if o.cargo_completo != o.cargo_txt %}<div><dt>Puesto según la convocatoria</dt><dd>{{ o.cargo_completo }}</dd></div>{% endif %}
   </dl>
 
   {% if not o.cerrada %}
@@ -32,7 +32,7 @@
     {% if o.req.frase %}<p class="o-frase">{{ o.req.frase }}</p>{% endif %}
     <dl class="o-req">
       <div><dt>Formación</dt><dd>{{ o.formacion_original or 'No indicada en la convocatoria' }}</dd></div>
-      <div><dt>Experiencia</dt><dd>{{ o.experiencia_original or 'No se exige experiencia' }}</dd></div>
+      <div><dt>Experiencia</dt><dd>{{ o.experiencia_original or ('No se exige experiencia' if o.req.sin_experiencia else 'No indicada en la convocatoria; revisa las bases') }}</dd></div>
       {% if o.especializacion_txt %}<div><dt>Especialización</dt><dd>{{ o.especializacion_txt }}</dd></div>{% endif %}
       {% if o.conocimientos_txt %}<div><dt>Conocimientos</dt><dd>{{ o.conocimientos_txt }}</dd></div>{% endif %}
       {% if o.competencias_txt %}<div><dt>Competencias</dt><dd>{{ o.competencias_txt }}</dd></div>{% endif %}

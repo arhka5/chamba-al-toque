@@ -171,6 +171,7 @@ class TalentoPeru:
         self.viewstate: str | None = None
         self.form: dict[str, str] = {}
         self.next_button: str | None = None
+        self.total_reducido = False
 
     def _load_first(self) -> str:
         html = self.client.request("GET", URL).text
@@ -203,11 +204,18 @@ class TalentoPeru:
 
     def pages(self, max_pages: int | None = None) -> Iterator[Page]:
         html = self._load_first()
+        anterior = None
         while True:
             pos = parse_pages(html)
             if not pos:
+                # Si durante la corrida vencieron ofertas, el total baja y la
+                # "última" página ya no existe: eso es el final, no un error.
+                if anterior and anterior[0] >= anterior[1] - 1:
+                    self.total_reducido = True
+                    return
                 raise RuntimeError("No se encontró el paginador")
             number, total = pos
+            anterior = (number, total)
             yield Page(number, total, parse_list(html))
             if number >= total or (max_pages and number >= max_pages):
                 return

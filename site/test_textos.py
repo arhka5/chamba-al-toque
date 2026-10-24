@@ -12,6 +12,11 @@ def test_nombres():
     assert nombre_propio("TECNICO EN ADMINISTRACION") == "Técnico en Administración"
     assert nombre_propio("GOBIERNO REGIONAL SAN MARTIN") == "Gobierno Regional San Martín"
     assert nombre_propio("JEFE DE MERCADOS Y FERIAS") == "Jefe de Mercados y Ferias"
+    assert nombre_propio("MINISTERIO PUBLICO-GERENCIA GENERAL") == "Ministerio Público-Gerencia General"
+    assert nombre_propio("DIREC.REGIONAL DE EDUCAC. AMAZONAS") == "Direc.Regional de Educac. Amazonas"
+    assert nombre_propio("ESPECIALISTA EN PROCESOS - ODM") == "Especialista en Procesos - ODM"
+    assert nombre_propio("FUERZA AEREA DEL PERU") == "Fuerza Aérea del Perú"
+    assert experiencia_resumen("0 AÑOS")[:2] == ("Sin experiencia", True)
     assert nombre_propio(normalizar_entidad("UNIDAD DE GESTION EDUCATIVA LOCAL # 01")) == "UGEL 01"
     assert slug_oferta("Especialista", "UGEL 03", "821420") == "especialista-ugel-03-821420"
     assert not slug_oferta("Sub Gerente de Servicios Orientacion y Control", "X", "1").split("-1")[0].endswith("-y")
@@ -42,6 +47,28 @@ def test_formacion():
     assert formacion_resumen("TÍTULO TÉCNICO O BACHILLER EN CONTABILIDAD") == ("Técnico", 2)
     assert formacion_resumen("TITULADO EN DERECHO, COLEGIADO Y HABILITADO") == ("Título profesional", 5)
     assert formacion_resumen("NO APLICA") == ("", None)
+
+
+def test_limpiar_cargo():
+    from textos import cargo_titulo, limpiar_cargo
+    assert limpiar_cargo("CONTRATACIÓN ADMINISTRATIVA DE SERVICIOS DE UN(A) ASESOR(A) DEL DESPACHO") == "ASESOR(A) DEL DESPACHO"
+    assert limpiar_cargo("(01) ESPECIALISTA EN EVALUACIÓN") == "ESPECIALISTA EN EVALUACIÓN"
+    assert limpiar_cargo("01 (UN) ANALISTA DE ARCHIVO") == "ANALISTA DE ARCHIVO"
+    assert limpiar_cargo('"ESPECIALISTA LEGAL"') == "ESPECIALISTA LEGAL"
+    assert limpiar_cargo("CHOFER") == "CHOFER"
+    t = cargo_titulo("Médico Colegiado y Habilitado para la Unidad Funcional de Epidemiología de la DIRESA Moquegua")
+    assert t == "Médico Colegiado y Habilitado"
+    assert cargo_titulo("Técnico Administrativo I, Especialistas Administrativos, Secretario") == "Técnico Administrativo I y otros cargos"
+
+
+def test_vacios():
+    assert experiencia_resumen("-") == ("", False, None)
+    assert experiencia_resumen(".") == ("", False, None)
+    assert formacion_resumen("SEGUN EL PERFIL DE PUESTO") == ("", None)
+    assert formacion_resumen("MEDICO CIRUJANO") == ("Título profesional", 5)
+    assert formacion_resumen("TECNICO EN ENFERMERIA") == ("Técnico", 2)
+    r = requisitos({"experiencia": "-", "formacion": "."})
+    assert r["frase"] == "" and not r["sin_experiencia"] and not r["solo_secundaria"]
 
 
 def test_requisitos():

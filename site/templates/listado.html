@@ -20,7 +20,7 @@
 <section class="bloque l-cierran">
   <h2>Cierran esta semana</h2>
   <ul>{% for o in extra.cierran %}<li><a href="{{ url(o.path) }}">{{ o.cargo_txt }}</a> · {{ o.entidad_txt }} · <time datetime="{{ o.fin }}">{{ o.cierre_txt }}</time></li>{% endfor %}</ul>
-  {% for t in extra.temas_dep %}<p><a href="{{ url(base_listado ~ 'sin-experiencia/') }}">Trabajos sin experiencia en {{ extra.dep.nombre }}</a></p>{% endfor %}
+  {% if extra.poca_exp %}<p><a href="{{ url(base_listado ~ 'hasta-un-ano-de-experiencia/') }}">Trabajos con hasta 1 año de experiencia en {{ extra.dep.nombre }}</a></p>{% endif %}
 </section>
 {% endif %}
 

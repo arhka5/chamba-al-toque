@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h1>{{ h1 }}</h1>
+<form class="buscador" id="buscador" action="{{ url('/buscar/') }}" method="get" role="search">
+  <label class="oculto" for="q">Cargo o entidad</label>
+  <input id="q" name="q" type="search" placeholder="Cargo o entidad: chofer, enfermera, UGEL" autocomplete="off">
+  <label class="oculto" for="d">Departamento</label>
+  <select id="d" name="d">
+    <option value="">Todo el Perú</option>
+    {% for d in departamentos %}<option value="{{ d.slug }}">{{ d.nombre }}</option>{% endfor %}
+  </select>
+  <button type="submit">Buscar</button>
+</form>
+<div class="filtros" id="filtros" hidden>
+  <label><input type="checkbox" id="fx"> Sin experiencia</label>
+  <label><input type="checkbox" id="fq"> Solo secundaria</label>
+  <label><input type="checkbox" id="fs"> Más de S/ 3,000</label>
+</div>
+<p class="b-estado" id="estado" role="status" aria-live="polite"></p>
+<div class="rejilla" id="resultados"></div>
+<noscript>
+  <p>La búsqueda necesita JavaScript. También puedes ver las convocatorias por departamento:</p>
+  <ul class="deps">{% for d in departamentos %}<li><a href="{{ url(d.path) }}">{{ d.nombre }} <span>{{ miles(d.n) }}</span></a></li>{% endfor %}</ul>
+</noscript>
+{% endblock %}
+{% block scripts %}
+<script>
+(function () {
+  var base = {{ url('')|tojson }};
+  var $ = function (id) { return document.getElementById(id); };
+  var params = new URLSearchParams(location.search);
+  $("q").value = params.get("q") || "";
+  $("d").value = params.get("d") || "";
+  $("filtros").hidden = false;
+  var datos = null;
+  var fold = function (s) { return (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase(); };
+  var soles = function (n) { return "S/ " + Math.round(n).toLocaleString("en-US"); };
+  // Fecha de hoy en Lima (UTC-5), no la del build.
+  var hoy = new Date(Date.now() - 5 * 3600e3).toISOString().slice(0, 10);
+  function cierre(f) {
+    if (!f) return null;
+    var d = Math.round((Date.parse(f + "T12:00:00Z") - Date.parse(hoy + "T12:00:00Z")) / 864e5);
+    var meses = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+    var t = d === 0 ? "Cierra hoy" : d === 1 ? "Cierra mañana" : d <= 7 ? "Cierra en " + d + " días" :
+      "Cierra el " + (+f.slice(8)) + " de " + meses[+f.slice(5, 7) - 1];
+    return { t: t, u: d <= 3 };
+  }
+  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; }
+  function pintar() {
+    var q = fold($("q").value.trim()), d = $("d").value;
+    var r = datos.filter(function (o) {
+      if (d && o.d !== d) return false;
+      if ($("fx").checked && !o.x) return false;
+      if ($("fq").checked && !o.q) return false;
+      if ($("fs").checked && !(o.s > 3000)) return false;
+      return !q || q.split(/\s+/).every(function (w) { return fold(o.c + " " + o.e + " " + o.l).indexOf(w) >= 0; });
+    });
+    $("estado").textContent = r.length.toLocaleString("en-US") + (r.length === 1 ? " convocatoria" : " convocatorias");
+    var frag = document.createDocumentFragment();
+    r.slice(0, 60).forEach(function (o) {
+      var a = el("article", "tarjeta");
+      a.appendChild(el("p", "t-entidad", o.e));
+      var h = el("h2", "t-cargo"); var l = el("a", "", o.c); l.href = base + o.u; h.appendChild(l); a.appendChild(h);
+      var p = el("p", "t-datos");
+      if (o.s) { var sd = el("strong", "t-sueldo", soles(o.s) + " "); sd.appendChild(el("small", "", "al mes")); p.appendChild(sd); }
+      else p.appendChild(el("span", "t-sueldo t-sin", "Sueldo no indicado"));
+      p.appendChild(el("span", "t-lugar", o.l));
+      var c = cierre(o.f);
+      if (c) p.appendChild(el("span", "t-cierre" + (c.u ? " urgente" : ""), c.t));
+      a.appendChild(p);
+      var rq = o.r || "";
+      if (rq) a.appendChild(el("p", "t-req", rq));
+      var v = el("span", "t-ver", "Ver convocatoria"); v.setAttribute("aria-hidden", "true"); a.appendChild(v);
+      frag.appendChild(a);
+    });
+    $("resultados").replaceChildren(frag);
+    if (r.length > 60) $("estado").textContent += " · se muestran las 60 más recientes, afina la búsqueda";
+  }
+  $("estado").textContent = "Cargando convocatorias…";
+  fetch(base + "/buscar.json").then(function (x) { return x.json(); }).then(function (j) { datos = j; pintar(); })
+    .catch(function () { $("estado").textContent = "No se pudo cargar la búsqueda. Prueba por departamento."; });
+  $("buscador").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var u = new URL(location.href); u.searchParams.set("q", $("q").value); u.searchParams.set("d", $("d").value);
+    history.replaceState(null, "", u); if (datos) pintar();
+  });
+  ["fx", "fq", "fs", "d"].forEach(function (id) { $(id).addEventListener("change", function () { if (datos) pintar(); }); });
+})();
+</script>
+{% endblock %}

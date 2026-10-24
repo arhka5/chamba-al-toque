@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block contenido %}
+<article class="texto">
+<h1>{{ h1 }}</h1>
+<h2>Origen de la información</h2>
+<p>La información de las convocatorias se toma de Talento Perú, el portal oficial de SERVIR, donde las entidades públicas registran sus ofertas laborales. Puede tener errores o retrasos respecto de la fuente. <strong>Confirma siempre la convocatoria en las bases publicadas por la entidad</strong> antes de postular.</p>
+<h2>Sin cobros ni intermediación</h2>
+<p>Chamba al Toque no cobra por publicar ni por ver convocatorias, no ofrece puestos, no garantiza resultados y no intermedia pagos. Postular a una convocatoria pública es gratis: si alguien te pide dinero para "asegurar" una plaza, es una estafa.</p>
+<h2>Datos personales</h2>
+<p>No pedimos DNI, correo, teléfono ni ningún otro dato personal para consultar convocatorias. La postulación se hace solo en el sitio de la entidad.</p>
+<h2>Marcas</h2>
+<p>Los nombres de las entidades y programas citados pertenecen a sus titulares. Este sitio no está afiliado a SERVIR ni a ninguna entidad pública.</p>
+<h2>Correcciones y retiro de información</h2>
+<p>Si encuentras un error o eres parte de una entidad y quieres corregir o retirar una convocatoria, escríbenos por <a href="{{ repo }}/issues/new" rel="noopener">GitHub</a>. Respondemos en un plazo de 48 horas.</p>
+</article>
+{% endblock %}

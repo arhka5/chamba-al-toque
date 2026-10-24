@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es" class="no-js" xmlns="http://www.w3.org/1999/xhtml"><head><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/theme.css?ln=primefaces-aristo" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/bootstrap.min.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/fonts.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/styles.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/css_font/fontello.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/css_font/animation.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/font-awesome.min.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/main.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/jquery.realperson.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/primefaces.css?ln=primefaces&amp;v=5.3" /><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/jquery/jquery.js?ln=primefaces&amp;v=5.3"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/jquery/jquery-plugins.js?ln=primefaces&amp;v=5.3"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/primefaces.js?ln=primefaces&amp;v=5.3"></script><script type="text/javascript">if(window.PrimeFaces){PrimeFaces.settings.projectStage='Development';}</script>
+	<meta charset="utf-8" />
+	<title>
+        .:Sistema de Difusión de Ofertas Laborales y Prácticas del Sector Público:. - Detalle de Vacante de Ofertas Laborales
+    </title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="X-UA-Compatible" content="IE=7,8,9" />
+	<link rel="shortcut icon" type="image/x-icon" href="/DifusionOfertasExterno/faces/resources/img/favicon.ico" /><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/prefixfree.min.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/barrarScroll.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/bootstrap.min.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/main/app.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/validator.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/primefaces-locale-es.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/modernizr.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/browser.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/jquery.plugin.min.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/jquery.realperson.min.js"></script><!--[if IE 7]><link rel="stylesheet" href="fontello-ie7.css" /><![endif]--><!--[if lte IE 7]><link rel="stylesfont-awesome.min.cssheet" href="ie6-ie7.css" /><![endif]-->
+		<style>
+.titulo-seccion {
+	color: #3C3C3B !important;
+	font-size: 20px;
+	padding-left: 0px;
+}
+
+.seccion-detalle {
+	padding: 10px 30px 10px 30px;
+}
+
+.cuadro-seccion {
+	margin-top: 8px;
+	border: 1px solid #C2BEBE;
+	-moz-box-shadow: 1px 3px 7px 6px #DCDCDC;
+	-webkit-box-shadow: 1px 3px 7px 6px #DCDCDC;
+	box-shadow: 1px 3px 7px 6px #DCDCDC;
+	border-radius: 3px 3px 3px 3px;
+	padding: 20px 15px 20px 15px;
+	line-height: 18px;
+}
+
+.sp-aviso0 {
+	color: #146080;
+	font-weight: 500;
+	font-size: 20px;
+}
+
+.sp-aviso {
+	color: #000;
+	font-weight: 650;
+	font-size: 13px;
+}
+
+.sub-titulo {
+	color: #000;
+	font-weight: 650;
+	font-size: 13px;
+	margin-bottom: 4px;
+	margin-top: 5px;
+}
+
+.sub-titulo-2 {
+	color: #000;
+	font-weight: 650;
+	font-size: 12.6px;
+	margin-bottom: 2px;
+}
+
+.detalle-sp {
+	color: #000;
+	font-weight: normal;
+	font-size: 12.6px;
+	margin-bottom: 2px;
+}
+
+.cuadro-seccion-lat {
+	margin-top: 15px;
+	border: 1px solid #C2BEBE;
+	-moz-box-shadow: 1px 3px 7px 6px #DCDCDC;
+	-webkit-box-shadow: 1px 3px 7px 6px #DCDCDC;
+	box-shadow: 1px 3px 7px 6px #DCDCDC;
+	border-radius: 2px 2px 2px 2px;
+	padding: 10px 15px 10px 15px;
+}
+
+.cuadro-seccion-btn {
+	margin-top: 35px;
+	width: 100% !important;
+	height: 100% !important;
+	border: 1px solid #fff;
+	border-radius: 4px 4px 4px 4px;
+	padding: 10px 15px 10px 15px;
+	font-weight: 200;
+	color: #fff;
+	background: #146080;
+}
+
+.cuadro-seccion-btn2 {
+	margin-top: 10px;
+	width: 100% !important;
+	height: 100% !important;
+	border: 1px solid #fff;
+	border-radius: 4px 4px 4px 4px;
+	padding: 10px 15px 10px 15px;
+	font-weight: 200;
+	color: #fff;
+	background: #999999;
+}
+
+.ocultarImgIcon2 {
+	background-position: 0 20px !important;
+	color: #fff;
+	text-indent: 0 !important;
+	font-size: 20px;
+	width: 30px;
+	height: 25px;
+	margin-top: -15px !important;
+	margin-left: 13% !important;
+}
+</style>
+		<script>
+			(function(i, s, o, g, r, a, m) {
+				i['GoogleAnalyticsObject'] = r;
+				i[r] = i[r] || function() {
+					(i[r].q = i[r].q || []).push(arguments)
+				}, i[r].l = 1 * new Date();
+				a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+				a.async = 1;
+				a.src = g;
+				m.parentNode.insertBefore(a, m)
+			})(window, document, 'script',
+					'https://www.google-analytics.com/analytics.js', 'ga');
+			ga('create', 'UA-154559467-3', 'auto');
+			ga('send', 'pageview', 'event');
+		</script></head><body>
+	<div class="navbar navbar-inverse set-radius-zero">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a id="box-logo" class="navbar-brand" href="https://www.servir.gob.pe/" target="_blank"> servir </a>
+			</div>
+			<div class="left-div">
+				<div>
+					<a id="box-logo3" class="navbar-brand"> Talento </a>
+				</div>
+				<div>
+					<small>Versión 1.4.1.3</small>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-wrapper box_main_app">
+		<div id="box-top-inf">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col-sm-4">
+						<div id="box-info-user" style="font-size: 12px; font-weight: 300;">
+							<i class="fa fa-calendar" style="opacity: 0.6; margin-right: 8px;"></i> <span id="date_box"></span> <i class="fa fa-clock-o" style="opacity: 0.6; margin-left: 10px;"></i> <span id="time_box"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="box-main-container" class="container row-offcanvas">
+			<div id="menu-left" class="sidebar-offcanvas">
+				<div class="wrapper row-offcanvas row-offcanvas-left">
+					<aside class="left-side sidebar-offcanvas">
+						<section class="sidebar" id="nav_left_sgac">
+							<div id="btn-hidden-nav" class="toggleBtn">
+								<a href="#" data-toggle="offcanvas"><i class="fa fa-bars"></i>
+									Menú </a>
+							</div>
+							<ul class="sidebar-menu">
+								<li class="active"><a href="../consultas/ofertas_laborales.xhtml"> <i class="topSpace fa fa-caret-down pull-right"></i> <span><strong>Ofertas
+												Laborales (Convocatoria Pública)</strong></span>
+								</a></li>
+								<li class="active"><a href="../consultas/modalidades_formativas.xhtml"> <i class="topSpace fa fa-caret-down pull-right"></i> <span><strong>Prácticas</strong></span>
+								</a></li>
+								<li class="active"><a href="../consultas/contratacion_directa.xhtml"> <i class="topSpace fa fa-caret-down pull-right"></i> <span><strong>Contratación
+												Directa Decreto de Urgencia 029-2020</strong></span>
+								</a></li>
+								<li class="active"><a href="../consultas/cooperacion_laboral.xhtml"> <i class="topSpace fa fa-caret-down pull-right"></i> <span><strong>Cooperación
+												Laboral Decreto Legislativo N° 1456</strong></span>
+								</a></li>
+								
+								<li class="active"><a href="https://talentoentidad.servir.gob.pe/#/home" target="_blank" style="font-family: 'Cabin', sans-serif; color: rgb(2, 68, 135);"> <i class="topSpace fa fa-caret-down pull-right"></i> <span><strong>Ver Convocatorias
+												Talento V.2</strong></span>
+								</a></li>
+							</ul>
+						</section>
+					</aside>
+				</div>
+			</div>
+			<div id="main-content-sidel">
+				<div class="row spac-top-10">
+					<div class="col-md-12">
+						<ol id="info-nav" class="breadcrumb">
+		<li class="active">Ofertas Laborales</li>
+		<li>Ver mï¿½s</li>
+		<li id="box-regresar" class="active pull-right">
+<form id="frmRegresar" name="frmRegresar" method="post" action="/DifusionOfertasExterno/faces/consultas/detalle_ofertas_laborales.xhtml" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="frmRegresar" value="frmRegresar" />
+<button id="frmRegresar:j_idt30" name="frmRegresar:j_idt30" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left btnlink" onclick="" type="submit"><span class="ui-button-icon-left ui-icon ui-c fa fa-angle-double-left"></span><span class="ui-button-text ui-c">Volver a la lista</span></button><script id="frmRegresar:j_idt30_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmRegresar_j_idt30",{id:"frmRegresar:j_idt30"});</script><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="-809990710250104241:5255910609291043992" autocomplete="off" />
+</form></li>
+						</ol>
+					</div>
+				</div>
+<form id="frmDetaOferLabo" name="frmDetaOferLabo" method="post" action="/DifusionOfertasExterno/faces/consultas/detalle_ofertas_laborales.xhtml" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="frmDetaOferLabo" value="frmDetaOferLabo" />
+<span id="frmDetaOferLabo:mensaje"></span><script id="frmDetaOferLabo:mensaje_s" type="text/javascript">$(function(){PrimeFaces.cw('Growl','widget_frmDetaOferLabo_mensaje',{id:'frmDetaOferLabo:mensaje',sticky:false,life:5000,escape:true,msgs:[]});});</script>
+			<div class="row" style="margin: 0px;">
+				<div class="col-sm-12">
+					<div id="idDatosConvocatoria" class="row box-mb" style="width: 870px;">
+						<div class="col-sm-8">
+							<div class="row box-mb">
+								<div class="col-sm-12 seccion-detalle">
+									<div class="row box-mb">
+										<div class="col-sm-12 titulo-seccion">
+											<i class="fa fa-list-alt"></i> Aviso
+										</div>
+									</div>
+									<div class="row box-mb text-center">
+										<div class="col-sm-12 cuadro-seccion" style="overflow-wrap: break-word;">
+											<span class="sp-aviso0">OPERARIO DE LIMPIEZA INTERNA</span>
+											<br /> <span class="sp-aviso">MUNICIPALIDAD  DISTRITAL DE PACHACAMAC</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row box-mb">
+								<div class="col-sm-12 seccion-detalle">
+									<div class="row box-mb">
+										<div class="col-sm-12 titulo-seccion">
+											 <i class="fa fa-male"></i> Sobre el Aviso
+										</div>
+									</div>
+									<div class="row box-mb">
+										<div class="col-sm-12 cuadro-seccion">
+											<div class="row box-mb">
+												<div class="col-sm-12">
+													<p class="sub-titulo">REQUERIMIENTO:</p>
+												</div>
+											</div>
+											<div class="row box-mb" style="margin-bottom: 5px; overflow-wrap: break-word;">
+												<div class="col-sm-12">
+													<ul style="margin-left: -10px;">
+														<li><span class="sub-titulo-2">EXPERIENCIA:</span><span class="detalle-sp">
+																NO APLICA</span></li>
+														<li><span class="sub-titulo-2">FORMACIÓN
+																ACADÉMICA - PERFIL:</span><span class="detalle-sp">
+																SECUNDARIA COMPLETA (NO INDISPENSABLE)</span></li>
+														<li><span class="sub-titulo-2">ESPECIALIZACIÓN:</span><span class="detalle-sp">
+																NO APLICA</span></li>
+														<li><span class="sub-titulo-2">CONOCIMIENTO:</span><span class="detalle-sp">
+																LIMPIEZA DE AMBIENTES; DESINFECCIÓN; MANEJO DE IMPLEMENTOS Y EQUIPOS; DISPOSICIÓN DE RESIDUOS; SEGURIDAD Y SALUD EN EL TRABAJO</span></li>
+														<li><span class="sub-titulo-2">COMPETENCIAS:</span><span class="detalle-sp">
+																RESPONSABILIDAD, ORDEN, DISCIPLINA, TRABAJO EN EQUIPO, ATENCIÓN AL DETALLE Y CUMPLIMIENTO DE INSTRUCCIONES</span></li>
+													</ul>
+												</div>
+											</div>
+											<div class="row box-mb" style="margin-bottom: 5px; overflow-wrap: break-word;">
+												<div class="col-sm-12">
+													<span class="sub-titulo">DETALLE: </span><br /> <span class="detalle-sp">
+															<a href="https://munipachacamac.gob.pe/convocatorias.html" target="_black" style="text-transform: uppercase">
+																https://munipachacamac.gob.pe/convocatorias.html </a>
+													</span>
+												</div>
+											</div>
+											<div class="row box-mb" style="margin-bottom: 5px;">
+												<div class="col-sm-12">
+													<span class="sub-titulo">CANTIDAD DE VACANTES: </span> <span class="detalle-sp">4</span>
+												</div>
+											</div>
+											<div class="row box-mb" style="margin-bottom: 5px;">
+												<div class="col-sm-12">
+													<span class="sub-titulo">NÚMERO DE CONVOCATORIA: </span> <span class="detalle-sp">D.LEG 1057 - INDETERMINADO-033</span>
+												</div>
+											</div>
+											<div class="row box-mb" style="margin-bottom: 5px;">
+												<div class="col-sm-12">
+													<span class="sub-titulo">REMUNERACIÓN: </span> <span class="detalle-sp">S/. 1,720.00
+													</span>
+												</div>
+											</div>
+											<div class="row box-mb" style="margin-bottom: 5px;">
+												<div class="col-sm-12">
+													<span class="sub-titulo">FECHA INICIO DE
+														PUBLICACIÓN: </span> <span class="detalle-sp">23/10/2026
+													</span>
+												</div>
+											</div>
+											<div class="row box-mb" style="margin-bottom: 5px;">
+												<div class="col-sm-12">
+													<span class="sub-titulo">FECHA FIN DE PUBLICACIÓN: </span>
+													<span class="detalle-sp">05/11/2026
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4 seccion-detalle">
+							<div class="row box-mb">
+								<div class="col-sm-12 titulo-seccion">
+									<i class="fa fa-file-archive-o"></i> Resumen del Aviso
+								</div>
+							</div>
+							<div class="row box-mb">
+								<div class="col-sm-12 cuadro-seccion" style="overflow-wrap: break-word;">
+									<div style="height: 25px;"></div>
+									<div class="row box-mb">
+										<div class="col-sm-12">
+											<p class="sub-titulo">OPERARIO DE LIMPIEZA INTERNA</p>
+										</div>
+									</div>
+									<div style="height: 20px;"></div>
+									<div class="row box-mb">
+										<div class="col-sm-12">
+											<p class="sub-titulo">INSTITUCIÓN:</p>
+											MUNICIPALIDAD  DISTRITAL DE PACHACAMAC
+										</div>
+									</div>
+									<br />
+									<div class="row box-mb">
+										<div class="col-sm-12">
+											<p class="sub-titulo">CANTIDAD DE VACANTES:</p>
+											4
+										</div>
+									</div>
+									<br />
+									<div class="row box-mb">
+										<div class="col-sm-12">
+											<p class="sub-titulo">NÚMERO DE CONVOCATORIA:</p>
+											D.LEG 1057 - INDETERMINADO -
+											033
+										</div>
+									</div>
+									<div style="height: 28px;"></div>
+								</div>
+							</div>
+							<div class="row box-mb text-center">
+								<div class="col-sm-12 cuadro-seccion-lat">
+									<span class="sub-titulo-2">N°
+										821548</span>
+								</div>
+							</div>
+							<div class="row box-mb text-center"><button id="frmDetaOferLabo:j_idt48" name="frmDetaOferLabo:j_idt48" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left cuadro-seccion-btn" onclick="printDiv('idDatosConvocatoria');ga('send', 'event', 'Imprimir aviso', 'Imprimir aviso detalle ofertas laborales', 'Imprimir aviso detalle ofertas laborales');;" title="Imprimir aviso" type="submit"><span class="ui-button-icon-left ui-icon ui-c icon-print ocultarImgIcon2"></span><span class="ui-button-text ui-c">Imprimir aviso</span></button><script id="frmDetaOferLabo:j_idt48_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmDetaOferLabo_j_idt48",{id:"frmDetaOferLabo:j_idt48"});</script>
+							</div>
+							<div class="row box-mb text-center"><button id="frmDetaOferLabo:j_idt50" name="frmDetaOferLabo:j_idt50" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only cuadro-seccion-btn2" onclick="ga('send', 'event', 'Descargar word', 'Descargar word detalle ofertas laborales completo', 'Descargar word detalle ofertas laborales completo');;" style="background-color: #76DCFF!important;     color: #146080;" title="Convocatoria en Word" type="submit"><span class="ui-button-text ui-c">Convocatoria en Word</span></button><script id="frmDetaOferLabo:j_idt50_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmDetaOferLabo_j_idt50",{id:"frmDetaOferLabo:j_idt50"});</script>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="-809990710250104241:5255910609291043992" autocomplete="off" />
+</form><div id="j_idt52" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow ui-hidden-container"><div class="ui-dialog-content ui-widget-content"><img id="j_idt53" src="../resources/img/loadingbar.gif?pfdrid_c=true" alt="" /></div></div><script id="j_idt52_s" type="text/javascript">$(function(){PrimeFaces.cw("Dialog","statusDialog",{id:"j_idt52",draggable:false,resizable:false,modal:true});});</script>
+			</div>
+		</div>
+	</div>
+	<div class="row text-center">* Lineamientos para el otorgamiento
+		de ajustes razonables a las personas con discapacidad en el proceso de
+		selección que realicen las entidades del sector público.</div>
+	<footer>
+		<div class="grisFooter">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 " style="margin-top: 6px;">
+						<p style="margin-left: 30px;">
+							<small>Aplicativo Admistrado por Subjefatura de Tecnología de la Información</small>
+						</p>
+						<p style="margin-left: 42px;">
+							<small>Pasaje Francisco de Zela 150 - Piso 10, Jesus María, Lima, Perú</small>
+						</p>
+						<p style="margin-left: -15px;">
+							<small><span class="icon-mobile"></span>(511) 206-3370
+								Anexo 2519 (empl.) 2610 (prác.) | <span class="glyphicon glyphicon-envelope"></span>
+								talentoperu@servir.gob.pe </small>
+						</p>
+					</div>
+					<div class="col-md-6 text-right">
+						<img src="../../resources/img/img_inst.png" width="450px" style="padding: 10px 0" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="redFooter">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6">
+						<span>Autoridad Nacional del Servicio Civil (SERVIR) - Todos los derechos reservados</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/jquery.jtime.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/scripts.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#time_box').jTime();
+		});
+
+		$(function() {
+			$('#defaultReal').realperson();
+		});
+
+		$(function() {
+			$('#defaultReal2').realperson();
+		});
+	</script>
+	<script type="text/javascript">
+		function start() {
+			PF('statusDialog').show();
+		}
+
+		function stop() {
+			PF('statusDialog').hide();
+		}
+	</script>
+	<script type="text/javascript">
+		function callCaptcha() {
+			$('#defaultReal').realperson();
+		}
+	</script>
+	<script type="text/javascript">
+		function callCaptcha2() {
+			$('#defaultReal2').realperson();
+		}
+	</script>
+	<script type="text/javascript">
+		function printDiv(divName) {
+			document.head
+					.insertAdjacentHTML('beforeend',
+							'<link rel="stylesheet" type="text/css" href="./css/main.css" />');
+			var printContents = document.getElementById(divName).innerHTML;
+			var originalContents = document.body.innerHTML;
+
+			document.body.innerHTML = printContents;
+
+			window.print();
+			document.body.innerHTML = originalContents;
+		}
+	</script><script type="text/javascript" src="/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=30002346" async></script></body>
+</html>

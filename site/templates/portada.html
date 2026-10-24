@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% from "_tarjeta.html" import tarjeta %}
+{% block contenido %}
+<section class="heroe">
+  <h1>Convocatorias de trabajo en el Estado peruano</h1>
+  <form class="buscador" action="{{ url('/buscar/') }}" method="get" role="search">
+    <label class="oculto" for="q">Cargo o entidad</label>
+    <input id="q" name="q" type="search" placeholder="¿Qué chamba buscas? Chofer, enfermera, UGEL" autocomplete="off">
+    <label class="oculto" for="d">Departamento</label>
+    <select id="d" name="d">
+      <option value="">Todo el Perú</option>
+      {% for d in departamentos %}<option value="{{ d.slug }}">{{ d.nombre }}</option>{% endfor %}
+    </select>
+    <button type="submit">Buscar</button>
+  </form>
+  <p class="contador">{{ miles(total_vigentes) }} convocatorias vigentes de {{ miles(total_entidades) }} entidades. Actualizado el {{ actualizado_txt }}.</p>
+  <ul class="atajos" aria-label="Atajos">
+    <li><a href="{{ url('/sin-experiencia/') }}">Sin experiencia</a></li>
+    <li><a href="{{ url('/secundaria-completa/') }}">Solo secundaria</a></li>
+    <li><a href="{{ url('/convocatorias-cas/') }}">CAS</a></li>
+    {% if por_vencer %}<li><a href="{{ url('/por-vencer/') }}">Cierran pronto ({{ miles(por_vencer) }})</a></li>{% endif %}
+  </ul>
+  <p class="heroe-texto">Aquí encuentras las convocatorias de trabajo de municipalidades, gobiernos regionales, ministerios, hospitales y otras entidades públicas del Perú. Los datos vienen de Talento Perú, el portal oficial de SERVIR, y se actualizan todos los días. Cada convocatoria enlaza a la web de la entidad, donde se postula; Chamba al Toque no cobra ni pide datos personales.</p>
+</section>
+
+<section class="bloque">
+  <h2>Últimas convocatorias</h2>
+  <div class="rejilla">
+    {% for o in ultimas %}{{ tarjeta(o) }}{% endfor %}
+  </div>
+  <p class="mas"><a href="{{ url('/nuevas/') }}">Ver las convocatorias nuevas de hoy</a></p>
+</section>
+
+<section class="bloque">
+  <h2>Convocatorias por departamento</h2>
+  <ul class="deps">
+    {% for d in departamentos %}<li><a href="{{ url(d.path) }}">{{ d.nombre }} <span>{{ miles(d.n) }}</span></a></li>{% endfor %}
+  </ul>
+</section>
+
+{% if top_entidades %}
+<section class="bloque">
+  <h2>Entidades con más plazas</h2>
+  <ul class="entidades">
+    {% for e in top_entidades %}<li><a href="{{ url('/entidad/' ~ e.slug ~ '/') }}">{{ e.nombre }}</a> <span>{{ plural(e.n, 'plaza', 'plazas') }}</span></li>{% endfor %}
+  </ul>
+</section>
+{% endif %}
+{% endblock %}

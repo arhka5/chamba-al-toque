@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% from "_tarjeta.html" import tarjeta %}
+{% block contenido %}
+<article class="oferta">
+  {% if o.cerrada %}
+  <p class="aviso-cerrada" role="status">Esta convocatoria cerró el {{ fecha_larga(o.cerrada_el) }}. Abajo tienes convocatorias parecidas que siguen abiertas.</p>
+  {% endif %}
+  <p class="o-entidad">{% if entidad_indexable.get(o.entidad_slug) %}<a href="{{ url('/entidad/' ~ o.entidad_slug ~ '/') }}">{{ o.entidad_txt }}</a>{% else %}{{ o.entidad_txt }}{% endif %}</p>
+  <h1>{{ h1 }}</h1>
+
+  <dl class="o-claves">
+    <div><dt>Sueldo mensual</dt><dd class="o-sueldo">{{ o.sueldo_txt or 'No indicado en la convocatoria' }}</dd></div>
+    <div><dt>Fecha límite</dt><dd>{% if o.fin %}<time datetime="{{ o.fin }}">{{ o.fin_txt }}</time>{% if not o.cerrada and o.dias is not none and o.dias <= 7 %}<br><span class="o-cierre{{ ' urgente' if o.urgente }}">{{ o.cierre_txt }}</span>{% endif %}{% else %}No indicada{% endif %}</dd></div>
+    <div><dt>Lugar</dt><dd>{{ o.lugar_txt }}</dd></div>
+    <div><dt>Vacantes</dt><dd>{{ o.vacantes }}</dd></div>
+    <div><dt>Régimen</dt><dd>{{ o.regimen_txt or 'No indicado' }}</dd></div>
+    {% if o.cargo_completo != o.cargo_txt %}<div><dt>Cargos que convoca</dt><dd>{{ o.cargo_completo }}</dd></div>{% endif %}
+  </dl>
+
+  {% if not o.cerrada %}
+  {% if o.url_bases %}
+  <p class="o-cta"><a class="boton" href="{{ o.url_bases }}" rel="noopener" target="_blank">Ver convocatoria y postular</a>
+  <span class="o-cta-nota">Sale a la web de {{ con_articulo(o.entidad_txt) }}, donde están las bases y se postula (se abre en otra pestaña).</span></p>
+  {% else %}
+  <p class="o-cta"><a class="boton" href="{{ fuente_url }}" rel="noopener" target="_blank">Ver en Talento Perú</a>
+  <span class="o-cta-nota">Busca el N.° {{ o.id }} en el portal de SERVIR para ver las bases.</span></p>
+  {% endif %}
+  {% endif %}
+
+  <section class="o-seccion">
+    <h2>Requisitos en palabras simples</h2>
+    {% if o.req.frase %}<p class="o-frase">{{ o.req.frase }}</p>{% endif %}
+    <dl class="o-req">
+      <div><dt>Formación</dt><dd>{{ o.formacion_original or 'No indicada en la convocatoria' }}</dd></div>
+      <div><dt>Experiencia</dt><dd>{{ o.experiencia_original or 'No se exige experiencia' }}</dd></div>
+      {% if o.especializacion_txt %}<div><dt>Especialización</dt><dd>{{ o.especializacion_txt }}</dd></div>{% endif %}
+      {% if o.conocimientos_txt %}<div><dt>Conocimientos</dt><dd>{{ o.conocimientos_txt }}</dd></div>{% endif %}
+      {% if o.competencias_txt %}<div><dt>Competencias</dt><dd>{{ o.competencias_txt }}</dd></div>{% endif %}
+    </dl>
+  </section>
+
+  {% if not o.cerrada %}
+  <section class="o-seccion">
+    <h2>Cómo postular</h2>
+    <ol class="o-pasos">
+      <li>Abre la convocatoria en la web de la entidad y descarga las bases.</li>
+      <li>Revisa el cronograma, las funciones y los documentos que piden.</li>
+      <li>Postula por el medio que indican las bases antes del {{ o.fin_txt or 'cierre' }}.</li>
+    </ol>
+  </section>
+  {% endif %}
+
+  <aside class="o-confianza">
+    <p>Postular a una convocatoria pública no cuesta nada. Si alguien te pide un pago, un depósito o tu clave para "asegurar" la plaza, es una estafa. Revisa las bases en la web oficial de la entidad y confirma la convocatoria en <a href="{{ fuente_url }}" rel="noopener">Talento Perú</a> con el N.° {{ o.id }}. Chamba al Toque no es SERVIR ni la entidad convocante, y no te pedirá datos personales.</p>
+  </aside>
+
+  <p class="o-fuente">Fuente: <a href="{{ fuente_url }}" rel="noopener">Talento Perú (SERVIR)</a>, N.° {{ o.id }}. {% if o.inicio_txt %}Publicada el {{ o.inicio_txt }}. {% endif %}Convocatoria {{ o.conv_txt }}. <a href="{{ reportar(o) }}" rel="noopener">Reportar un error o una convocatoria sospechosa</a>.</p>
+</article>
+
+<section class="bloque">
+  <h2>Más trabajos</h2>
+  <p class="mas-links">
+    <a href="{{ url('/departamento/' ~ o.dep_slug ~ '/') }}">Más trabajos en {{ o.dep_txt }} {{ anio }}</a>
+    {% if entidad_indexable.get(o.entidad_slug) %} · <a href="{{ url('/entidad/' ~ o.entidad_slug ~ '/') }}">Otras convocatorias de {{ o.entidad_txt }}</a>{% endif %}
+    {% for t in temas_oferta %} · <a href="{{ url(t.path) }}">{{ t.nombre }}</a>{% endfor %}
+  </p>
+  {% if misma_entidad %}
+  <h3>Otras {{ misma_entidad|length }} plazas en {{ o.entidad_txt }}</h3>
+  <div class="rejilla">{% for x in misma_entidad %}{{ tarjeta(x, False, 4) }}{% endfor %}</div>
+  {% endif %}
+  {% if similares %}
+  <h3>Convocatorias parecidas</h3>
+  <div class="rejilla">{% for x in similares %}{{ tarjeta(x, True, 4) }}{% endfor %}</div>
+  {% endif %}
+</section>
+{% endblock %}

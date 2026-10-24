@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block contenido %}
+<article class="texto">
+<h1>{{ h1 }}</h1>
+<p>Chamba al Toque junta en una lista fácil de revisar las convocatorias de trabajo que las entidades públicas del Perú registran en Talento Perú, el portal oficial de SERVIR (Autoridad Nacional del Servicio Civil).</p>
+<h2>Por qué existe</h2>
+<p>Talento Perú tiene miles de convocatorias, pero se revisa de diez en diez y es difícil saber cuáles piden solo secundaria, cuáles no exigen experiencia o cuáles cierran mañana. Aquí cada convocatoria muestra el sueldo, la fecha límite y los requisitos en una línea, y se puede ver por departamento o por entidad.</p>
+<h2>De dónde salen los datos</h2>
+<p>Todos los días, de madrugada, un programa revisa las convocatorias vigentes de <a href="{{ fuente_url }}" rel="noopener">Talento Perú</a> y actualiza el sitio. No se agrega ni se inventa información: si un dato no está en la convocatoria, se indica "No indicado". Las convocatorias cerradas se retiran.</p>
+<p>Hoy hay {{ miles(total_vigentes) }} convocatorias vigentes de {{ miles(total_entidades) }} entidades. Última actualización: {{ actualizado_txt }}.</p>
+<h2>Lo que no somos</h2>
+<p>No somos SERVIR ni una entidad del Estado. No intervenimos en los procesos de selección, no cobramos y no pedimos datos personales. La postulación se hace siempre en la web de cada entidad, siguiendo sus bases.</p>
+<h2>Quién lo hace</h2>
+<p>Lo hace y mantiene <a href="https://github.com/arhka5" rel="noopener">arhka5</a>, una persona, no una empresa ni una entidad del Estado. El código del sitio es abierto y está en <a href="{{ repo }}" rel="noopener">GitHub</a>, donde también puedes reportar errores.</p>
+</article>
+{% endblock %}

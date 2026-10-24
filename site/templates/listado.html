@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% from "_tarjeta.html" import tarjeta %}
+{% block contenido %}
+<header class="l-cab">
+  <h1>{{ h1 }}{% if pagina > 1 %} <span class="l-pag">(página {{ pagina }})</span>{% endif %}</h1>
+  {% set r = extra.resumen %}
+  {% if pagina == 1 and r %}
+    {% if extra.tipo == 'departamento' %}
+    <p class="l-intro">Hay {{ plural(r.n, 'convocatoria vigente', 'convocatorias vigentes') }} de entidades públicas en {{ r.lugar }}{% if r.min and r.min != r.max %}, con sueldos desde {{ r.min }} hasta {{ r.max }} al mes{% elif r.min %}, con un sueldo de {{ r.min }} al mes{% endif %}.{% if r.sin_exp %} {{ plural(r.sin_exp, 'no pide', 'no piden') }} experiencia.{% endif %}{% if r.secundaria %} {{ plural(r.secundaria, 'pide', 'piden') }} como máximo secundaria completa.{% endif %}{% if r.top|length > 1 %} Las entidades con más plazas son {% elif r.top %} La entidad con más plazas es {% endif %}{% if r.top %}{% for e in r.top %}{% if e.indexable %}<a href="{{ url('/entidad/' ~ e.slug ~ '/') }}">{{ e.nombre }}</a>{% else %}{{ e.nombre }}{% endif %}{{ ', ' if not loop.last and loop.revindex > 2 else (' y ' if not loop.last else '') }}{% endfor %}.{% endif %}</p>
+    {% elif extra.tipo == 'entidad' %}
+    <p class="l-intro">{{ extra.entidad }} tiene {{ plural(r.n, 'convocatoria vigente', 'convocatorias vigentes') }}.{% if extra.primera %} Las plazas más cercanas a cerrar vencen el {{ extra.primera }}.{% endif %}{% if r.min and r.min != r.max %} Los sueldos van de {{ r.min }} a {{ r.max }}.{% elif r.min %} El sueldo es de {{ r.min }} al mes.{% endif %} Esta información proviene de Talento Perú (SERVIR); las bases completas están en la web de la entidad.</p>
+    {% else %}
+    <p class="l-intro">{{ intro }} Hay {{ plural(r.n, 'convocatoria vigente', 'convocatorias vigentes') }}{% if r.min and r.min != r.max %}, con sueldos desde {{ r.min }} hasta {{ r.max }} al mes{% endif %}.</p>
+    {% endif %}
+  {% endif %}
+  <p class="l-act">Actualizado el {{ actualizado_txt }}</p>
+</header>
+
+{% if pagina == 1 and extra.cierran %}
+<section class="bloque l-cierran">
+  <h2>Cierran esta semana</h2>
+  <ul>{% for o in extra.cierran %}<li><a href="{{ url(o.path) }}">{{ o.cargo_txt }}</a> · {{ o.entidad_txt }} · <time datetime="{{ o.fin }}">{{ o.cierre_txt }}</time></li>{% endfor %}</ul>
+  {% for t in extra.temas_dep %}<p><a href="{{ url(base_listado ~ 'sin-experiencia/') }}">Trabajos sin experiencia en {{ extra.dep.nombre }}</a></p>{% endfor %}
+</section>
+{% endif %}
+
+{% if ofertas %}
+<h2 class="rejilla-tit">Convocatorias vigentes ({{ miles(total) }})</h2>
+<div class="rejilla">
+  {% for o in ofertas %}{{ tarjeta(o, extra.tipo != 'departamento') }}{% endfor %}
+</div>
+{% else %}
+<p class="vacio">Ahora no hay convocatorias aquí. Revisa <a href="{{ url('/') }}">las últimas convocatorias</a>.</p>
+{% endif %}
+
+{% if paginas > 1 %}
+<nav class="paginacion" aria-label="Páginas">
+  {% if pagina > 1 %}<a rel="prev" href="{{ url(base_listado if pagina == 2 else base_listado ~ 'pagina/' ~ (pagina - 1) ~ '/') }}">Anterior</a>{% endif %}
+  {% for n in range(1, paginas + 1) %}
+    {% if n == 1 or n == paginas or (n - pagina)|abs <= 1 %}
+      {% if n == pagina %}<span aria-current="page">{{ n }}</span>
+      {% else %}<a href="{{ url(base_listado if n == 1 else base_listado ~ 'pagina/' ~ n ~ '/') }}">{{ n }}</a>{% endif %}
+    {% elif (n - pagina)|abs == 2 %}<span class="pag-hueco">…</span>{% endif %}
+  {% endfor %}
+  {% if pagina < paginas %}<a rel="next" href="{{ url(base_listado ~ 'pagina/' ~ (pagina + 1) ~ '/') }}">Siguiente</a>{% endif %}
+</nav>
+{% endif %}
+{% endblock %}

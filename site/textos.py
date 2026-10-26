@@ -304,17 +304,25 @@ def experiencia_resumen(texto: str | None) -> tuple[str, bool, int | None]:
     if _no_aplica(texto):
         return "Sin experiencia", True, 0
     t = texto.upper()
-    anios = [int(x) for x in re.findall(r"(\d+)\s*\(?[A-Z]*\)?\s*AÑOS?", t)]
-    meses = [int(x) for x in re.findall(r"(\d+)\s*\(?[A-Z]*\)?\s*MES(?:ES)?", t)]
+    # "5.00 AÑO(S)" o "1,5 AÑOS": con decimales (antes se leía "00" y salía "sin experiencia").
+    num = r"(\d+(?:[.,]\d+)?)"
+    anios = [float(x.replace(",", ".")) for x in re.findall(num + r"\s*\(?[A-Z]*\)?\s*AÑOS?", t)]
+    meses = [float(x.replace(",", ".")) for x in re.findall(num + r"\s*\(?[A-Z]*\)?\s*MES(?:ES)?", t)]
     # La experiencia general suele ser la mayor; se muestra esa.
     if anios and max(anios) == 0 and not meses:
         return "Sin experiencia", True, 0
     if anios and max(anios) > 0:
         n = max(anios)
-        return f"{n} año{'s' if n != 1 else ''} de experiencia", False, n * 12
-    if meses:
-        n = max(meses)
+        if not n.is_integer() and n < 1:
+            m = round(n * 12)
+            return (f"{m} meses de experiencia" if m != 1 else "1 mes de experiencia"), False, m
+        txt = f"{n:g}".replace(".", ",")
+        return f"{txt} año{'s' if n != 1 else ''} de experiencia", False, round(n * 12)
+    if meses and max(meses) > 0:
+        n = round(max(meses))
         return (f"{n} meses de experiencia" if n != 1 else "1 mes de experiencia"), False, n
+    if meses:
+        return "Sin experiencia", True, 0
     return "Con experiencia", False, None
 
 

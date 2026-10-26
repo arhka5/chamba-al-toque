@@ -40,6 +40,12 @@ def test_experiencia():
     assert experiencia_resumen("EXPERIENCIA GENERAL DE 2 AÑOS; ESPECÍFICA 1 AÑO")[:2] == ("2 años de experiencia", False)
     assert experiencia_resumen("06 MESES EN EL SECTOR")[:2] == ("6 meses de experiencia", False)
     assert experiencia_resumen("EN LABORES SIMILARES")[:2] == ("Con experiencia", False)
+    # Decimales de Talento Perú: "5.00 AÑO(S)" no es "00 años" (antes salía "sin experiencia").
+    assert experiencia_resumen("EXPERIENCIA GENERAL: 5.00 AÑO(S), ESPECIFICA: 4.00 AÑOS") == \
+        ("5 años de experiencia", False, 60)
+    assert experiencia_resumen("1.5 AÑOS EN EL SECTOR PÚBLICO") == ("1,5 años de experiencia", False, 18)
+    assert experiencia_resumen("0.5 AÑO") == ("6 meses de experiencia", False, 6)
+    assert experiencia_resumen("0.00 AÑO(S)")[:2] == ("Sin experiencia", True)
 
 
 def test_formacion():

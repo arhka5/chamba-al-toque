@@ -56,7 +56,8 @@
       {% for d in departamentos %}<li><a href="{{ url(d.path) }}">{{ d.nombre }}</a></li>{% endfor %}
     </ul>
     <p class="pie-fuente">Datos de <a href="{{ fuente_url }}" rel="noopener">Talento Perú (SERVIR)</a>, actualizados el {{ actualizado_txt }}. Chamba al Toque no es SERVIR ni una entidad del Estado, no cobra y no pide datos personales. Se financia con anuncios de Google.</p>
-    <p class="pie-links"><a href="{{ url('/acerca/') }}">Acerca</a> · <a href="{{ url('/aviso-legal/') }}">Aviso legal</a> · <a href="{{ url('/privacidad/') }}">Privacidad</a> · <a href="{{ url('/contacto/') }}">Contacto</a></p>
+    <p class="pie-links"><a href="{{ url('/acerca/') }}">Acerca</a> · <a href="{{ url('/aviso-legal/') }}">Aviso legal</a> · <a href="{{ url('/privacidad/') }}">Privacidad</a></p>
+    <p><a class="pie-contacto" href="https://toca.pe/#contacto">Contacto</a></p>
   </div>
 </footer>
 {% block scripts %}{% endblock %}

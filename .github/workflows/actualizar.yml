@@ -7,6 +7,13 @@ on:
     - cron: "30 5 * * *"
     - cron: "0 18 * * *"
   workflow_dispatch:
+    inputs:
+      solo_publicar:
+        # SERVIR bloquea las IP de GitHub (403): herramientas/actualizar_desde_pc.py
+        # scrapea desde casa, sube ofertas.json a "data" y lanza esto en true.
+        description: "No scrapear: publicar con los datos de la rama data"
+        type: boolean
+        default: false
   push:
     branches: [main]
     paths: ["scraper/**", "site/**", "data/**", ".github/workflows/actualizar.yml"]
@@ -60,7 +67,9 @@ jobs:
       - name: Descargar ofertas de Talento Perú
         # Un push que solo cambia la web no vuelve a scrapear: reutiliza los datos.
         run: |
-          if [ "${{ github.event_name }}" = "push" ] && [ "$(cat previous.json)" != "{}" ] \
+          if [ "${{ inputs.solo_publicar }}" = "true" ] && [ "$(cat previous.json)" != "{}" ]; then
+            cp previous.json out/ofertas.json
+          elif [ "${{ github.event_name }}" = "push" ] && [ "$(cat previous.json)" != "{}" ] \
              && ! git diff --name-only HEAD~1 HEAD | grep -q '^scraper/'; then
             cp previous.json out/ofertas.json
           else

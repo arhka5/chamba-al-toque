@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Consultar cada fuente (una petición por URL)
         run: |
-          UA="ChambaAlToqueBot/1.0 (+https://github.com/arhka5/chamba-al-toque)"
+          UA="Mozilla/5.0 (compatible; TocaBot/1.0)"
           while read -r nombre url; do
             [ -z "$nombre" ] && continue
             res=$(curl -s -o /tmp/r -w "%{http_code} %{size_download} %{time_total}" -A "$UA" -L --max-time 40 "$url" || echo "ERR 0 0")

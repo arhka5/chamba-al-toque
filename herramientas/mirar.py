@@ -86,7 +86,8 @@ def main(argv=None) -> int:
                 alto = min(page.evaluate("document.documentElement.scrollHeight"), args.alto_max)
                 slug = re.sub(r"[^a-z0-9]+", "-", ruta.lower()).strip("-") or "portada"
                 archivo = out / f"{slug}_{nombre}{'_oscuro' if args.oscuro else ''}.png"
-                page.screenshot(path=str(archivo), clip={"x": 0, "y": 0, "width": w, "height": alto})
+                # sin full_page, Playwright recorta el clip al viewport (solo salía la primera pantalla)
+                page.screenshot(path=str(archivo), full_page=True, clip={"x": 0, "y": 0, "width": w, "height": alto})
                 r = page.evaluate(REVISION_JS)
                 r["errores"] = errores[:5]
                 informe[f"{ruta} @ {nombre}"] = r

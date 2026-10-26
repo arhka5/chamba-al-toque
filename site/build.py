@@ -27,7 +27,7 @@ sys.path.insert(0, str(HERE))
 import textos as T  # noqa: E402
 
 LIMA = timezone(timedelta(hours=-5))
-BASE_URL = "https://arhka5.github.io/chamba-al-toque"
+BASE_URL = "https://chambearhoy.toca.pe"
 REPO = "https://github.com/arhka5/chamba-al-toque"
 FUENTE_URL = "https://app.servir.gob.pe/DifusionOfertasExterno/faces/consultas/ofertas_laborales.xhtml"
 
@@ -804,6 +804,10 @@ def escribir_sitemaps(sitio: Sitio, out: Path) -> None:
         + "".join(f"<sitemap><loc>{sitio.abs('/' + a)}</loc>" + (f"<lastmod>{lm}</lastmod>" if lm else "")
                   + "</sitemap>" for a, lm in archivos)
         + "</sitemapindex>\n", encoding="utf-8")
+    # robots.txt solo sirve en la raíz del host (dominio propio, no subcarpeta de github.io)
+    if not sitio.base_path:
+        (out / "robots.txt").write_text(
+            f"User-agent: *\nAllow: /\n\nSitemap: {sitio.abs('/sitemap.xml')}\n", encoding="utf-8")
 
 
 def verificar(sitio: Sitio, out: Path) -> list[str]:

@@ -1,7 +1,7 @@
 # Chamba al Toque
 
 Convocatorias de trabajo del Estado peruano, con sueldo, requisitos y fecha
-límite, en una página por oferta: https://arhka5.github.io/chamba-al-toque/
+límite, en una página por oferta: https://chambearhoy.toca.pe/
 
 Los datos salen de [Talento Perú](https://app.servir.gob.pe/DifusionOfertasExterno/faces/consultas/ofertas_laborales.xhtml),
 el portal oficial de SERVIR donde las entidades públicas registran sus

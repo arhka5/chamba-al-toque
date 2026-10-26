@@ -108,8 +108,8 @@ INFO = [
              "una convocatoria publicada en Chamba al Toque."},
     {"slug": "privacidad", "title": "Privacidad | Chamba al Toque", "h1": "Privacidad", "indexable": False,
      "lastmod": "2026-10-26",
-     "desc": "Chamba al Toque no pide datos personales. Los anuncios de Google AdSense usan cookies: cómo "
-             "desactivar los anuncios personalizados."},
+     "desc": "Chamba al Toque no pide datos personales. Visitas contadas sin cookies; los anuncios de Google "
+             "AdSense sí usan cookies y cómo desactivarlos."},
     {"slug": "contacto", "title": "Contacto | Chamba al Toque", "h1": "Contacto", "indexable": True,
      "lastmod": "2026-10-23",
      "desc": "Cómo reportar un error o una convocatoria sospechosa en Chamba al Toque. Respondemos en 48 horas."},

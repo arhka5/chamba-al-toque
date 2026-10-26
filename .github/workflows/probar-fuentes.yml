@@ -20,12 +20,13 @@ jobs:
             sleep 2
           done <<'EOF'
           servir-talento-v1 https://app.servir.gob.pe/DifusionOfertasExterno/faces/consultas/ofertas_laborales.xhtml
-          servir-talento-v2-api https://api1pngd.servir.gob.pe/convocatoria/api/public/v1/maestraDetalle?codcabecera=TBL_REGIMEN
-          servir-web https://www.servir.gob.pe/
-          gobpe-convocatoria https://www.gob.pe/institucion/regionsanmartin-diresa/informes-publicaciones/8721608-convocatoria-cas-n-07-2026-grsm-diresa
-          gobpe-busqueda https://www.gob.pe/busquedas?contenido[]=informes-publicaciones&term=convocatoria+cas
-          pj-repositorio https://aplicativo.pj.gob.pe/repositoriopsep/15214_AnuncioConvocatoria.pdf
-          minjus-convocatorias https://convocatoria.minjus.gob.pe/convocatoria/public/index.xhtml
-          empleosperu-mtpe https://mtpe-candidatos.empleosperu.gob.pe/search-jobs/description?jobId=fe8f617c2b3449d19f24beec044d51c7
-          munimolina-pdf https://portal.munimolina.gob.pe/nor_legales/otros/cas/cas_files/2026/10/10_Bases_Generales_de_la_Convocatoria_N___009-2026_1792589931.pdf
+          servir-practicas https://app.servir.gob.pe/DifusionOfertasExterno/faces/consultas/modalidades_formativas.xhtml
+          pluz-cortes https://www.pluz.pe/es/ayuda/enterate-de-los-cortes-de-luz-programados.html
+          luzdelsur-cortes https://www.luzdelsur.pe/es/corteluz
+          sedapal-interrupciones https://www.sedapal.com.pe/paginas/interrupciones-de-servicio
+          facilito-buscador https://www.facilito.gob.pe/facilito/pages/facilito/buscadorEESS.jsp
+          facilito-automotor https://www.facilito.gob.pe/facilito/actions/PreciosCombustibleAutomotorAction.do?method=inicio
+          digemid-opm-web https://opm-digemid.minsa.gob.pe/
+          digemid-opm-api https://ms-opm.minsa.gob.pe/msopmcovid/
+          datosabiertos https://www.datosabiertos.gob.pe/
           EOF

@@ -33,6 +33,12 @@
 </section>
 
 <section class="bloque">
+  <h2>Entidades más buscadas</h2>
+  <ul class="atajos">{% for h in hubs %}<li><a href="{{ url(h.path) }}">{{ h.corto }}{% if h.ofertas %} ({{ miles(h.ofertas|length) }}){% endif %}</a></li>{% endfor %}</ul>
+  <p class="mas"><a href="{{ url('/como-postular-cas/') }}">Cómo postular a una convocatoria CAS, paso a paso</a></p>
+</section>
+
+<section class="bloque">
   <h2>Convocatorias por departamento</h2>
   <ul class="deps">
     {% for d in departamentos %}<li><a href="{{ url(d.path) }}">{{ d.nombre }} <span>{{ miles(d.n) }}</span></a></li>{% endfor %}

@@ -408,7 +408,7 @@ PREFIJOS_CARGO = re.compile(
     r"^(?:CONVOCATORIA\s+(?:PARA\s+)?(?:LA\s+)?)?(?:CONTRATACI[OÓ]N\s+(?:ADMINISTRATIVA\s+DE\s+SERVICIOS|CAS)\s+"
     r"(?:DE\s+|PARA\s+)?)?(?:PROCESO\s+CAS\s+N[°º.]?\s*[\w-]+\s*[-:]?\s*)?", re.I)
 CANTIDAD_CARGO = re.compile(
-    r"^(?:\(?\d{1,2}\)?\s*)?(?:\(?(?:UN|UNA|UN\s*\(A\)|UN/A|UNO|DOS|TRES|CUATRO|CINCO)\)?\s+)?(?:\(?\d{1,2}\)?\s+)?",
+    r"^(?:DE\s+(?=(?:UN|UNA)\b|\(?\d))?(?:\(?\d{1,2}\)?\s*)?(?:\(?(?:UN\s*\(A\)|UN/A|UNA|UNO|UN|DOS|TRES|CUATRO|CINCO)\)?\s+)?(?:\(?\d{1,2}\)?\s+)?",
     re.I)
 
 

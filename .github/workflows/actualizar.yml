@@ -81,6 +81,22 @@ jobs:
         # build.py termina con error y no se publica ni se guardan los datos.
         run: python site/build.py --data out/ofertas.json --state out/state.json --out public
 
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+      - id: deploy
+        uses: actions/deploy-pages@v4
+
+      - name: Anunciar las nuevas en el canal de Telegram
+        # Después de publicar, para que los enlaces ya funcionen. Si falla, el sitio
+        # igual queda publicado y esas ofertas se anuncian en la próxima corrida.
+        continue-on-error: true
+        run: python herramientas/telegram.py out/telegram.json out/state.json
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT: ${{ vars.TELEGRAM_CHAT }}
+
       - name: Guardar datos en la rama "data"
         # Un solo commit que reemplaza al anterior: el historial no crece.
         run: |
@@ -94,10 +110,3 @@ jobs:
           git push -q --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" data
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: public
-      - id: deploy
-        uses: actions/deploy-pages@v4

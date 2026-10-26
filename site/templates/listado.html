@@ -11,6 +11,13 @@
     <p class="l-intro">Hay {{ plural(r.n, 'convocatoria de prácticas vigente', 'convocatorias de prácticas vigentes') }} en municipalidades, ministerios y otras entidades públicas{% if r.min and r.min != r.max %}, con subvenciones desde {{ r.min }} hasta {{ r.max }} al mes{% endif %}.{% if r.egresados %} {{ plural(r.egresados, 'es', 'son') }} para egresados (prácticas profesionales){% if r.estudiantes %} y {{ miles(r.estudiantes) }} para estudiantes (preprofesionales){% endif %}.{% endif %} Cada aviso enlaza a la web de la entidad, donde se postula.</p>
     {% elif extra.tipo == 'entidad' %}
     <p class="l-intro">{{ extra.entidad }} tiene {{ plural(r.n, 'convocatoria vigente', 'convocatorias vigentes') }}.{% if extra.primera %} Las plazas más cercanas a cerrar vencen el {{ extra.primera }}.{% endif %}{% if r.min and r.min != r.max %} Los sueldos van de {{ r.min }} a {{ r.max }}.{% elif r.min %} El sueldo es de {{ r.min }} al mes.{% endif %} Esta información proviene de Talento Perú (SERVIR); las bases completas están en la web de la entidad.</p>
+    {% if extra.hub %}<p class="l-intro">Mira también <a href="{{ url(extra.hub.path) }}">todas las convocatorias {{ extra.hub.de }}</a>, de todas sus sedes en una sola lista.</p>{% endif %}
+    {% elif extra.tipo == 'hub' %}
+    {% set h = extra.hub %}
+    <p class="l-intro">{{ h.intro }}</p>
+    {% if h.nota %}<p class="l-intro">{{ h.nota }}</p>{% endif %}
+    <p class="l-portal">Portal oficial: <a href="{{ h.portal }}" rel="noopener">{{ h.portal_txt }}</a>. Antes de postular, revisa allí las bases y el cronograma de cada proceso.</p>
+    <p class="l-intro">{% if r.n %}En Talento Perú hay hoy {{ plural(r.n, 'convocatoria vigente', 'convocatorias vigentes') }} {{ h.de }}{% if r.plazas > r.n %} ({{ miles(r.plazas) }} plazas){% endif %}{% if r.min and r.min != r.max %}, con sueldos desde {{ r.min }} hasta {{ r.max }} al mes{% elif r.min %}, con un sueldo de {{ r.min }} al mes{% endif %}.{% else %}Hoy no hay convocatorias {{ h.de }} registradas en Talento Perú: sus procesos están en el portal oficial.{% endif %} ¿Primera vez? Lee <a href="{{ url('/como-postular-cas/') }}">cómo postular a una convocatoria CAS</a>.</p>
     {% else %}
     <p class="l-intro">{{ intro }} Hay {{ plural(r.n, 'convocatoria vigente', 'convocatorias vigentes') }}{% if r.min and r.min != r.max %}, con sueldos desde {{ r.min }} hasta {{ r.max }} al mes{% endif %}.</p>
     {% endif %}
@@ -31,8 +38,23 @@
 <div class="rejilla">
   {% for o in ofertas %}{{ tarjeta(o, extra.tipo != 'departamento') }}{% endfor %}
 </div>
+{% elif extra.tipo == 'hub' %}
+{% if extra.relacionadas %}
+<h2 class="rejilla-tit">Mientras tanto: {{ extra.hub.relacionadas_txt }}</h2>
+<div class="rejilla">
+  {% for o in extra.relacionadas %}{{ tarjeta(o) }}{% endfor %}
+</div>
+{% endif %}
+<p class="vacio">Revisa también <a href="{{ url('/convocatorias-cas/') }}">todas las convocatorias CAS</a> y <a href="{{ url('/nuevas/') }}">las nuevas de hoy</a>.</p>
 {% else %}
 <p class="vacio">Ahora no hay convocatorias aquí. Revisa <a href="{{ url('/') }}">las últimas convocatorias</a>.</p>
+{% endif %}
+
+{% if extra.tipo == 'hub' and pagina == 1 %}
+<nav class="bloque" aria-label="Entidades más buscadas">
+  <h2>Otras entidades muy buscadas</h2>
+  <ul class="atajos">{% for x in hubs if x.slug != extra.hub.slug %}<li><a href="{{ url(x.path) }}">{{ x.corto }}</a></li>{% endfor %}</ul>
+</nav>
 {% endif %}
 
 {% if paginas > 1 %}

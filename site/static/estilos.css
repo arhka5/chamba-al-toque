@@ -155,3 +155,14 @@ main{padding-bottom:32px}
 
 /* El 6.º dato ("Puesto según la convocatoria" o "Duración" en prácticas) ocupa toda la fila: sin hueco gris al costado */
 .o-claves div:nth-child(6){grid-column:1/-1}
+
+/* Entidades más buscadas, guía CAS y textos para compartir */
+.atajos{flex-wrap:wrap}
+.l-portal{margin:12px 0;padding:12px 14px;max-width:68ch;background:var(--suave);border-left:4px solid var(--sol);border-radius:4px}
+.l-portal a{font-weight:700}
+.texto ul{margin:0 0 12px 1.2em}
+.texto li{margin:4px 0}
+.compartir textarea{width:100%;padding:10px;border:1px solid var(--linea);border-radius:6px;background:var(--caja);color:var(--tinta);font:inherit;font-size:.95rem;line-height:1.45}
+.compartir details{margin:10px 0;padding:8px 12px;border:1px solid var(--linea);border-radius:6px;background:var(--caja)}
+.compartir summary{min-height:40px;display:flex;align-items:center;font-weight:700;cursor:pointer}
+.copiar{min-height:44px;padding:0 20px;border:0;border-radius:6px;background:var(--sol);color:var(--sobre-sol);font:inherit;font-weight:800;cursor:pointer}

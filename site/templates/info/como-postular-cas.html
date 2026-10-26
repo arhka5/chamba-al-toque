@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block contenido %}
+<article class="texto">
+<h1>{{ h1 }}</h1>
+<p>El CAS (Contrato Administrativo de Servicios, Decreto Legislativo 1057) es el régimen con el que más contrata el Estado peruano: municipalidades, ministerios, hospitales, UGEL y gobiernos regionales lo usan todo el año. Postular es gratis y se hace siempre ante la entidad que convoca, siguiendo sus bases. Esta guía resume los pasos que se repiten en casi todas las convocatorias.</p>
+
+<h2>1. Busca una plaza cuyos requisitos cumplas</h2>
+<p>Hoy hay {{ miles(total_vigentes) }} convocatorias vigentes. Para no perder tiempo, empieza por las que encajan contigo: <a href="{{ url('/sin-experiencia/') }}">sin experiencia</a>, <a href="{{ url('/hasta-un-ano-de-experiencia/') }}">hasta 1 año de experiencia</a>, <a href="{{ url('/secundaria-completa/') }}">solo secundaria</a> o las de <a href="{{ url('/') }}#contenido">tu departamento</a>. Si estudias o acabas de egresar, revisa también las <a href="{{ url('/practicas/') }}">prácticas en el Estado</a>.</p>
+
+<h2>2. Lee las bases y el perfil del puesto</h2>
+<p>Las bases dicen qué se pide, cómo se evalúa y cuánto se paga. Fíjate sobre todo en el perfil:</p>
+<ul>
+  <li><strong>Formación académica:</strong> secundaria, técnica, bachiller o título, y en qué carrera.</li>
+  <li><strong>Experiencia general:</strong> el tiempo total que has trabajado, en el sector público o privado.</li>
+  <li><strong>Experiencia específica:</strong> el tiempo en un puesto o en una función parecida a la que se convoca.</li>
+  <li><strong>Cursos y especialización:</strong> capacitaciones con un mínimo de horas, si se piden.</li>
+  <li><strong>Conocimientos:</strong> ofimática, idiomas o temas técnicos del puesto.</li>
+</ul>
+<p>Si no cumples un requisito mínimo, quedas fuera en la primera revisión, aunque el resto de tu hoja de vida sea muy buena. Las prácticas preprofesionales y profesionales se reconocen como experiencia laboral (Ley 31396); revisa en las bases cómo las cuenta esa entidad.</p>
+
+<h2>3. Anota las fechas del cronograma</h2>
+<p>Cada convocatoria tiene su cronograma: postulación, evaluación curricular, entrevista, resultados y firma del contrato. El plazo para postular suele ser corto (a veces uno o dos días) y lo que llega fuera de fecha u hora no se evalúa. En Chamba al Toque cada convocatoria muestra su fecha límite y la lista de las que <a href="{{ url('/por-vencer/') }}">cierran pronto</a>.</p>
+
+<h2>4. Prepara tus documentos</h2>
+<p>Casi siempre te pedirán:</p>
+<ul>
+  <li>Tu hoja de vida documentada: títulos, certificados de estudios y de cursos, constancias o certificados de trabajo que prueben cada requisito.</li>
+  <li>Tu DNI.</li>
+  <li>Las declaraciones juradas que vienen como anexos en las bases, por ejemplo de no tener antecedentes, de no estar en el registro de deudores alimentarios (REDAM) o de no tener parientes en la entidad. Llénalas y fírmalas.</li>
+</ul>
+<p>Si se postula en línea o por correo, suele pedirse todo en un solo PDF y en el orden que indican las bases. Revisa que se lea bien y que las firmas estén completas: un documento ilegible cuenta como no presentado.</p>
+
+<h2>5. Postula por el canal que indican las bases</h2>
+<p>Puede ser el sistema de postulación de la entidad, un correo electrónico, la mesa de partes virtual o la presencial. Usa solo ese canal y guarda la constancia (el correo enviado, el cargo o la captura de la pantalla final).</p>
+
+<h2>6. Las etapas de evaluación</h2>
+<p>En el CAS hay dos etapas obligatorias: la <strong>evaluación curricular</strong>, donde se revisa que cumplas el perfil con tus documentos, y la <strong>entrevista personal</strong>. Algunas entidades agregan un examen de conocimientos o una evaluación psicológica. Los resultados de cada etapa se publican en la web de la entidad con la fecha y hora de la siguiente: si no te presentas a una etapa, quedas fuera.</p>
+
+<h2>7. Bonificaciones</h2>
+<p>La ley da una bonificación sobre el puntaje a algunos postulantes, siempre que lo declaren y lo acrediten al postular:</p>
+<ul>
+  <li><strong>Licenciados de las Fuerzas Armadas:</strong> 10 % (Ley 29248), con el documento oficial de licenciamiento.</li>
+  <li><strong>Personas con discapacidad:</strong> 15 % (Ley 29973), con el certificado de discapacidad o la resolución de inscripción en el CONADIS.</li>
+  <li><strong>Deportistas calificados:</strong> según su nivel, como indiquen las bases.</li>
+</ul>
+
+<h2>8. Si ganas la plaza</h2>
+<p>El ganador firma el contrato en el plazo que fijan las bases. Si no lo firma a tiempo, la entidad puede llamar al siguiente en el orden de mérito (el accesitario), así que revisa los resultados finales apenas salgan.</p>
+
+<h2>Nadie te puede cobrar por una plaza</h2>
+<p>Postular a una convocatoria del Estado es gratis. Desconfía de quien te pida dinero para «asegurar» una plaza, para darte las preguntas del examen o para inscribirte. Si ves una convocatoria sospechosa en este sitio, <a href="mailto:{{ contacto }}">escríbenos</a>.</p>
+
+<p>Para ver las convocatorias de entidades concretas: {% for h in hubs %}<a href="{{ url(h.path) }}">{{ h.corto }}</a>{{ ', ' if not loop.last and loop.revindex > 2 else (' y ' if not loop.last else '.') }}{% endfor %}</p>
+</article>
+{% endblock %}

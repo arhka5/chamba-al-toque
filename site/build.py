@@ -17,6 +17,7 @@ import shutil
 import sys
 from collections import Counter, defaultdict
 from datetime import date, datetime, timedelta, timezone
+from html import escape as escapar_html
 from pathlib import Path
 from urllib.parse import quote, urlparse
 
@@ -41,6 +42,9 @@ DIAS_CERRADA = 30
 MIN_PROPORCION = 0.5  # salvaguarda: no publicar si llega menos de la mitad
 PORTADA_ULTIMAS = 24
 SUELDO_MINIMO_CREIBLE = 300  # por debajo es un error de carga (hay ofertas con "S/ 1")
+SUELDO_MAXIMO_CREIBLE = 50000  # por encima también ("S/ 836,419" en una convocatoria de especialista)
+VACANTES_MAXIMO_CREIBLE = 300  # el Poder Judicial cargó el sueldo como vacantes: "6,620 plazas"
+TELEGRAM_MAX = 15  # ofertas por mensaje del canal; el resto queda en el enlace a /nuevas/
 
 MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre",
          "octubre", "noviembre", "diciembre"]
@@ -66,6 +70,7 @@ TEMAS = [
     {
         "slug": "convocatorias-cas", "nombre": "Convocatorias CAS",
         "title": "Convocatorias CAS {anio}: ofertas vigentes en el Estado",
+        "corto": "Convocatorias CAS {anio}",
         "h1": "Convocatorias CAS {anio}",
         "intro": "Convocatorias del régimen CAS (Decreto Legislativo 1057), el más usado por municipalidades, "
                  "ministerios y hospitales para contratar personal.",
@@ -74,6 +79,7 @@ TEMAS = [
     {
         "slug": "sin-experiencia", "nombre": "Sin experiencia",
         "title": "Trabajos en el Estado sin experiencia {anio}",
+        "corto": "Trabajos en el Estado sin experiencia {anio}",
         "h1": "Trabajos sin experiencia en entidades públicas {anio}",
         "intro": "Convocatorias públicas donde la entidad no pide experiencia laboral previa.",
         "filtro": lambda o: o["req"]["sin_experiencia"],
@@ -81,6 +87,7 @@ TEMAS = [
     {
         "slug": "hasta-un-ano-de-experiencia", "nombre": "Hasta 1 año de experiencia",
         "title": "Trabajos en el Estado con poca experiencia {anio}: hasta 1 año",
+        "corto": "Trabajos con hasta 1 año de experiencia {anio}",
         "h1": "Convocatorias que piden hasta 1 año de experiencia {anio}",
         "intro": "Casi todas las plazas del Estado piden algo de experiencia. Aquí están las que piden un año "
                  "o menos, o ninguna.",
@@ -89,6 +96,7 @@ TEMAS = [
     {
         "slug": "secundaria-completa", "nombre": "Solo secundaria",
         "title": "Trabajos en el Estado con secundaria completa {anio}",
+        "corto": "Trabajos con secundaria completa {anio}",
         "h1": "Convocatorias que piden solo secundaria completa {anio}",
         "intro": "Convocatorias públicas que piden como máximo secundaria completa, o que no piden un nivel de estudios.",
         "filtro": lambda o: o["req"]["solo_secundaria"],
@@ -113,6 +121,62 @@ INFO = [
     {"slug": "contacto", "title": "Contacto | Chamba al Toque", "h1": "Contacto", "indexable": True,
      "lastmod": "2026-10-23",
      "desc": "Cómo reportar un error o una convocatoria sospechosa en Chamba al Toque. Respondemos en 48 horas."},
+    {"slug": "como-postular-cas", "title": "Cómo postular a una convocatoria CAS paso a paso ({anio})",
+     "h1": "Cómo postular a una convocatoria CAS, paso a paso", "indexable": True, "lastmod": "2026-10-26",
+     "desc": "Guía para postular a un CAS en el Estado: dónde encontrar la convocatoria, cómo leer las bases, "
+             "qué documentos preparar, las etapas de evaluación y las bonificaciones."},
+]
+
+# Entidades muy buscadas que publican con varios nombres en Talento Perú (sede, cortes,
+# UGEL…) o casi solo en su propio portal. Cada una tiene una página fija aunque hoy no
+# tenga ofertas en Talento Perú: lleva al portal oficial (enlaces comprobados el 26-10-2026).
+HUBS = [
+    {"slug": "convocatorias-essalud", "nombre": "EsSalud",
+     "patron": r"ESSALUD|SEGURO SOCIAL DE SALUD",
+     "relacionadas": r"HOSPITAL|RED DE SALUD|REDES INTEGRADAS DE SALUD|DIRESA|DIRECCI[OÓ]N REGIONAL DE SALUD",
+     "relacionadas_txt": "convocatorias en hospitales y redes de salud del Minsa y los gobiernos regionales",
+     "portal": "https://convocatorias.essalud.gob.pe/", "portal_txt": "Portal de convocatorias de EsSalud",
+     "intro": "EsSalud contrata sobre todo por CAS para sus hospitales, policlínicos y redes asistenciales: "
+              "médicos, enfermeras, técnicos de enfermería, tecnólogos y personal administrativo. Publica la "
+              "mayoría de sus procesos en su propio portal de convocatorias, donde se crea una cuenta y se "
+              "postula en línea solo durante los días de inscripción del cronograma."},
+    {"slug": "convocatorias-pnp", "nombre": "la PNP",
+     "patron": r"POLIC[IÍ]A NACIONAL|\bPNP\b",
+     "portal": "https://www.gob.pe/institucion/pnp/colecciones/49316-convocatorias-de-contrataciones-"
+               "administrativas-de-servicio-del-estado-cas-de-la-policia-nacional-del-peru",
+     "portal_txt": "Convocatorias CAS de la PNP en gob.pe",
+     "intro": "La Policía Nacional del Perú contrata personal civil por CAS: administrativos, analistas, "
+              "técnicos, choferes, cocineros y otros puestos de apoyo. Publica esas convocatorias en su página "
+              "de gob.pe y, según sus bases, la hoja de vida se suele enviar por correo electrónico.",
+     "nota": "Esta página es sobre trabajos civiles en la PNP. La admisión a las escuelas de oficiales y "
+             "suboficiales es otro proceso, que no se publica en Talento Perú."},
+    {"slug": "convocatorias-reniec", "nombre": "RENIEC",
+     "patron": r"RENIEC|REGISTRO NACIONAL DE IDENTIFICACI",
+     "portal": "https://www.reniec.gob.pe/", "portal_txt": "Web oficial de RENIEC",
+     "intro": "RENIEC convoca varias veces al año, sobre todo registradores y asistentes registrales para sus "
+              "agencias en todo el país. El canal y la fecha de inscripción cambian en cada proceso (a veces "
+              "la inscripción dura un solo día), así que conviene leer las bases apenas salen."},
+    {"slug": "convocatorias-minedu", "nombre": "Minedu y las UGEL", "corto": "Minedu y UGEL",
+     "patron": r"MINISTERIO DE EDUCACI|\bUGEL\b|GESTI[OÓ]N EDUCATIVA|(DIRECCI[OÓ]N|GERENCIA|DIREC\.) REGIONAL DE EDUCACI",
+     "portal": "https://www.gob.pe/minedu", "portal_txt": "Web oficial del Minedu",
+     "intro": "Aquí se juntan las convocatorias del Ministerio de Educación, las direcciones y gerencias "
+              "regionales de educación y las UGEL. Cada UGEL convoca por su cuenta: especialistas, "
+              "administrativos, choferes, vigilantes y personal de apoyo para colegios. La contratación docente "
+              "y de auxiliares de educación sigue sus propias normas y cronogramas."},
+    {"slug": "convocatorias-poder-judicial", "nombre": "el Poder Judicial",
+     "patron": r"PODER JUDICIAL|CORTE SUPERIOR DE JUSTICIA",
+     "portal": "https://aplicativo.pj.gob.pe/psep/wfrmConvocatoriasV.aspx?TCon=C",
+     "portal_txt": "Convocatorias CAS del Poder Judicial",
+     "intro": "El Poder Judicial y sus cortes superiores de justicia convocan con mucha frecuencia: "
+              "asistentes y secretarios judiciales, auxiliares, notificadores y personal administrativo. Muchas "
+              "plazas piden ser abogado o estudiante de Derecho, pero también hay puestos técnicos y de apoyo. "
+              "La postulación se hace en línea en su sistema de convocatorias."},
+    {"slug": "convocatorias-sunat", "nombre": "la SUNAT",
+     "patron": r"\bSUNAT\b|SUPERINTENDENCIA NACIONAL DE ADUANAS",
+     "portal": "https://unete.sunat.gob.pe/es", "portal_txt": "Únete a SUNAT (portal oficial de convocatorias)",
+     "intro": "La SUNAT publica sus convocatorias CAS en su portal Únete a SUNAT, con las bases, el cronograma "
+              "y los resultados de cada etapa. Cada proceso tiene su propio cronograma: la inscripción se hace "
+              "en ese portal y solo en las fechas indicadas."},
 ]
 
 
@@ -222,6 +286,25 @@ def de_articulo(entidad: str) -> str:
     return "del " + con[3:] if con.startswith("el ") else "de " + con
 
 
+def destacadas(ofertas: list[dict], n: int, por_entidad: int = 1, por_dep: int | None = None) -> list[dict]:
+    """Las n ofertas más atractivas para difundir, sin repetir entidad (ni saturar un
+    departamento): buen sueldo y pocos requisitos, que es lo que más se comparte."""
+    def puntaje(o):
+        req = o["req"]
+        return (min(o.get("sueldo") or 0, 4500) + 3000 * req["sin_experiencia"]
+                + 1500 * req["solo_secundaria"] + 1000 * req["hasta_un_anio"])
+    out, ent, dep = [], Counter(), Counter()
+    for o in sorted(ofertas, key=puntaje, reverse=True):
+        if ent[o["entidad_slug"]] >= por_entidad or (por_dep and dep[o["dep_slug"]] >= por_dep):
+            continue
+        ent[o["entidad_slug"]] += 1
+        dep[o["dep_slug"]] += 1
+        out.append(o)
+        if len(out) >= n:
+            break
+    return out
+
+
 # ---------------------------------------------------------------- estado
 
 def cargar_json(path: Path, defecto):
@@ -255,6 +338,7 @@ class Sitio:
         self.generado = data.get("generatedAt") or ahora.isoformat(timespec="seconds")
         self.fuente = data.get("source", {})
         self.errores: list[str] = []
+        self.telegram: dict | None = None  # mensaje para el canal, si hay ofertas por anunciar
         self.paginas: list[dict] = []  # para sitemaps: {path, lastmod, indexable}
 
         crudas = {}
@@ -267,8 +351,10 @@ class Sitio:
                 self.descartadas += 1
                 continue
             o = dict(o)
-            if o.get("sueldo") is not None and o["sueldo"] < SUELDO_MINIMO_CREIBLE:
+            if o.get("sueldo") is not None and not SUELDO_MINIMO_CREIBLE <= o["sueldo"] <= SUELDO_MAXIMO_CREIBLE:
                 o["sueldo"] = None  # "S/ 1": dato mal cargado, se muestra como no indicado
+            if (o.get("vacantes") or 0) > VACANTES_MAXIMO_CREIBLE:
+                o["vacantes"] = None
             crudas[o["id"]] = o
         self.sin_detalle = sum(1 for o in data.get("offers", []) if not o.get("id"))
 
@@ -334,6 +420,25 @@ class Sitio:
             lista = [o for o in self.vigentes if t["filtro"](o)]
             self.temas.append({**t, "ofertas": lista, "indexable": len(lista) >= UMBRAL_TEMA,
                                "path": f"/{t['slug']}/"})
+
+        self.hubs = []
+        for h in HUBS:
+            lista = [o for o in self.vigentes if re.search(h["patron"], o["entidad"].upper())]
+            rel = destacadas([o for o in self.vigentes if h.get("relacionadas")
+                              and re.search(h["relacionadas"], o["entidad"].upper())], 12) if not lista else []
+            de = "del " + h["nombre"][3:] if h["nombre"].startswith("el ") else "de " + h["nombre"]
+            corto = h.get("corto") or h["nombre"].removeprefix("la ").removeprefix("el ")
+            self.hubs.append({**h, "de": de, "corto": corto, "ofertas": lista, "relacionadas_lista": rel, "path": f"/{h['slug']}/"})
+        self.hub_de_entidad = {o["entidad_slug"]: h for h in self.hubs for o in h["ofertas"]}
+
+        # Canal de Telegram: ofertas vistas desde ayer que aún no se anunciaron
+        # (herramientas/telegram.py las marca en state["anunciadas"] al publicarlas).
+        ids = {o["id"] for o in self.vigentes}
+        self.state["anunciadas"] = [i for i in self.state.get("anunciadas", []) if i in ids]
+        ya = set(self.state["anunciadas"])
+        ayer = (hoy - timedelta(days=1)).isoformat()
+        self.por_anunciar = [o for o in self.vigentes if o["id"] not in ya
+                             and self.state["ofertas"][o["id"]]["first_seen"] >= ayer]
 
         # Prácticas (modalidades formativas): sin N.° de SERVIR, su id es la clave de la lista.
         self.state.setdefault("practicas", {})
@@ -559,6 +664,9 @@ class Sitio:
                     "indexable": self.entidad_indexable.get(s, False)} for s, n in top]
         return {
             "n": len(ofertas),
+            "plazas": sum(o["vacantes"] for o in ofertas),
+            "min_n": min(sueldos) if sueldos else None,
+            "max_n": max(sueldos) if sueldos else None,
             "min": soles(min(sueldos)) if sueldos else "",
             "max": soles(max(sueldos)) if sueldos else "",
             "sin_exp": sin_exp,
@@ -691,7 +799,7 @@ def construir(sitio: Sitio, out: Path) -> None:
         url=sitio.url, abs=sitio.abs, anio=sitio.anio, ld_json=ld_json, miles=miles, plural=plural,
         fecha_larga=fecha_larga, soles=soles, departamentos=departamentos, temas=sitio.temas,
         css=css, contacto=CONTACTO, fuente_url=FUENTE_URL, practicas_url=PRACTICAS_URL, hoy=sitio.hoy.isoformat(),
-        total_practicas=len(sitio.practicas), adsense=ADSENSE,
+        total_practicas=len(sitio.practicas), adsense=ADSENSE, hubs=sitio.hubs,
         actualizado_txt=f"{fecha_larga(actualizado.date().isoformat())}, {actualizado:%H:%M}",
         actualizado_corto=fecha_corta(actualizado.date().isoformat()),
         total_vigentes=len(sitio.vigentes),
@@ -741,6 +849,19 @@ def construir(sitio: Sitio, out: Path) -> None:
     def con_marca(titulo: str, limite: int = 65) -> str:
         return f"{titulo} | Chamba al Toque" if len(titulo) + 18 <= limite else titulo
 
+    def elegir(*candidatos: str, limite: int = 70) -> str:
+        """El primer título que quepa (los primeros llevan más datos), con la marca si entra."""
+        candidatos = [c for c in candidatos if c]
+        return con_marca(next((c for c in candidatos if len(c) <= limite), candidatos[-1]))
+
+    def cifras(r: dict) -> str:
+        """'120 plazas, hasta S/ 8,000': lo que más clics da en Google para empleo público."""
+        txt = plural(r["plazas"], "plaza", "plazas")
+        if r["max_n"]:
+            maximo = soles(round(r["max_n"]))  # sin céntimos en el título
+            txt += f", {maximo}" if r["min_n"] == r["max_n"] else f", hasta {maximo}"
+        return txt
+
     hoy_txt = fecha_corta(sitio.hoy.isoformat())
 
     # Portada
@@ -771,10 +892,10 @@ def construir(sitio: Sitio, out: Path) -> None:
             migas.append((o["entidad_txt"], f"/entidad/{o['entidad_slug']}/"))
         migas.append((o["cargo_txt"], None))
         h1 = f"{o['cargo_txt']} en {o['entidad_txt']}{o['sufijo']}"
-        titulo = h1
-        if len(titulo) + 5 <= 70:
-            titulo += f" {sitio.anio}"
-        titulo = con_marca(titulo)
+        sueldo = soles(round(o["sueldo"])) if o.get("sueldo") else ""
+        titulo = elegir(f"{h1}: {o['vacantes']} plazas, {sueldo}" if o["vacantes"] > 1 and sueldo else "",
+                        f"{h1}: {sueldo}" if sueldo else "",
+                        f"{h1} {sitio.anio}", h1)
         # Prioridad: qué y dónde, sueldo, fecha límite y, si cabe, requisitos.
         regimen = REGIMENES.get(o.get("regimen") or "", ("", "Convocatoria", None))[1]
         a_largo = f"{regimen} para {o['cargo_txt']} en {con_articulo(o['entidad_txt'])} ({o['lugar_txt']})."
@@ -808,9 +929,8 @@ def construir(sitio: Sitio, out: Path) -> None:
     for d in departamentos:
         ofertas = sitio.por_dep[d["slug"]]
         r = sitio.resumen_listado(ofertas, d["nombre"])
-        titulo = con_marca(f"Trabajos en {d['nombre']} {sitio.anio}: convocatorias del Estado")
-        if "|" not in titulo:
-            titulo = f"Trabajos en {d['nombre']} {sitio.anio}: convocatorias CAS y del Estado"
+        titulo = elegir(f"Trabajos en {d['nombre']} {sitio.anio}: {cifras(r)}",
+                        f"Trabajos en {d['nombre']} {sitio.anio}: convocatorias CAS y del Estado")
         desc = armar([
             f"{plural(r['n'], 'convocatoria vigente', 'convocatorias vigentes')} en {d['nombre']}"
             + (f", con sueldos desde {r['min']} hasta {r['max']} al mes." if r["min"] and r["min"] != r["max"] else "."),
@@ -841,9 +961,9 @@ def construir(sitio: Sitio, out: Path) -> None:
         nombre = ofertas[0]["entidad_txt"]
         dep = Counter((o["dep_txt"], o["dep_slug"]) for o in ofertas).most_common(1)[0][0]
         r = sitio.resumen_listado(ofertas, None)
-        titulo = f"Convocatorias {nombre} {sitio.anio}: {plural(len(ofertas), 'plaza vigente', 'plazas vigentes')}"
-        if len(titulo) > 70:
-            titulo = f"Convocatorias {nombre} {sitio.anio}"
+        titulo = elegir(f"Convocatorias {nombre} {sitio.anio}: {cifras(r)}",
+                        f"Convocatorias {nombre} {sitio.anio}: {plural(r['plazas'], 'plaza', 'plazas')}",
+                        f"Convocatorias {nombre} {sitio.anio}")
         cargos = lista_cargos([o["cargo_txt"].lower() for o in ofertas])
         primera = min((o["fin"] for o in ofertas if o.get("fin")), default=None)
         desc = armar([
@@ -854,17 +974,40 @@ def construir(sitio: Sitio, out: Path) -> None:
         ])
         listado(f"/entidad/{s}/", ofertas, sitio.entidad_indexable[s], titulo, f"Convocatorias de {nombre} {sitio.anio}",
                 desc, [("Inicio", "/"), (dep[0], f"/departamento/{dep[1]}/"), (nombre, None)],
-                extra={"tipo": "entidad", "resumen": r, "entidad": nombre, "primera": fecha_larga(primera)})
+                extra={"tipo": "entidad", "resumen": r, "entidad": nombre, "primera": fecha_larga(primera),
+                       "hub": sitio.hub_de_entidad.get(s)})
 
     # Temas nacionales
     for t in sitio.temas:
         r = sitio.resumen_listado(t["ofertas"], None)
-        listado(t["path"], t["ofertas"], t["indexable"], t["title"].format(anio=sitio.anio),
+        listado(t["path"], t["ofertas"], t["indexable"],
+                elegir(f"{t['corto'].format(anio=sitio.anio)}: {cifras(r)}", t["title"].format(anio=sitio.anio)),
                 t["h1"].format(anio=sitio.anio),
                 armar([f"{plural(r['n'], 'convocatoria vigente', 'convocatorias vigentes')}.", t["intro"],
                        f"Sueldos desde {r['min']} hasta {r['max']} al mes." if r["min"] else ""]),
                 [("Inicio", "/"), (t["nombre"], None)], intro=t["intro"],
                 extra={"tipo": "tema", "resumen": r})
+
+    # Entidades más buscadas: página fija con el portal oficial, tenga o no ofertas hoy.
+    for h in sitio.hubs:
+        r = sitio.resumen_listado(h["ofertas"], None)
+        sigla = h["corto"]
+        h1 = f"Convocatorias {h['de']} {sitio.anio}"
+        if r["n"]:
+            titulo = elegir(f"Convocatorias {sigla} {sitio.anio}: {cifras(r)}", f"Convocatorias {sigla} {sitio.anio}")
+            primera = min((o["fin"] for o in h["ofertas"] if o.get("fin")), default=None)
+            desc = armar([f"{plural(r['n'], 'convocatoria vigente', 'convocatorias vigentes')} {h['de']}"
+                          + (f", con sueldos hasta {r['max']}." if r["max"] else "."),
+                          f"Cierran desde el {fecha_corta(primera)}." if primera else "",
+                          "Requisitos, sueldo y enlace a las bases de cada una."])
+        else:
+            titulo = elegir(f"Convocatorias {sigla} {sitio.anio}: dónde postular y portal oficial",
+                            f"Convocatorias {sigla} {sitio.anio}")
+            desc = armar([f"Dónde se publican las convocatorias {h['de']} y cómo postular.",
+                          f"Enlace al portal oficial y convocatorias vigentes en el Estado, al {hoy_txt}."])
+        listado(h["path"], h["ofertas"], True, titulo, h1, desc, [("Inicio", "/"), (h1, None)],
+                extra={"tipo": "hub", "resumen": r, "hub": h,
+                       "relacionadas": h["relacionadas_lista"][:12]})
 
     # Prácticas
     pr = sitio.practicas
@@ -902,6 +1045,52 @@ def construir(sitio: Sitio, out: Path) -> None:
             "Convocatorias del Estado que cierran en los próximos 3 días.",
             [("Inicio", "/"), ("Por vencer", None)], extra={"tipo": "tema"})
 
+    # Textos para difundir: WhatsApp y grupos de Facebook (se copian a mano desde
+    # /compartir/, página sin enlaces ni índice) y el mensaje del canal de Telegram.
+    ayer = (sitio.hoy - timedelta(days=1)).isoformat()
+    recientes = [o for o in sitio.vigentes if sitio.state["ofertas"][o["id"]]["first_seen"] >= ayer]
+    elegidas = destacadas([o for o in recientes if (o["dias"] or 0) >= 1], 5, por_dep=2)
+    if len(elegidas) < 5:  # día flojo: se completa con las más recientes
+        elegidas += destacadas([o for o in sitio.vigentes if o not in elegidas and (o["dias"] or 0) >= 1],
+                               5 - len(elegidas), por_dep=2)
+    emojis = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣"]
+    lineas = [f"*🆕 {len(elegidas)} convocatorias del Estado de hoy ({hoy_txt})*", ""]
+    for e, o in zip(emojis, elegidas):
+        lineas += [f"{e} *{o['cargo_txt']}* · {o['entidad_txt']} ({o['dep_txt']})",
+                   "💰 " + (o["sueldo_txt"] or "Sueldo en las bases") + f" · ⏰ {o['cierre_txt']}"
+                   + (" · Sin experiencia" if o["req"]["sin_experiencia"] else ""),
+                   f"👉 {sitio.abs(o['path'])}", ""]
+    lineas.append(f"Todas las de hoy: {sitio.abs('/nuevas/')}")
+    whatsapp = "\n".join(lineas)
+
+    facebook = []
+    for d in departamentos:
+        semana = [o for o in sitio.por_dep[d["slug"]] if o["dias"] is not None and 0 <= o["dias"] <= 7]
+        if len(semana) < 3:
+            continue
+        top = sorted(destacadas(semana, 6, por_entidad=2), key=lambda o: (o["dias"], o["cargo_txt"]))
+        lineas = [f"📍 Convocatorias del Estado en {d['nombre']} que cierran esta semana", ""]
+        for o in top:
+            lineas.append(f"✅ {o['cargo_txt']} · {o['entidad_txt']}"
+                          + (f" · {o['sueldo_txt']}" if o["sueldo_txt"] else "") + f" · {o['cierre_txt'].lower()}")
+        lineas += ["", f"Son {len(semana)} en total, con requisitos y enlace a las bases:",
+                   sitio.abs(d["path"]), "", "Postular es gratis: nadie debe cobrarte por una plaza del Estado."]
+        facebook.append({"nombre": d["nombre"], "n": len(semana), "texto": "\n".join(lineas)})
+    facebook.sort(key=lambda f: -f["n"])
+    escribir("/compartir/", "compartir.html", False, None, titulo="Textos para compartir",
+             h1="Textos para compartir", descripcion="", whatsapp=whatsapp, facebook=facebook, ld=[])
+
+    if sitio.por_anunciar:
+        tg = [f"<b>🆕 {plural(len(sitio.por_anunciar), 'convocatoria nueva', 'convocatorias nuevas')} "
+              f"en el Estado</b> ({hoy_txt})", ""]
+        for o in destacadas(sitio.por_anunciar, TELEGRAM_MAX):
+            datos = " · ".join(x for x in (o["sueldo_txt"], o["cierre_txt"].lower()) if x)
+            tg.append(f"• <a href=\"{sitio.abs(o['path'])}\">{escapar_html(o['cargo_txt'])}</a> · "
+                      f"{escapar_html(o['entidad_txt'])} ({escapar_html(o['dep_txt'])})" + (f" · {datos}" if datos else ""))
+        tg += ["", f"👉 <a href=\"{sitio.abs('/nuevas/')}\">Ver todas las nuevas</a> · "
+                   f"<a href=\"{sitio.abs('/por-vencer/')}\">Cierran pronto</a>"]
+        sitio.telegram = {"mensaje": "\n".join(tg), "ids": [o["id"] for o in sitio.por_anunciar]}
+
     # Búsqueda (mejora progresiva con JS; sin JS muestra departamentos y temas)
     indice = [{"u": o["path"], "c": o["cargo_txt"], "e": o["entidad_txt"], "d": o["dep_slug"],
                "l": o["lugar_txt"], "s": o.get("sueldo") or 0, "f": o.get("fin") or "",
@@ -916,7 +1105,7 @@ def construir(sitio: Sitio, out: Path) -> None:
     # Páginas informativas
     for p in INFO:
         escribir(f"/{p['slug']}/", f"info/{p['slug']}.html", p["indexable"], p["lastmod"],
-                 titulo=p["title"], h1=p["h1"], descripcion=p["desc"],
+                 titulo=p["title"].format(anio=sitio.anio), h1=p["h1"], descripcion=p["desc"],
                  migas=[("Inicio", "/"), (p["h1"], None)], ld=[])
 
     # 404 (GitHub Pages la sirve desde la raíz del proyecto)
@@ -1035,6 +1224,11 @@ def main(argv=None) -> int:
     state["vigentes_ultima_publicacion"] = len(sitio.vigentes)
     state_path.parent.mkdir(parents=True, exist_ok=True)
     state_path.write_text(json.dumps(state, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    aviso_tg = Path(args.data).with_name("telegram.json")  # lo lee herramientas/telegram.py
+    if sitio.telegram:
+        aviso_tg.write_text(json.dumps(sitio.telegram, ensure_ascii=False), encoding="utf-8")
+    else:
+        aviso_tg.unlink(missing_ok=True)
     faltan = [w for w, _ in T.SIN_DICCIONARIO.most_common(50)]
     (Path(args.data).parent / "palabras-sin-diccionario.txt").write_text("\n".join(faltan), encoding="utf-8")
     n_idx = sum(1 for p in sitio.paginas if p["indexable"])

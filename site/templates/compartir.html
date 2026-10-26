@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block contenido %}
+<article class="texto compartir">
+<h1>{{ h1 }}</h1>
+<p>Textos listos para pegar, generados con las convocatorias de hoy ({{ actualizado_txt }}). Esta página no aparece en Google ni tiene enlaces desde el sitio.</p>
+
+<h2>Canal de WhatsApp</h2>
+<textarea id="t-wa" rows="22" readonly>{{ whatsapp }}</textarea>
+<p><button type="button" class="copiar" data-para="t-wa">Copiar texto</button></p>
+
+<h2>Grupos de Facebook: cierran esta semana</h2>
+<p>Un texto por departamento, de los que tienen más convocatorias por cerrar. Publica en cada grupo una vez por semana como máximo.</p>
+{% for f in facebook %}
+<details>
+  <summary>{{ f.nombre }} · {{ plural(f.n, 'convocatoria', 'convocatorias') }}</summary>
+  <textarea id="t-fb-{{ loop.index }}" rows="14" readonly>{{ f.texto }}</textarea>
+  <p><button type="button" class="copiar" data-para="t-fb-{{ loop.index }}">Copiar texto</button></p>
+</details>
+{% else %}
+<p>Esta semana ningún departamento tiene 3 o más convocatorias por cerrar.</p>
+{% endfor %}
+</article>
+{% endblock %}
+{% block scripts %}
+<script>
+document.querySelectorAll(".copiar").forEach(function (b) {
+  b.addEventListener("click", function () {
+    var t = document.getElementById(b.dataset.para);
+    var listo = function () { b.textContent = "¡Copiado!"; setTimeout(function () { b.textContent = "Copiar texto"; }, 2000); };
+    if (navigator.clipboard) { navigator.clipboard.writeText(t.value).then(listo); }
+    else { t.select(); document.execCommand("copy"); listo(); }
+  });
+});
+</script>
+{% endblock %}

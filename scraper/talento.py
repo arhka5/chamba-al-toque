@@ -166,6 +166,12 @@ class Page:
 
 
 class TalentoPeru:
+    # Prácticas (scraper/practicas.py) usa la misma clase con otra página y otros parsers.
+    url = URL
+    form_id = FORM
+    parse_list = staticmethod(parse_list)
+    parse_detail = staticmethod(parse_detail)
+
     def __init__(self, client: Client):
         self.client = client
         self.viewstate: str | None = None
@@ -174,12 +180,12 @@ class TalentoPeru:
         self.total_reducido = False
 
     def _load_first(self) -> str:
-        html = self.client.request("GET", URL).text
+        html = self.client.request("GET", self.url).text
         soup = BeautifulSoup(html, "html.parser")
         self.viewstate = parse_viewstate(html)
-        self.form = {i["name"]: i.get("value", "") for i in soup.select(f"#{FORM} input[name]")
+        self.form = {i["name"]: i.get("value", "") for i in soup.select(f"#{self.form_id} input[name]")
                      if i.get("type") in ("hidden", "text", None) and i["name"] != "javax.faces.ViewState"}
-        nxt = next((b for b in soup.select(f"#{FORM} button.btn-paginator") if "Sig" in b.get_text()), None)
+        nxt = next((b for b in soup.select(f"#{self.form_id} button.btn-paginator") if "Sig" in b.get_text()), None)
         self.next_button = nxt["id"] if nxt else None
         if not self.viewstate or not self.next_button:
             raise RuntimeError("No se reconoció la página de Talento Perú (¿cambió el sitio?)")
@@ -190,14 +196,14 @@ class TalentoPeru:
             "javax.faces.partial.ajax": "true",
             "javax.faces.source": self.next_button,
             "javax.faces.partial.execute": "@all",
-            "javax.faces.partial.render": FORM,
+            "javax.faces.partial.render": self.form_id,
             self.next_button: self.next_button,
-            FORM: FORM,
+            self.form_id: self.form_id,
             "javax.faces.ViewState": self.viewstate,
         }
-        xml = self.client.request("POST", URL, data=data, headers=AJAX_HEADERS).text
+        xml = self.client.request("POST", self.url, data=data, headers=AJAX_HEADERS).text
         self.viewstate = parse_viewstate(xml) or self.viewstate
-        html = ajax_update(xml)
+        html = ajax_update(xml, self.form_id)
         if html is None:
             raise RuntimeError("Respuesta AJAX inesperada al pasar de página")
         return html
@@ -216,7 +222,7 @@ class TalentoPeru:
                 raise RuntimeError("No se encontró el paginador")
             number, total = pos
             anterior = (number, total)
-            yield Page(number, total, parse_list(html))
+            yield Page(number, total, self.parse_list(html))
             if number >= total or (max_pages and number >= max_pages):
                 return
             html = self._next()
@@ -226,4 +232,4 @@ class TalentoPeru:
         if not offer.get("_button"):
             return {}
         data = {**self.form, "javax.faces.ViewState": self.viewstate, offer["_button"]: ""}
-        return parse_detail(self.client.request("POST", URL, data=data).text)
+        return self.parse_detail(self.client.request("POST", self.url, data=data).text)

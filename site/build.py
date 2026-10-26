@@ -30,6 +30,7 @@ LIMA = timezone(timedelta(hours=-5))
 BASE_URL = "https://chambearhoy.toca.pe"
 REPO = "https://github.com/arhka5/chamba-al-toque"
 FUENTE_URL = "https://app.servir.gob.pe/DifusionOfertasExterno/faces/consultas/ofertas_laborales.xhtml"
+PRACTICAS_URL = "https://app.servir.gob.pe/DifusionOfertasExterno/faces/consultas/modalidades_formativas.xhtml"
 
 POR_PAGINA = 25
 UMBRAL_ENTIDAD = 3
@@ -333,6 +334,45 @@ class Sitio:
             self.temas.append({**t, "ofertas": lista, "indexable": len(lista) >= UMBRAL_TEMA,
                                "path": f"/{t['slug']}/"})
 
+        # Prácticas (modalidades formativas): sin N.° de SERVIR, su id es la clave de la lista.
+        self.state.setdefault("practicas", {})
+        firmas, crudas_p = set(), []
+        for p in data.get("practicas", []):
+            # SERVIR repite filas idénticas (mismo aviso, otra vacante): una sola página.
+            firma = json.dumps([p.get(k) for k in ("entidad", "cargo", "convocatoria", "carreras", "fin",
+                                                    "subvencion", "url_bases")], ensure_ascii=False)
+            if firma in firmas:
+                continue
+            firmas.add(firma)
+            crudas_p.append(p)
+        self.practicas = [self.preparar_practica(p) for p in crudas_p
+                          if p.get("id") and (not p.get("fin") or p["fin"] >= hoy_iso)
+                          and re.search(r"[A-Za-zÁÉÍÓÚÑáéíóúñ]{3,}", p.get("cargo", ""))]
+        self.practicas.sort(key=lambda p: (p.get("inicio") or "", p["id"]), reverse=True)
+        # Mismo cargo en la misma entidad: se distingue por carrera o por N.° de convocatoria.
+        grupos_p = defaultdict(list)
+        for p in self.practicas:
+            grupos_p[(p["entidad_txt"], p["cargo_txt"])].append(p)
+        for lista in grupos_p.values():
+            primeras = Counter(p["carreras_txt"][0] if p["carreras_txt"] else "" for p in lista)
+            for p in lista:
+                c = p["carreras_txt"][0] if p["carreras_txt"] else ""
+                if len(lista) == 1:
+                    p["titulo_txt"] = p["cargo_txt"]
+                elif c and primeras[c] == 1:
+                    p["titulo_txt"] = f"{p['cargo_txt']} de {c}"
+                else:  # el cargo completo dice la oficina: "…para la Oficina Registral de Satipo"
+                    p["titulo_txt"] = cortar(p["cargo_completo"], 110)
+            vistos = Counter()
+            for p in lista:  # copias que aún coinciden: (2), (3)…
+                vistos[p["titulo_txt"]] += 1
+                if vistos[p["titulo_txt"]] > 1:
+                    p["titulo_txt"] += f" ({vistos[p['titulo_txt']]})"
+        vigentes_p = {p["id"] for p in self.practicas}
+        for id_ in list(self.state["practicas"]):
+            if id_ not in vigentes_p:
+                del self.state["practicas"][id_]
+
     # -- URLs
     def url(self, path: str) -> str:
         return self.base_path + path
@@ -412,6 +452,100 @@ class Sitio:
         p["cerrada"] = cerrada
         p["fuente_url"] = FUENTE_URL
         return p
+
+    def preparar_practica(self, o: dict) -> dict:
+        p = dict(o)
+        # "CONTAR CON UN(A) PRACTICANTE PROFESIONAL…" -> "Practicante profesional…"
+        cargo = re.sub(r"^(CONTAR CON|CONTRATAR(?: A)?|CONTRATACI[OÓ]N DE|REQUERIMIENTO DE)\s+(UN\s*\(A\)|UNA|UN|\(01\)|01)?\s*",
+                       "", T.limpiar_cargo(o["cargo"]).strip(" ]})-.:;"), flags=re.I)
+        p["cargo_completo"] = T.nombre_propio(cargo or o["cargo"]).rstrip(" .")
+        p["cargo_txt"] = re.sub(r"\s+(y|e|o|de|del|la|el|en|para|con|a)$", "", T.cargo_titulo(p["cargo_completo"]),
+                                flags=re.I)
+        if o.get("subvencion") is not None and o["subvencion"] < SUELDO_MINIMO_CREIBLE:
+            p["subvencion"] = None  # "S/ 1": dato mal cargado en la fuente
+        p["entidad_txt"] = T.nombre_propio(T.normalizar_entidad(o["entidad"]))
+        dep = (o.get("departamento") or "").upper().strip()
+        p["dep_txt"] = DEPARTAMENTOS.get(dep, T.nombre_propio(dep) or "Perú")
+        prov = T.nombre_propio(o.get("provincia") or "")
+        p["lugar_txt"] = p["dep_txt"] if prov.upper() == p["dep_txt"].upper() or not prov else f"{prov}, {p['dep_txt']}"
+        modalidad = (o.get("modalidad") or "").lower()
+        p["modalidad_txt"] = ("Prácticas preprofesionales" if "pre" in modalidad else
+                              "Prácticas profesionales" if "profesional" in modalidad else "Prácticas")
+        p["carreras_txt"] = [T.nombre_propio(c) for c in o.get("carreras") or []]
+        p["conocimientos_txt"] = [T.oracion(x.strip(" .")) for c in o.get("conocimientos") or []
+                                  for x in re.split(r"(?:^|\s)¿\s*", c) if x.strip(" .")]
+        # "¿ apoyar en… ¿ otros…": viñetas mal codificadas en la fuente
+        actividades = re.sub(r"\s*¿\s*", " ", o.get("actividades") or "").strip()
+        p["actividades_txt"] = T.oracion(actividades) if actividades else ""
+        p["sueldo_txt"] = soles(p.get("subvencion"))
+        p["fin_txt"] = fecha_larga(o.get("fin"))
+        p["inicio_txt"] = fecha_larga(o.get("inicio"))
+        dias = (date.fromisoformat(o["fin"]) - self.hoy).days if o.get("fin") else None
+        p["dias"] = dias
+        p["cierre_txt"] = cierre_texto(dias, o["fin"]) if dias is not None else ""
+        p["urgente"] = dias is not None and 0 <= dias <= 3
+        p["vacantes"] = o.get("vacantes") or 1
+        # Frase para la tarjeta: para quién es.
+        condicion = (o.get("condicion") or "").lower()
+        quien = ("Para egresados" if condicion.startswith("egresad") else
+                 "Para estudiantes" if condicion.startswith("estudiant") else "")
+        carreras = p["carreras_txt"]
+        if carreras:
+            de = carreras[0] if len(carreras) == 1 else (
+                f"{carreras[0]} y {carreras[1]}" if len(carreras) == 2 else
+                f"{carreras[0]}, {carreras[1]} y {plural(len(carreras) - 2, 'carrera más', 'carreras más')}")
+            frase = f"{quien or 'Para'} de {de}."
+        else:
+            frase = f"{quien}." if quien else ""
+        p["req"] = {"frase": frase}
+
+        st = self.state["practicas"].get(o["id"])
+        h = hashlib.sha1(json.dumps([o.get(k) for k in sorted(o) if k != "visto"], ensure_ascii=False,
+                                    default=str).encode()).hexdigest()[:16]
+        hoy = self.hoy.isoformat()
+        if not st:
+            # sufijo del hash del id completo: "abc123…-2" no choca con "abc123…"
+            st = {"slug": T.slug_oferta(p["cargo_txt"], p["entidad_txt"],
+                                        hashlib.sha1(o["id"].encode()).hexdigest()[:6]),
+                  "first_seen": hoy, "lastmod": hoy, "hash": h}
+            self.state["practicas"][o["id"]] = st
+        elif st.get("hash") != h:
+            st["hash"], st["lastmod"] = h, hoy
+        p["slug"], p["lastmod"] = st["slug"], st["lastmod"]
+        p["path"] = f"/practica/{p['slug']}/"
+        return p
+
+    def jobposting_practica(self, p: dict) -> dict | None:
+        if not p.get("inicio") or not p["cargo_txt"] or not p["entidad_txt"]:
+            self.errores.append(f"JobPosting omitido en práctica {p['id']}: faltan datos")
+            return None
+        desc = [f"<p>{con_articulo(p['entidad_txt'])[:1].upper() + con_articulo(p['entidad_txt'])[1:]} convoca "
+                f"{plural(p['vacantes'], 'vacante', 'vacantes')} de {p['modalidad_txt'].lower()}: "
+                f"<strong>{p['cargo_txt']}</strong>.</p><ul>"]
+        desc.append(f"<li>Lugar: {p['lugar_txt']}, Perú.</li>")
+        if p["sueldo_txt"]:
+            desc.append(f"<li>Subvención económica mensual: {p['sueldo_txt']}.</li>")
+        if p["carreras_txt"]:
+            desc.append(f"<li>Carreras: {', '.join(p['carreras_txt'])}.</li>")
+        if p["actividades_txt"]:
+            desc.append(f"<li>Actividades: {p['actividades_txt'].rstrip('.')}.</li>")
+        desc.append("</ul><p>Las bases y la postulación están en la web de la entidad. Aviso registrado en "
+                    "Talento Perú (SERVIR).</p>")
+        jp = {
+            "@context": "https://schema.org", "@type": "JobPosting",
+            "title": p["cargo_txt"], "description": "".join(desc), "datePosted": p["inicio"],
+            "employmentType": "INTERN",
+            "hiringOrganization": {"@type": "Organization", "name": p["entidad_txt"]},
+            "jobLocation": {"@type": "Place", "address": {"@type": "PostalAddress",
+                                                          "addressRegion": p["dep_txt"], "addressCountry": "PE"}},
+            "directApply": False, "totalJobOpenings": p["vacantes"], "url": self.abs(p["path"]),
+        }
+        if p.get("fin") and p["fin"] >= p["inicio"]:
+            jp["validThrough"] = f"{p['fin']}T23:59:59-05:00"
+        if p.get("subvencion"):
+            jp["baseSalary"] = {"@type": "MonetaryAmount", "currency": "PEN", "value": {
+                "@type": "QuantitativeValue", "value": p["subvencion"], "unitText": "MONTH"}}
+        return jp
 
     # -- textos generados con datos
     def resumen_listado(self, ofertas: list[dict], lugar: str | None) -> dict:
@@ -555,7 +689,8 @@ def construir(sitio: Sitio, out: Path) -> None:
     env.globals.update(
         url=sitio.url, abs=sitio.abs, anio=sitio.anio, ld_json=ld_json, miles=miles, plural=plural,
         fecha_larga=fecha_larga, soles=soles, departamentos=departamentos, temas=sitio.temas,
-        css=css, repo=REPO, fuente_url=FUENTE_URL, hoy=sitio.hoy.isoformat(),
+        css=css, repo=REPO, fuente_url=FUENTE_URL, practicas_url=PRACTICAS_URL, hoy=sitio.hoy.isoformat(),
+        total_practicas=len(sitio.practicas),
         actualizado_txt=f"{fecha_larga(actualizado.date().isoformat())}, {actualizado:%H:%M}",
         actualizado_corto=fecha_corta(actualizado.date().isoformat()),
         total_vigentes=len(sitio.vigentes),
@@ -730,6 +865,31 @@ def construir(sitio: Sitio, out: Path) -> None:
                 [("Inicio", "/"), (t["nombre"], None)], intro=t["intro"],
                 extra={"tipo": "tema", "resumen": r})
 
+    # Prácticas
+    pr = sitio.practicas
+    subv = [p["subvencion"] for p in pr if p.get("subvencion")]  # ya sin montos absurdos
+    r_pr = {"n": len(pr), "min": soles(min(subv)) if subv else "", "max": soles(max(subv)) if subv else "",
+            "egresados": sum(1 for p in pr if p["req"]["frase"].startswith("Para egresados")),
+            "estudiantes": sum(1 for p in pr if p["req"]["frase"].startswith("Para estudiantes"))}
+    listado("/practicas/", pr, len(pr) > 0, f"Prácticas en el Estado {sitio.anio}: preprofesionales y profesionales",
+            f"Prácticas en entidades públicas {sitio.anio}",
+            armar([f"{plural(len(pr), 'convocatoria de prácticas vigente', 'convocatorias de prácticas vigentes')} "
+                   "en entidades públicas del Perú.",
+                   f"Subvención desde {r_pr['min']} hasta {r_pr['max']} al mes." if r_pr["min"] else "",
+                   f"Actualizado el {hoy_txt}."]),
+            [("Inicio", "/"), ("Prácticas", None)], extra={"tipo": "practicas", "resumen": r_pr})
+    for p in pr:
+        migas = [("Inicio", "/"), ("Prácticas", "/practicas/"), (p["cargo_txt"], None)]
+        h1 = f"{p['titulo_txt']} en {p['entidad_txt']}"
+        a = f"{p['modalidad_txt']} en {con_articulo(p['entidad_txt'])} ({p['lugar_txt']})."
+        b = f"Subvención de {p['sueldo_txt']} al mes." if p["sueldo_txt"] else ""
+        c = f"Postula hasta el {fecha_corta(p['fin'])}." if p.get("fin") else ""
+        jp = sitio.jobposting_practica(p)
+        escribir(p["path"], "practica.html", True, p["lastmod"], titulo=con_marca(h1), h1=h1,
+                 descripcion=armar([a, b, c, p["req"]["frase"]]), o=p, migas=migas,
+                 otras=[x for x in pr if x["id"] != p["id"] and x["dep_txt"] == p["dep_txt"]][:4],
+                 ld=[x for x in (jp, sitio.breadcrumbs(migas)) if x])
+
     # Nuevas y por vencer (cambian a diario: noindex)
     nuevas = [o for o in sitio.vigentes if sitio.state["ofertas"][o["id"]]["first_seen"] == sitio.hoy.isoformat()]
     listado("/nuevas/", nuevas, False, "Convocatorias nuevas de hoy",
@@ -786,7 +946,7 @@ def escribir_sitemaps(sitio: Sitio, out: Path) -> None:
                 + "".join(filas) + "</urlset>\n")
 
     indexables = [p for p in sitio.paginas if p["indexable"] and "/pagina/" not in p["path"]]
-    ofertas = [p for p in indexables if p["plantilla"] == "oferta.html"]
+    ofertas = [p for p in indexables if p["plantilla"] in ("oferta.html", "practica.html")]
     info = [p for p in indexables if p["plantilla"].startswith("info/")]
     listados = [p for p in indexables if p not in ofertas and p not in info]
     archivos = []  # (nombre, lastmod más reciente de sus URLs)
@@ -813,7 +973,7 @@ def escribir_sitemaps(sitio: Sitio, out: Path) -> None:
 def verificar(sitio: Sitio, out: Path) -> list[str]:
     """Comprobaciones sobre el sitio generado (SEO_SPEC 3.6 y 10)."""
     problemas = []
-    ofertas_vigentes = {sitio.abs(o["path"]) for o in sitio.vigentes}
+    ofertas_vigentes = {sitio.abs(o["path"]) for o in sitio.vigentes + sitio.practicas}
     prohibidas = ["descubre", "sumérgete", "en un solo lugar", "experiencia única", "—"]
     titulos = Counter()
     for f in out.rglob("*.html"):

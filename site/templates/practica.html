@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% from "_tarjeta.html" import tarjeta %}
+{% block contenido %}
+<article class="oferta">
+  <p class="o-entidad">{{ o.entidad_txt }}</p>
+  <h1>{{ h1 }}</h1>
+
+  <dl class="o-claves">
+    <div><dt>Subvención mensual</dt><dd class="o-sueldo">{{ o.sueldo_txt or 'No indicada en el aviso' }}</dd></div>
+    <div><dt>Fecha límite</dt><dd>{% if o.fin %}<time datetime="{{ o.fin }}">{{ o.fin_txt }}</time>{% if o.dias is not none and o.dias <= 7 %}<br><span class="o-cierre{{ ' urgente' if o.urgente }}">{{ o.cierre_txt }}</span>{% endif %}{% else %}No indicada{% endif %}</dd></div>
+    <div><dt>Lugar</dt><dd>{{ o.lugar_txt }}{% if o.modo %} ({{ o.modo|lower }}){% endif %}</dd></div>
+    <div><dt>Tipo</dt><dd>{{ o.modalidad_txt }}</dd></div>
+    <div><dt>Vacantes</dt><dd>{{ o.vacantes }}</dd></div>
+    {% if o.duracion_meses %}<div><dt>Duración</dt><dd>{{ plural(o.duracion_meses, 'mes', 'meses') }}{% if o.horas_semana %}, {{ o.horas_semana }} horas a la semana{% endif %}</dd></div>{% endif %}
+  </dl>
+
+  <p class="o-cta"><a class="boton" href="{{ o.url_bases or practicas_url }}" rel="noopener" target="_blank">Ver convocatoria y postular</a>
+  <span class="o-cta-nota">{% if o.url_bases %}Las bases y la postulación están en la web {{ de_articulo(o.entidad_txt) }}.{% else %}Busca el aviso en el portal de prácticas de Talento Perú.{% endif %}</span></p>
+
+  <section class="o-seccion">
+    <h2>Para quién es</h2>
+    {% if o.req.frase %}<p class="o-frase">{{ o.req.frase }}</p>{% endif %}
+    <dl class="o-req">
+      {% if o.condicion or o.formacion %}<div><dt>Requisito</dt><dd>{{ o.condicion }}{% if o.condicion and o.formacion %} de {% endif %}{{ o.formacion|lower if o.condicion else o.formacion }}</dd></div>{% endif %}
+      {% if o.carreras_txt %}<div><dt>Carreras</dt><dd>{{ o.carreras_txt|join(', ') }}</dd></div>{% endif %}
+      {% if o.conocimientos_txt %}<div><dt>Conocimientos</dt><dd>{{ o.conocimientos_txt|join('. ') }}</dd></div>{% endif %}
+      {% if o.actividades_txt %}<div><dt>Qué harás</dt><dd>{{ o.actividades_txt }}</dd></div>{% endif %}
+    </dl>
+  </section>
+
+  <aside class="o-confianza">
+    <p>Postular a unas prácticas del Estado no cuesta nada. Si alguien te pide un pago para "asegurar" la vacante, es una estafa. Confirma el aviso en <a href="{{ practicas_url }}" rel="noopener">Talento Perú</a>. Chamba al Toque no es SERVIR ni la entidad convocante.</p>
+  </aside>
+
+  <p class="o-fuente">Fuente: <a href="{{ practicas_url }}" rel="noopener">Talento Perú (SERVIR), modalidades formativas</a>.{% if o.inicio_txt %} Publicado el {{ o.inicio_txt }}.{% endif %}{% if o.convocatoria %} Convocatoria N.° {{ o.convocatoria }}.{% endif %}</p>
+</article>
+
+<section class="bloque">
+  <h2>Más prácticas</h2>
+  <p class="mas-links"><a href="{{ url('/practicas/') }}">Todas las prácticas en el Estado</a></p>
+  {% if otras %}
+  <h3>Otras prácticas en {{ o.dep_txt }}</h3>
+  <div class="rejilla">{% for x in otras %}{{ tarjeta(x, False, 4) }}{% endfor %}</div>
+  {% endif %}
+</section>
+{% endblock %}

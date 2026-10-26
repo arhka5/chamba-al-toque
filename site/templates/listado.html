@@ -7,6 +7,8 @@
   {% if pagina == 1 and r %}
     {% if extra.tipo == 'departamento' %}
     <p class="l-intro">Hay {{ plural(r.n, 'convocatoria vigente', 'convocatorias vigentes') }} de entidades públicas en {{ r.lugar }}{% if r.min and r.min != r.max %}, con sueldos desde {{ r.min }} hasta {{ r.max }} al mes{% elif r.min %}, con un sueldo de {{ r.min }} al mes{% endif %}.{% if r.sin_exp %} {{ plural(r.sin_exp, 'no pide', 'no piden') }} experiencia.{% endif %}{% if r.secundaria %} {{ plural(r.secundaria, 'pide', 'piden') }} como máximo secundaria completa.{% endif %}{% if r.top|length > 1 %} Las entidades con más plazas son {% elif r.top %} La entidad con más plazas es {% endif %}{% if r.top %}{% for e in r.top %}{% if e.indexable %}<a href="{{ url('/entidad/' ~ e.slug ~ '/') }}">{{ e.nombre }}</a>{% else %}{{ e.nombre }}{% endif %}{{ ', ' if not loop.last and loop.revindex > 2 else (' y ' if not loop.last else '') }}{% endfor %}.{% endif %}</p>
+    {% elif extra.tipo == 'practicas' %}
+    <p class="l-intro">Hay {{ plural(r.n, 'convocatoria de prácticas vigente', 'convocatorias de prácticas vigentes') }} en municipalidades, ministerios y otras entidades públicas{% if r.min and r.min != r.max %}, con subvenciones desde {{ r.min }} hasta {{ r.max }} al mes{% endif %}.{% if r.egresados %} {{ plural(r.egresados, 'es', 'son') }} para egresados (prácticas profesionales){% if r.estudiantes %} y {{ miles(r.estudiantes) }} para estudiantes (preprofesionales){% endif %}.{% endif %} Cada aviso enlaza a la web de la entidad, donde se postula.</p>
     {% elif extra.tipo == 'entidad' %}
     <p class="l-intro">{{ extra.entidad }} tiene {{ plural(r.n, 'convocatoria vigente', 'convocatorias vigentes') }}.{% if extra.primera %} Las plazas más cercanas a cerrar vencen el {{ extra.primera }}.{% endif %}{% if r.min and r.min != r.max %} Los sueldos van de {{ r.min }} a {{ r.max }}.{% elif r.min %} El sueldo es de {{ r.min }} al mes.{% endif %} Esta información proviene de Talento Perú (SERVIR); las bases completas están en la web de la entidad.</p>
     {% else %}
@@ -25,7 +27,7 @@
 {% endif %}
 
 {% if ofertas %}
-<h2 class="rejilla-tit">Convocatorias vigentes ({{ miles(total) }})</h2>
+<h2 class="rejilla-tit">{{ 'Prácticas vigentes' if extra.tipo == 'practicas' else 'Convocatorias vigentes' }} ({{ miles(total) }})</h2>
 <div class="rejilla">
   {% for o in ofertas %}{{ tarjeta(o, extra.tipo != 'departamento') }}{% endfor %}
 </div>

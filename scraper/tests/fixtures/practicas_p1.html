@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="es" class="no-js" xmlns="http://www.w3.org/1999/xhtml"><head><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/theme.css?ln=primefaces-aristo" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/bootstrap.min.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/fonts.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/styles.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/css_font/fontello.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/css_font/animation.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/font-awesome.min.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/main.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/jquery.realperson.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/primefaces.css?ln=primefaces&amp;v=5.3" /><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/jquery/jquery.js?ln=primefaces&amp;v=5.3"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/jquery/jquery-plugins.js?ln=primefaces&amp;v=5.3"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/primefaces.js?ln=primefaces&amp;v=5.3"></script><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/watermark/watermark.css?ln=primefaces&amp;v=5.3" /><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/watermark/watermark.js?ln=primefaces&amp;v=5.3"></script><script type="text/javascript">if(window.PrimeFaces){PrimeFaces.settings.projectStage='Development';}</script>
+	<meta charset="utf-8" />
+	<title>
+        .:Sistema de Difusión de Ofertas Laborales y Prácticas del Sector Público:. - Modalidades Formativas
+    </title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="X-UA-Compatible" content="IE=7,8,9" />
+	<link rel="shortcut icon" type="image/x-icon" href="/DifusionOfertasExterno/faces/resources/img/favicon.ico" /><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/prefixfree.min.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/barrarScroll.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/bootstrap.min.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/main/app.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/validator.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/primefaces-locale-es.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/modernizr.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/browser.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/jquery.plugin.min.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/jquery.realperson.min.js"></script><!--[if IE 7]><link rel="stylesheet" href="fontello-ie7.css" /><![endif]--><!--[if lte IE 7]><link rel="stylesfont-awesome.min.cssheet" href="ie6-ie7.css" /><![endif]-->
+		<style>
+.titulo-listado {
+	color: #D41B17;
+	font-weight: 550;
+	font-size: 30px;
+	margin-bottom: 4px;
+	margin-top: 5px;
+}
+
+.cuadro-vacantes {
+	border: 1px solid #146080;
+	border-radius: 6px;
+	padding: 10px 20px 0px 25px;
+	margin-bottom: 15px;
+}
+
+.titulo-vacante {
+	color: #000;
+	font-size: 20px;
+	margin-bottom: 4px;
+	margin-top: 5px;
+	padding-left: -5px !important;
+	font-family: arial; /*"Comic Sans MS", "Comic Sans", cursive;*/
+}
+
+.logo-vacante {
+	vertical-align: middle;
+	padding: 0px;
+	margin-top: 0px;
+}
+
+.nombre-entidad {
+	margin-top: 0px;
+	line-height: 19px;
+}
+
+.sub-titulo {
+	color: #000;
+	font-weight: 550;
+	font-size: 13.5px;
+	margin-top: 5px;
+	line-height: 19px;
+	border-top: 1px solid #EFEFEF;
+	font-family: arial; /*"Comic Sans MS", "Comic Sans", cursive;*/
+}
+
+.detalle-sp {
+	color: #000;
+	font-weight: normal;
+	font-size: 12.6px;
+	margin-top: 5px;
+	line-height: 19px;
+	border-top: 1px solid #EFEFEF;
+}
+
+.cuadro-detalle {
+	
+}
+
+.vbottom {
+	display: inline-block;
+	vertical-align: middle;
+	float: none;
+}
+.ui-widget .ui-widget {
+	font-size: 10px;
+}
+</style>
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		
+		  ga('create', 'UA-154559467-3', 'auto');
+		  ga('send', 'pageview', 'event');
+		</script></head><body>
+	<div class="navbar navbar-inverse set-radius-zero">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a id="box-logo" class="navbar-brand" href="https://www.servir.gob.pe/" target="_blank"> servir </a>
+			</div>
+			<div class="left-div">
+				<div>
+					<a id="box-logo3" class="navbar-brand"> Talento </a>
+				</div>
+				<div>
+					<small>Versión 1.4.1.3</small>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-wrapper box_main_app">
+		<div id="box-top-inf">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col-sm-4">
+						<div id="box-info-user" style="font-size: 12px; font-weight: 300;">
+							<i class="fa fa-calendar" style="opacity: 0.6; margin-right: 8px;"></i> <span id="date_box"></span> <i class="fa fa-clock-o" style="opacity: 0.6; margin-left: 10px;"></i> <span id="time_box"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="box-main-container" class="container row-offcanvas">
+			<div id="menu-left" class="sidebar-offcanvas">
+				<div class="wrapper row-offcanvas row-offcanvas-left">
+					<aside class="left-side sidebar-offcanvas">
+						<section class="sidebar" id="nav_left_sgac">
+							<div id="btn-hidden-nav" class="toggleBtn">
+								<a href="#" data-toggle="offcanvas"><i class="fa fa-bars"></i>
+									Menú </a>
+							</div>
+							<ul class="sidebar-menu">
+								<li class="active"><a href="../consultas/ofertas_laborales.xhtml"> <i class="topSpace fa fa-caret-down pull-right"></i> <span><strong>Ofertas
+												Laborales (Convocatoria Pública)</strong></span>
+								</a></li>
+								<li class="active"><a href="../consultas/modalidades_formativas.xhtml"> <i class="topSpace fa fa-caret-down pull-right"></i> <span><strong>Prácticas</strong></span>
+								</a></li>
+								<li class="active"><a href="../consultas/contratacion_directa.xhtml"> <i class="topSpace fa fa-caret-down pull-right"></i> <span><strong>Contratación
+												Directa Decreto de Urgencia 029-2020</strong></span>
+								</a></li>
+								<li class="active"><a href="../consultas/cooperacion_laboral.xhtml"> <i class="topSpace fa fa-caret-down pull-right"></i> <span><strong>Cooperación
+												Laboral Decreto Legislativo N° 1456</strong></span>
+								</a></li>
+								
+								<li class="active"><a href="https://talentoentidad.servir.gob.pe/#/home" target="_blank" style="font-family: 'Cabin', sans-serif; color: rgb(2, 68, 135);"> <i class="topSpace fa fa-caret-down pull-right"></i> <span><strong>Ver Convocatorias
+												Talento V.2</strong></span>
+								</a></li>
+							</ul>
+						</section>
+					</aside>
+				</div>
+			</div>
+			<div id="main-content-sidel">
+				<div class="row spac-top-10">
+					<div class="col-md-12">
+						<ol id="info-nav" class="breadcrumb">
+		
+		<a id="box-logo6" class="navbar-brand"> Talento </a>
+						</ol>
+					</div>
+				</div>
+<form id="frmLstModFormativas" name="frmLstModFormativas" method="post" action="/DifusionOfertasExterno/faces/consultas/modalidades_formativas.xhtml" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="frmLstModFormativas" value="frmLstModFormativas" />
+<span id="frmLstModFormativas:mensaje"></span><script id="frmLstModFormativas:mensaje_s" type="text/javascript">$(function(){PrimeFaces.cw('Growl','widget_frmLstModFormativas_mensaje',{id:'frmLstModFormativas:mensaje',sticky:false,life:5000,escape:true,msgs:[]});});</script>
+			<div class="row" style="margin: 0px;">
+				
+				
+				<div class="col-sm-12">
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<div style="height: 10px;"></div>
+					<div class="row box-mb">
+						<div class="col-sm-5">
+							<div class="form-group">
+								<b><label style="font-size:14px;font-weight:400px !important;" class="confirm-subtitle">Encuentra tu próxima práctica en el Estado</label>
+								</b>
+							</div>
+						</div>
+					</div>
+					<div class="row box-mb">
+						<div class="col-sm-8 text-center">
+							
+							<div class="form-group"><script type="text/javascript">rmcBuscar = function() {PrimeFaces.ab({s:"frmLstModFormativas:j_idt34",f:"frmLstModFormativas",p:"frmLstModFormativas:j_idt34 frmLstModFormativas:txtCriterio",u:"frmLstModFormativas:mensaje frmLstModFormativas",onst:function(cfg){PF('statusDialog').show();;},onco:function(xhr,status,args){PF('statusDialog').hide();;},pa:arguments[0]});}</script>
+								<i class="fa fa-search" style="position: absolute; right: 25px; top: 9px; color: #146080;" onclick="rmcBuscar();"></i><input id="frmLstModFormativas:txtCriterio" name="frmLstModFormativas:txtCriterio" type="text" value="" maxlength="150" tabindex="1" onkeydown="if (event.keyCode === 13) { rmcBuscar(); return false; }" style="border: 2px solid #45BFE4!important;" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all form-control3" /><script id="frmLstModFormativas:txtCriterio_s" type="text/javascript">PrimeFaces.cw("InputText","widget_frmLstModFormativas_txtCriterio",{id:"frmLstModFormativas:txtCriterio"});</script><script id="frmLstModFormativas:j_idt36_s" type="text/javascript">$(function(){PrimeFaces.cw("Watermark","widget_frmLstModFormativas_j_idt36",{id:"frmLstModFormativas:j_idt36",value:"Ingrese una carrera",target:"frmLstModFormativas:txtCriterio"},"watermark");});</script>
+							</div>
+							
+						</div>
+						<div class="col-sm-2"></div>
+					</div>
+					<div class="row box-mb" style="padding-top: 5px;">
+						<div class="col-sm-5">
+							<div class="form-group"><div id="frmLstModFormativas:cboModFormativa" class="ui-selectonemenu ui-widget ui-state-default ui-corner-all form-control style-select" style="border: 2px solid #45BFE4!important;"><div class="ui-helper-hidden-accessible"><input id="frmLstModFormativas:cboModFormativa_focus" name="frmLstModFormativas:cboModFormativa_focus" type="text" autocomplete="off" role="combobox" aria-haspopup="true" aria-expanded="false" /></div><div class="ui-helper-hidden-accessible"><select id="frmLstModFormativas:cboModFormativa_input" name="frmLstModFormativas:cboModFormativa_input" tabindex="-1" onchange="PrimeFaces.ab({s:&quot;frmLstModFormativas:cboModFormativa&quot;,e:&quot;valueChange&quot;,p:&quot;frmLstModFormativas:cboModFormativa&quot;,u:&quot;frmLstModFormativas:cboModFormativa&quot;});"><option value="" selected="selected">Seleccione el tipo de prácticas</option><option value="01">Prácticas Profesionales</option><option value="02">Prácticas Pre-Profesionales</option></select></div><label id="frmLstModFormativas:cboModFormativa_label" class="ui-selectonemenu-label ui-inputfield ui-corner-all">&nbsp;</label><div class="ui-selectonemenu-trigger ui-state-default ui-corner-right"><span class="ui-icon ui-icon-triangle-1-s ui-c"></span></div><div id="frmLstModFormativas:cboModFormativa_panel" class="ui-selectonemenu-panel ui-widget ui-widget-content ui-corner-all ui-helper-hidden ui-shadow"><div class="ui-selectonemenu-items-wrapper" style="height:auto"><ul id="frmLstModFormativas:cboModFormativa_items" class="ui-selectonemenu-items ui-selectonemenu-list ui-widget-content ui-widget ui-corner-all ui-helper-reset" role="listbox"><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="Seleccione el tipo de prácticas" tabindex="-1" role="option">Seleccione el tipo de prácticas</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="Prácticas Profesionales" tabindex="-1" role="option">Prácticas Profesionales</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="Prácticas Pre-Profesionales" tabindex="-1" role="option">Prácticas Pre-Profesionales</li></ul></div></div></div><script id="frmLstModFormativas:cboModFormativa_s" type="text/javascript">$(function(){PrimeFaces.cw("SelectOneMenu","widget_frmLstModFormativas_cboModFormativa",{id:"frmLstModFormativas:cboModFormativa",behaviors:{valueChange:function(ext,event) {PrimeFaces.ab({s:"frmLstModFormativas:cboModFormativa",e:"valueChange",p:"frmLstModFormativas:cboModFormativa",u:"frmLstModFormativas:cboModFormativa"},ext);}}});});</script>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row box-mb">
+						<div class="col-sm-5">
+							<div class="form-group"><span id="frmLstModFormativas:autocompletar" class="ui-autocomplete autoCompStyle"><input id="frmLstModFormativas:autocompletar_input" name="frmLstModFormativas:autocompletar_input" type="text" class="ui-autocomplete-input ui-inputfield ui-widget ui-state-default ui-corner-all" autocomplete="off" style="box-shadow:none;text-shadow:none;padding:0.25rem 1.0rem !important;                               border-radius:5;border:2px solid #45BFE4;background:#fff;height:30px;font-size:12px;width: 335px;" placeholder="INSTITUCIONES PÚBLICAS" value="" /><input id="frmLstModFormativas:autocompletar_hinput" name="frmLstModFormativas:autocompletar_hinput" type="hidden" autocomplete="off" value="" /><div id="frmLstModFormativas:autocompletar_panel" class="ui-autocomplete-panel ui-widget-content ui-corner-all ui-helper-hidden ui-shadow"></div></span><script id="frmLstModFormativas:autocompletar_s" type="text/javascript">$(function(){PrimeFaces.cw("AutoComplete","widget_frmLstModFormativas_autocompletar",{id:"frmLstModFormativas:autocompletar",delay:300});});</script>
+                            </div>
+						</div>
+						<div class="col-sm-1"></div>
+						<div class="col-sm-6 text-left row text-left box-dig-btn" style="padding-left: 25px !important;"><button id="frmLstModFormativas:j_idt43" name="frmLstModFormativas:j_idt43" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="PrimeFaces.ab({s:&quot;frmLstModFormativas:j_idt43&quot;,u:&quot;frmLstModFormativas:mensaje frmLstModFormativas&quot;,onco:function(xhr,status,args){PF('statusDialog').hide();;}});return false;" style="width:150px!important;border-radius:5px!important;                           background-color:#146080!important;border: 1px solid #FFC729!important;" title="Buscar" type="submit"><span class="ui-button-text ui-c">Buscar</span></button><script id="frmLstModFormativas:j_idt43_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_j_idt43",{id:"frmLstModFormativas:j_idt43"});</script>
+						</div>
+
+					</div>
+					<div class="row box-mb">
+						<div class="col-sm-5">
+							<div class="form-group"><input id="frmLstModFormativas:txtNroConv" name="frmLstModFormativas:txtNroConv" type="text" value="" maxlength="150" tabindex="1" style="border: 2px solid #45BFE4!important;" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all form-control" /><script id="frmLstModFormativas:txtNroConv_s" type="text/javascript">PrimeFaces.cw("InputText","widget_frmLstModFormativas_txtNroConv",{id:"frmLstModFormativas:txtNroConv"});</script><script id="frmLstModFormativas:j_idt45_s" type="text/javascript">$(function(){PrimeFaces.cw("Watermark","widget_frmLstModFormativas_j_idt45",{id:"frmLstModFormativas:j_idt45",value:"Coloca el número de convocatoria",target:"frmLstModFormativas:txtNroConv"},"watermark");});</script>
+							</div>
+						</div>
+						
+						<div class="col-sm-1"></div>
+						<div class="col-sm-6 text-left row text-left box-dig-btn" style="padding-left: 25px !important;"><button id="frmLstModFormativas:j_idt47" name="frmLstModFormativas:j_idt47" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="PF('statusDialog').show();;PrimeFaces.ab({s:&quot;frmLstModFormativas:j_idt47&quot;,u:&quot;frmLstModFormativas:mensaje frmLstModFormativas&quot;,onco:function(xhr,status,args){PF('statusDialog').hide();;}});return false;" style="width:150px!important;border-radius:5px!important;background-color: #76DCFF!important;            color: #146080;            border: 1px solid #FFC729!important" title="Limpiar" type="submit"><span class="ui-button-text ui-c">Limpiar</span></button><script id="frmLstModFormativas:j_idt47_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_j_idt47",{id:"frmLstModFormativas:j_idt47"});</script>
+						</div>
+
+					</div>
+					
+
+					<div class="row box-mb">
+						<div class="col-sm-3"><div id="frmLstModFormativas:cboDep" class="ui-selectonemenu ui-widget ui-state-default ui-corner-all form-control form-control4 style-select2" style="border: 2px solid #45BFE4!important;"><div class="ui-helper-hidden-accessible"><input id="frmLstModFormativas:cboDep_focus" name="frmLstModFormativas:cboDep_focus" type="text" autocomplete="off" role="combobox" aria-haspopup="true" aria-expanded="false" /></div><div class="ui-helper-hidden-accessible"><select id="frmLstModFormativas:cboDep_input" name="frmLstModFormativas:cboDep_input" tabindex="-1" onchange="PrimeFaces.ab({s:&quot;frmLstModFormativas:cboDep&quot;,e:&quot;valueChange&quot;,p:&quot;frmLstModFormativas:cboDep&quot;,u:&quot;frmLstModFormativas:cboDep&quot;});"><option value="0">Ubicación</option><option value="01">AMAZONAS</option><option value="02">ANCASH</option><option value="03">APURIMAC</option><option value="04">AREQUIPA</option><option value="05">AYACUCHO</option><option value="06">CAJAMARCA</option><option value="07">CALLAO</option><option value="08">CUSCO</option><option value="09">HUANCAVELICA</option><option value="10">HUANUCO</option><option value="11">ICA</option><option value="12">JUNIN</option><option value="13">LA LIBERTAD</option><option value="14">LAMBAYEQUE</option><option value="15">LIMA</option><option value="16">LORETO</option><option value="17">MADRE DE DIOS</option><option value="18">MOQUEGUA</option><option value="19">PASCO</option><option value="20">PIURA</option><option value="21">PUNO</option><option value="22">SAN MARTIN</option><option value="23">TACNA</option><option value="24">TUMBES</option><option value="25">UCAYALI</option></select></div><label id="frmLstModFormativas:cboDep_label" class="ui-selectonemenu-label ui-inputfield ui-corner-all">&nbsp;</label><div class="ui-selectonemenu-trigger ui-state-default ui-corner-right"><span class="ui-icon ui-icon-triangle-1-s ui-c"></span></div><div id="frmLstModFormativas:cboDep_panel" class="ui-selectonemenu-panel ui-widget ui-widget-content ui-corner-all ui-helper-hidden ui-shadow"><div class="ui-selectonemenu-items-wrapper" style="height:200px"><ul id="frmLstModFormativas:cboDep_items" class="ui-selectonemenu-items ui-selectonemenu-list ui-widget-content ui-widget ui-corner-all ui-helper-reset" role="listbox"><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all ui-noselection-option" data-label="Ubicación" tabindex="-1" role="option">Ubicación</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="AMAZONAS" tabindex="-1" role="option">AMAZONAS</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="ANCASH" tabindex="-1" role="option">ANCASH</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="APURIMAC" tabindex="-1" role="option">APURIMAC</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="AREQUIPA" tabindex="-1" role="option">AREQUIPA</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="AYACUCHO" tabindex="-1" role="option">AYACUCHO</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="CAJAMARCA" tabindex="-1" role="option">CAJAMARCA</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="CALLAO" tabindex="-1" role="option">CALLAO</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="CUSCO" tabindex="-1" role="option">CUSCO</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="HUANCAVELICA" tabindex="-1" role="option">HUANCAVELICA</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="HUANUCO" tabindex="-1" role="option">HUANUCO</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="ICA" tabindex="-1" role="option">ICA</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="JUNIN" tabindex="-1" role="option">JUNIN</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="LA LIBERTAD" tabindex="-1" role="option">LA LIBERTAD</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="LAMBAYEQUE" tabindex="-1" role="option">LAMBAYEQUE</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="LIMA" tabindex="-1" role="option">LIMA</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="LORETO" tabindex="-1" role="option">LORETO</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="MADRE DE DIOS" tabindex="-1" role="option">MADRE DE DIOS</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="MOQUEGUA" tabindex="-1" role="option">MOQUEGUA</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="PASCO" tabindex="-1" role="option">PASCO</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="PIURA" tabindex="-1" role="option">PIURA</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="PUNO" tabindex="-1" role="option">PUNO</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="SAN MARTIN" tabindex="-1" role="option">SAN MARTIN</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="TACNA" tabindex="-1" role="option">TACNA</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="TUMBES" tabindex="-1" role="option">TUMBES</li><li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="UCAYALI" tabindex="-1" role="option">UCAYALI</li></ul></div></div></div><script id="frmLstModFormativas:cboDep_s" type="text/javascript">$(function(){PrimeFaces.cw("SelectOneMenu","widget_frmLstModFormativas_cboDep",{id:"frmLstModFormativas:cboDep",behaviors:{valueChange:function(ext,event) {PrimeFaces.ab({s:"frmLstModFormativas:cboDep",e:"valueChange",p:"frmLstModFormativas:cboDep",u:"frmLstModFormativas:cboDep"},ext);}}});});</script>
+							<i class="fa fa-map-marker" style="position: absolute; left: 25px; top: 7px; color: #A0A3A5;"></i>
+						</div>
+					</div>
+					<label class="control-label"> 
+
+						<span>Descarga la oferta de tu interés en Word</span><span style="font-size: 16px !important;"><b>*</b></span> <span>
+							y activa el modo leer. Aprende a usarlo </span> <a href="../resources/manuales/guia_leer_en_word-modalidades.pdf" target="_blank" style="font-style: italic; cursor: pointer; color: #2186DF">aquí</a>.
+					</label>
+						<div class="row">
+							<div class="col-sm-2"></div>
+							<div class="col-sm-8"><button id="frmLstModFormativas:j_idt54" name="frmLstModFormativas:j_idt54" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left ui-state-disabled btn-paginator" onclick="PF('statusDialog').show();;PrimeFaces.ab({s:&quot;frmLstModFormativas:j_idt54&quot;,u:&quot;frmLstModFormativas:mensaje frmLstModFormativas&quot;,onco:function(xhr,status,args){PF('statusDialog').hide();;}});return false;" type="submit" disabled="disabled"><span class="ui-button-icon-left ui-icon ui-c icon-fast-backward imgIconLeft"></span><span class="ui-button-text ui-c">Primero</span></button><script id="frmLstModFormativas:j_idt54_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_j_idt54",{id:"frmLstModFormativas:j_idt54"});</script><button id="frmLstModFormativas:j_idt55" name="frmLstModFormativas:j_idt55" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left ui-state-disabled btn-paginator" onclick="PF('statusDialog').show();;PrimeFaces.ab({s:&quot;frmLstModFormativas:j_idt55&quot;,u:&quot;frmLstModFormativas:mensaje frmLstModFormativas&quot;,onco:function(xhr,status,args){PF('statusDialog').hide();;}});return false;" type="submit" disabled="disabled"><span class="ui-button-icon-left ui-icon ui-c icon-backward imgIconLeft"></span><span class="ui-button-text ui-c">Atras</span></button><script id="frmLstModFormativas:j_idt55_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_j_idt55",{id:"frmLstModFormativas:j_idt55"});</script><label class="control-label btn-paginator-cnt">Página 1 de 13</label><button id="frmLstModFormativas:j_idt57" name="frmLstModFormativas:j_idt57" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left btn-paginator position-icon-right" onclick="PF('statusDialog').show();;PrimeFaces.ab({s:&quot;frmLstModFormativas:j_idt57&quot;,u:&quot;frmLstModFormativas:mensaje frmLstModFormativas&quot;,onco:function(xhr,status,args){PF('statusDialog').hide();;}});return false;" type="submit"><span class="ui-button-icon-left ui-icon ui-c icon-forward imgIconRight"></span><span class="ui-button-text ui-c">Sig.</span></button><script id="frmLstModFormativas:j_idt57_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_j_idt57",{id:"frmLstModFormativas:j_idt57"});</script><button id="frmLstModFormativas:j_idt58" name="frmLstModFormativas:j_idt58" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left btn-paginator position-icon-right" onclick="PF('statusDialog').show();;PrimeFaces.ab({s:&quot;frmLstModFormativas:j_idt58&quot;,u:&quot;frmLstModFormativas:mensaje frmLstModFormativas&quot;,onco:function(xhr,status,args){PF('statusDialog').hide();;}});return false;" type="submit"><span class="ui-button-icon-left ui-icon ui-c icon-fast-forward imgIconRight"></span><span class="ui-button-text ui-c">Último</span></button><script id="frmLstModFormativas:j_idt58_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_j_idt58",{id:"frmLstModFormativas:j_idt58"});</script>
+							</div>
+							<div class="col-sm-2"></div>
+						</div>
+					<div class="row box-mb">
+						<div class="col-sm-12">
+								<div class="col-sm-12 cuadro-vacantes">
+									<div style="width: 800px;">
+										<div class="row box-mb">
+											<div class="col-sm-8">
+												
+												<div class="row box-mb" style="overflow-wrap: break-word;">
+													<div class="col-sm-12 titulo-vacante"><label>PRÁCTICAS PROFESIONALES SEDES DESCONCENTRADAS</label>
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3 logo-vacante text-center">
+														
+														<img src="../resources/img/logo-talento-peru.png" width="120px" height="45px" />
+													</div>
+													<div class="col-sm-9 text-left nombre-entidad">
+														
+														SUPERINTENDENCIA NACIONAL DE ADUANAS Y DE ADMINISTRACION TRIBUTARIA - SUNAT
+													</div>
+												</div>
+												<div style="height: 15px;"></div>
+												<div class="row box-mb">
+													<div class="col-sm-3 text-left sub-titulo" style="padding-left: 10px !important;">
+														
+														Tipo de Modalidad:
+													</div>
+													<div class="col-sm-9 text-left detalle-sp">
+														
+														Practicas Profesionales
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3">
+														
+
+													</div>
+													<div class="col-sm-9 text-center">
+														
+														<div class="col-sm-12 text-center box-dig-btn"><button id="frmLstModFormativas:idPnlRepeatPuestos:0:j_idt66" name="frmLstModFormativas:idPnlRepeatPuestos:0:j_idt66" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="PF('statusDialog').show();ga('send', 'event', 'ver mas', 'Ver mas detalle modalidades', 'Ver mas detalle modalidades');;" style="border-radius: 4px !important;border: 1px solid #FFC729!important" title="Ver más" type="submit"><span class="ui-button-text ui-c">   Ver más   </span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:0:j_idt66_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_0_j_idt66",{id:"frmLstModFormativas:idPnlRepeatPuestos:0:j_idt66"});</script><button id="frmLstModFormativas:idPnlRepeatPuestos:0:j_idt68" name="frmLstModFormativas:idPnlRepeatPuestos:0:j_idt68" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="ga('send', 'event', 'Descargar word', 'Descargar word detalle modalidades', 'Descargar word detalle modalidades');;" style="border-radius:4px!important;                                white-space: pre;                                margin-top:10px;background-color: #76DCFF!important;     color: #146080;     border: 1px solid #FFC729!important" title="Convocatoria en Word" type="submit"><span class="ui-button-text ui-c">Convocatoria en
+Word</span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:0:j_idt68_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_0_j_idt68",{id:"frmLstModFormativas:idPnlRepeatPuestos:0:j_idt68"});</script>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="col-sm-4 titulo-vacante">
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Ubicación:</div>
+													<div class="col-sm-6 detalle-sp">
+														TACNA -
+														TACNA</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Número de
+														Convocatoria:</div>
+													<div class="col-sm-6 detalle-sp">
+														007 - 2026</div>
+												</div>
+												<div class="row align-items-end">
+													<div class="col-sm-6 sub-titulo">Número de Vacante:</div>
+													<div class="col-sm-6 detalle-sp">
+														11</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Inicio de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">23/10/2026
+													</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Cierre de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">05/11/2026
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12 cuadro-vacantes">
+									<div style="width: 800px;">
+										<div class="row box-mb">
+											<div class="col-sm-8">
+												
+												<div class="row box-mb" style="overflow-wrap: break-word;">
+													<div class="col-sm-12 titulo-vacante"><label>PRACTICANTE PROFESIONAL</label>
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3 logo-vacante text-center">
+														
+														<img src="../resources/img/logo-talento-peru.png" width="120px" height="45px" />
+													</div>
+													<div class="col-sm-9 text-left nombre-entidad">
+														
+														DIRECCION REGIONAL DE TRANSPORTES Y COMUNICACIONES TACNA
+													</div>
+												</div>
+												<div style="height: 15px;"></div>
+												<div class="row box-mb">
+													<div class="col-sm-3 text-left sub-titulo" style="padding-left: 10px !important;">
+														
+														Tipo de Modalidad:
+													</div>
+													<div class="col-sm-9 text-left detalle-sp">
+														
+														Practicas Profesionales
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3">
+														
+
+													</div>
+													<div class="col-sm-9 text-center">
+														
+														<div class="col-sm-12 text-center box-dig-btn"><button id="frmLstModFormativas:idPnlRepeatPuestos:1:j_idt66" name="frmLstModFormativas:idPnlRepeatPuestos:1:j_idt66" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="PF('statusDialog').show();ga('send', 'event', 'ver mas', 'Ver mas detalle modalidades', 'Ver mas detalle modalidades');;" style="border-radius: 4px !important;border: 1px solid #FFC729!important" title="Ver más" type="submit"><span class="ui-button-text ui-c">   Ver más   </span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:1:j_idt66_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_1_j_idt66",{id:"frmLstModFormativas:idPnlRepeatPuestos:1:j_idt66"});</script><button id="frmLstModFormativas:idPnlRepeatPuestos:1:j_idt68" name="frmLstModFormativas:idPnlRepeatPuestos:1:j_idt68" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="ga('send', 'event', 'Descargar word', 'Descargar word detalle modalidades', 'Descargar word detalle modalidades');;" style="border-radius:4px!important;                                white-space: pre;                                margin-top:10px;background-color: #76DCFF!important;     color: #146080;     border: 1px solid #FFC729!important" title="Convocatoria en Word" type="submit"><span class="ui-button-text ui-c">Convocatoria en
+Word</span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:1:j_idt68_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_1_j_idt68",{id:"frmLstModFormativas:idPnlRepeatPuestos:1:j_idt68"});</script>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="col-sm-4 titulo-vacante">
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Ubicación:</div>
+													<div class="col-sm-6 detalle-sp">
+														TACNA -
+														TACNA</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Número de
+														Convocatoria:</div>
+													<div class="col-sm-6 detalle-sp">
+														004 - 2026</div>
+												</div>
+												<div class="row align-items-end">
+													<div class="col-sm-6 sub-titulo">Número de Vacante:</div>
+													<div class="col-sm-6 detalle-sp">
+														1</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Inicio de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">23/10/2026
+													</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Cierre de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">05/11/2026
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12 cuadro-vacantes">
+									<div style="width: 800px;">
+										<div class="row box-mb">
+											<div class="col-sm-8">
+												
+												<div class="row box-mb" style="overflow-wrap: break-word;">
+													<div class="col-sm-12 titulo-vacante"><label>PRACTICANTE PROFESIONAL</label>
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3 logo-vacante text-center">
+														
+														<img src="../resources/img/logo-talento-peru.png" width="120px" height="45px" />
+													</div>
+													<div class="col-sm-9 text-left nombre-entidad">
+														
+														DIRECCION REGIONAL DE TRANSPORTES Y COMUNICACIONES TACNA
+													</div>
+												</div>
+												<div style="height: 15px;"></div>
+												<div class="row box-mb">
+													<div class="col-sm-3 text-left sub-titulo" style="padding-left: 10px !important;">
+														
+														Tipo de Modalidad:
+													</div>
+													<div class="col-sm-9 text-left detalle-sp">
+														
+														Practicas Profesionales
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3">
+														
+
+													</div>
+													<div class="col-sm-9 text-center">
+														
+														<div class="col-sm-12 text-center box-dig-btn"><button id="frmLstModFormativas:idPnlRepeatPuestos:2:j_idt66" name="frmLstModFormativas:idPnlRepeatPuestos:2:j_idt66" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="PF('statusDialog').show();ga('send', 'event', 'ver mas', 'Ver mas detalle modalidades', 'Ver mas detalle modalidades');;" style="border-radius: 4px !important;border: 1px solid #FFC729!important" title="Ver más" type="submit"><span class="ui-button-text ui-c">   Ver más   </span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:2:j_idt66_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_2_j_idt66",{id:"frmLstModFormativas:idPnlRepeatPuestos:2:j_idt66"});</script><button id="frmLstModFormativas:idPnlRepeatPuestos:2:j_idt68" name="frmLstModFormativas:idPnlRepeatPuestos:2:j_idt68" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="ga('send', 'event', 'Descargar word', 'Descargar word detalle modalidades', 'Descargar word detalle modalidades');;" style="border-radius:4px!important;                                white-space: pre;                                margin-top:10px;background-color: #76DCFF!important;     color: #146080;     border: 1px solid #FFC729!important" title="Convocatoria en Word" type="submit"><span class="ui-button-text ui-c">Convocatoria en
+Word</span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:2:j_idt68_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_2_j_idt68",{id:"frmLstModFormativas:idPnlRepeatPuestos:2:j_idt68"});</script>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="col-sm-4 titulo-vacante">
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Ubicación:</div>
+													<div class="col-sm-6 detalle-sp">
+														TACNA -
+														TACNA</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Número de
+														Convocatoria:</div>
+													<div class="col-sm-6 detalle-sp">
+														005 - 2026</div>
+												</div>
+												<div class="row align-items-end">
+													<div class="col-sm-6 sub-titulo">Número de Vacante:</div>
+													<div class="col-sm-6 detalle-sp">
+														1</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Inicio de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">23/10/2026
+													</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Cierre de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">05/11/2026
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12 cuadro-vacantes">
+									<div style="width: 800px;">
+										<div class="row box-mb">
+											<div class="col-sm-8">
+												
+												<div class="row box-mb" style="overflow-wrap: break-word;">
+													<div class="col-sm-12 titulo-vacante"><label>PRACTICANTE PROFESIONAL</label>
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3 logo-vacante text-center">
+														
+														<img src="../resources/img/logo-talento-peru.png" width="120px" height="45px" />
+													</div>
+													<div class="col-sm-9 text-left nombre-entidad">
+														
+														DIRECCION REGIONAL DE TRANSPORTES Y COMUNICACIONES TACNA
+													</div>
+												</div>
+												<div style="height: 15px;"></div>
+												<div class="row box-mb">
+													<div class="col-sm-3 text-left sub-titulo" style="padding-left: 10px !important;">
+														
+														Tipo de Modalidad:
+													</div>
+													<div class="col-sm-9 text-left detalle-sp">
+														
+														Practicas Profesionales
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3">
+														
+
+													</div>
+													<div class="col-sm-9 text-center">
+														
+														<div class="col-sm-12 text-center box-dig-btn"><button id="frmLstModFormativas:idPnlRepeatPuestos:3:j_idt66" name="frmLstModFormativas:idPnlRepeatPuestos:3:j_idt66" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="PF('statusDialog').show();ga('send', 'event', 'ver mas', 'Ver mas detalle modalidades', 'Ver mas detalle modalidades');;" style="border-radius: 4px !important;border: 1px solid #FFC729!important" title="Ver más" type="submit"><span class="ui-button-text ui-c">   Ver más   </span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:3:j_idt66_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_3_j_idt66",{id:"frmLstModFormativas:idPnlRepeatPuestos:3:j_idt66"});</script><button id="frmLstModFormativas:idPnlRepeatPuestos:3:j_idt68" name="frmLstModFormativas:idPnlRepeatPuestos:3:j_idt68" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="ga('send', 'event', 'Descargar word', 'Descargar word detalle modalidades', 'Descargar word detalle modalidades');;" style="border-radius:4px!important;                                white-space: pre;                                margin-top:10px;background-color: #76DCFF!important;     color: #146080;     border: 1px solid #FFC729!important" title="Convocatoria en Word" type="submit"><span class="ui-button-text ui-c">Convocatoria en
+Word</span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:3:j_idt68_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_3_j_idt68",{id:"frmLstModFormativas:idPnlRepeatPuestos:3:j_idt68"});</script>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="col-sm-4 titulo-vacante">
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Ubicación:</div>
+													<div class="col-sm-6 detalle-sp">
+														TACNA -
+														TACNA</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Número de
+														Convocatoria:</div>
+													<div class="col-sm-6 detalle-sp">
+														004 - 2026</div>
+												</div>
+												<div class="row align-items-end">
+													<div class="col-sm-6 sub-titulo">Número de Vacante:</div>
+													<div class="col-sm-6 detalle-sp">
+														1</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Inicio de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">23/10/2026
+													</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Cierre de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">05/11/2026
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12 cuadro-vacantes">
+									<div style="width: 800px;">
+										<div class="row box-mb">
+											<div class="col-sm-8">
+												
+												<div class="row box-mb" style="overflow-wrap: break-word;">
+													<div class="col-sm-12 titulo-vacante"><label>EGRESADO(A) UNIVERSITARIO DE LA CARRERA PROFESIONAL DE CONTABILIDAD, DERECHO, ADMINISTRACIÓN Y/O AFINES POR LA FORMACIÓN</label>
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3 logo-vacante text-center">
+														
+														<img src="../resources/img/logo-talento-peru.png" width="120px" height="45px" />
+													</div>
+													<div class="col-sm-9 text-left nombre-entidad">
+														
+														GOBIERNO REGIONAL DE TACNA
+													</div>
+												</div>
+												<div style="height: 15px;"></div>
+												<div class="row box-mb">
+													<div class="col-sm-3 text-left sub-titulo" style="padding-left: 10px !important;">
+														
+														Tipo de Modalidad:
+													</div>
+													<div class="col-sm-9 text-left detalle-sp">
+														
+														Practicas Profesionales
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3">
+														
+
+													</div>
+													<div class="col-sm-9 text-center">
+														
+														<div class="col-sm-12 text-center box-dig-btn"><button id="frmLstModFormativas:idPnlRepeatPuestos:4:j_idt66" name="frmLstModFormativas:idPnlRepeatPuestos:4:j_idt66" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="PF('statusDialog').show();ga('send', 'event', 'ver mas', 'Ver mas detalle modalidades', 'Ver mas detalle modalidades');;" style="border-radius: 4px !important;border: 1px solid #FFC729!important" title="Ver más" type="submit"><span class="ui-button-text ui-c">   Ver más   </span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:4:j_idt66_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_4_j_idt66",{id:"frmLstModFormativas:idPnlRepeatPuestos:4:j_idt66"});</script><button id="frmLstModFormativas:idPnlRepeatPuestos:4:j_idt68" name="frmLstModFormativas:idPnlRepeatPuestos:4:j_idt68" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="ga('send', 'event', 'Descargar word', 'Descargar word detalle modalidades', 'Descargar word detalle modalidades');;" style="border-radius:4px!important;                                white-space: pre;                                margin-top:10px;background-color: #76DCFF!important;     color: #146080;     border: 1px solid #FFC729!important" title="Convocatoria en Word" type="submit"><span class="ui-button-text ui-c">Convocatoria en
+Word</span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:4:j_idt68_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_4_j_idt68",{id:"frmLstModFormativas:idPnlRepeatPuestos:4:j_idt68"});</script>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="col-sm-4 titulo-vacante">
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Ubicación:</div>
+													<div class="col-sm-6 detalle-sp">
+														TACNA -
+														TACNA</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Número de
+														Convocatoria:</div>
+													<div class="col-sm-6 detalle-sp">
+														022 - 2026</div>
+												</div>
+												<div class="row align-items-end">
+													<div class="col-sm-6 sub-titulo">Número de Vacante:</div>
+													<div class="col-sm-6 detalle-sp">
+														1</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Inicio de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">23/10/2026
+													</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Cierre de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">06/11/2026
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12 cuadro-vacantes">
+									<div style="width: 800px;">
+										<div class="row box-mb">
+											<div class="col-sm-8">
+												
+												<div class="row box-mb" style="overflow-wrap: break-word;">
+													<div class="col-sm-12 titulo-vacante"><label>ESTUDIANTE UNIVERSITARIO A PARTIR DEL 9NO. CICLO DE LA CARRERA PROFESIONAL DE INGENIERÍA COMERCIAL, ADMINISTRACIÓN, CONTABILIDAD O AFINES POR LA FORMACIÓN.</label>
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3 logo-vacante text-center">
+														
+														<img src="../resources/img/logo-talento-peru.png" width="120px" height="45px" />
+													</div>
+													<div class="col-sm-9 text-left nombre-entidad">
+														
+														GOBIERNO REGIONAL DE TACNA
+													</div>
+												</div>
+												<div style="height: 15px;"></div>
+												<div class="row box-mb">
+													<div class="col-sm-3 text-left sub-titulo" style="padding-left: 10px !important;">
+														
+														Tipo de Modalidad:
+													</div>
+													<div class="col-sm-9 text-left detalle-sp">
+														
+														Practicas Pre-Profesionales
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3">
+														
+
+													</div>
+													<div class="col-sm-9 text-center">
+														
+														<div class="col-sm-12 text-center box-dig-btn"><button id="frmLstModFormativas:idPnlRepeatPuestos:5:j_idt66" name="frmLstModFormativas:idPnlRepeatPuestos:5:j_idt66" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="PF('statusDialog').show();ga('send', 'event', 'ver mas', 'Ver mas detalle modalidades', 'Ver mas detalle modalidades');;" style="border-radius: 4px !important;border: 1px solid #FFC729!important" title="Ver más" type="submit"><span class="ui-button-text ui-c">   Ver más   </span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:5:j_idt66_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_5_j_idt66",{id:"frmLstModFormativas:idPnlRepeatPuestos:5:j_idt66"});</script><button id="frmLstModFormativas:idPnlRepeatPuestos:5:j_idt68" name="frmLstModFormativas:idPnlRepeatPuestos:5:j_idt68" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="ga('send', 'event', 'Descargar word', 'Descargar word detalle modalidades', 'Descargar word detalle modalidades');;" style="border-radius:4px!important;                                white-space: pre;                                margin-top:10px;background-color: #76DCFF!important;     color: #146080;     border: 1px solid #FFC729!important" title="Convocatoria en Word" type="submit"><span class="ui-button-text ui-c">Convocatoria en
+Word</span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:5:j_idt68_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_5_j_idt68",{id:"frmLstModFormativas:idPnlRepeatPuestos:5:j_idt68"});</script>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="col-sm-4 titulo-vacante">
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Ubicación:</div>
+													<div class="col-sm-6 detalle-sp">
+														TACNA -
+														TACNA</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Número de
+														Convocatoria:</div>
+													<div class="col-sm-6 detalle-sp">
+														010 - 2026</div>
+												</div>
+												<div class="row align-items-end">
+													<div class="col-sm-6 sub-titulo">Número de Vacante:</div>
+													<div class="col-sm-6 detalle-sp">
+														1</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Inicio de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">23/10/2026
+													</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Cierre de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">06/11/2026
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12 cuadro-vacantes">
+									<div style="width: 800px;">
+										<div class="row box-mb">
+											<div class="col-sm-8">
+												
+												<div class="row box-mb" style="overflow-wrap: break-word;">
+													<div class="col-sm-12 titulo-vacante"><label>PRACTICANTE PROFESIONAL PARA L SGTD_2DA CONVOCATORIA</label>
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3 logo-vacante text-center">
+														
+														<img src="../resources/img/logo-talento-peru.png" width="120px" height="45px" />
+													</div>
+													<div class="col-sm-9 text-left nombre-entidad">
+														
+														ZONA REGISTRAL NØ III SEDE MOYOBAMBA
+													</div>
+												</div>
+												<div style="height: 15px;"></div>
+												<div class="row box-mb">
+													<div class="col-sm-3 text-left sub-titulo" style="padding-left: 10px !important;">
+														
+														Tipo de Modalidad:
+													</div>
+													<div class="col-sm-9 text-left detalle-sp">
+														
+														Practicas Profesionales
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3">
+														
+
+													</div>
+													<div class="col-sm-9 text-center">
+														
+														<div class="col-sm-12 text-center box-dig-btn"><button id="frmLstModFormativas:idPnlRepeatPuestos:6:j_idt66" name="frmLstModFormativas:idPnlRepeatPuestos:6:j_idt66" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="PF('statusDialog').show();ga('send', 'event', 'ver mas', 'Ver mas detalle modalidades', 'Ver mas detalle modalidades');;" style="border-radius: 4px !important;border: 1px solid #FFC729!important" title="Ver más" type="submit"><span class="ui-button-text ui-c">   Ver más   </span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:6:j_idt66_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_6_j_idt66",{id:"frmLstModFormativas:idPnlRepeatPuestos:6:j_idt66"});</script><button id="frmLstModFormativas:idPnlRepeatPuestos:6:j_idt68" name="frmLstModFormativas:idPnlRepeatPuestos:6:j_idt68" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="ga('send', 'event', 'Descargar word', 'Descargar word detalle modalidades', 'Descargar word detalle modalidades');;" style="border-radius:4px!important;                                white-space: pre;                                margin-top:10px;background-color: #76DCFF!important;     color: #146080;     border: 1px solid #FFC729!important" title="Convocatoria en Word" type="submit"><span class="ui-button-text ui-c">Convocatoria en
+Word</span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:6:j_idt68_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_6_j_idt68",{id:"frmLstModFormativas:idPnlRepeatPuestos:6:j_idt68"});</script>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="col-sm-4 titulo-vacante">
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Ubicación:</div>
+													<div class="col-sm-6 detalle-sp">
+														SAN MARTIN -
+														MOYOBAMBA</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Número de
+														Convocatoria:</div>
+													<div class="col-sm-6 detalle-sp">
+														0017 - 2026</div>
+												</div>
+												<div class="row align-items-end">
+													<div class="col-sm-6 sub-titulo">Número de Vacante:</div>
+													<div class="col-sm-6 detalle-sp">
+														2</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Inicio de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">23/10/2026
+													</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Cierre de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">05/11/2026
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12 cuadro-vacantes">
+									<div style="width: 800px;">
+										<div class="row box-mb">
+											<div class="col-sm-8">
+												
+												<div class="row box-mb" style="overflow-wrap: break-word;">
+													<div class="col-sm-12 titulo-vacante"><label>EGRESADO(A) UNIVERSITARIO DE LA CARRERA PROFESIONAL DE ADMINISTRACIÓN, INGENIERÍA COMERCIAL, CONTABILIDAD Y/O AFINES POR LA FORMACIÓN, O, EGRESADO TÉCNICO SUPERIOR EN LAS CARRERAS DE SECRETARIADO, CON</label>
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3 logo-vacante text-center">
+														
+														<img src="../resources/img/logo-talento-peru.png" width="120px" height="45px" />
+													</div>
+													<div class="col-sm-9 text-left nombre-entidad">
+														
+														GOBIERNO REGIONAL DE TACNA
+													</div>
+												</div>
+												<div style="height: 15px;"></div>
+												<div class="row box-mb">
+													<div class="col-sm-3 text-left sub-titulo" style="padding-left: 10px !important;">
+														
+														Tipo de Modalidad:
+													</div>
+													<div class="col-sm-9 text-left detalle-sp">
+														
+														Practicas Profesionales
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3">
+														
+
+													</div>
+													<div class="col-sm-9 text-center">
+														
+														<div class="col-sm-12 text-center box-dig-btn"><button id="frmLstModFormativas:idPnlRepeatPuestos:7:j_idt66" name="frmLstModFormativas:idPnlRepeatPuestos:7:j_idt66" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="PF('statusDialog').show();ga('send', 'event', 'ver mas', 'Ver mas detalle modalidades', 'Ver mas detalle modalidades');;" style="border-radius: 4px !important;border: 1px solid #FFC729!important" title="Ver más" type="submit"><span class="ui-button-text ui-c">   Ver más   </span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:7:j_idt66_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_7_j_idt66",{id:"frmLstModFormativas:idPnlRepeatPuestos:7:j_idt66"});</script><button id="frmLstModFormativas:idPnlRepeatPuestos:7:j_idt68" name="frmLstModFormativas:idPnlRepeatPuestos:7:j_idt68" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="ga('send', 'event', 'Descargar word', 'Descargar word detalle modalidades', 'Descargar word detalle modalidades');;" style="border-radius:4px!important;                                white-space: pre;                                margin-top:10px;background-color: #76DCFF!important;     color: #146080;     border: 1px solid #FFC729!important" title="Convocatoria en Word" type="submit"><span class="ui-button-text ui-c">Convocatoria en
+Word</span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:7:j_idt68_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_7_j_idt68",{id:"frmLstModFormativas:idPnlRepeatPuestos:7:j_idt68"});</script>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="col-sm-4 titulo-vacante">
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Ubicación:</div>
+													<div class="col-sm-6 detalle-sp">
+														TACNA -
+														TACNA</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Número de
+														Convocatoria:</div>
+													<div class="col-sm-6 detalle-sp">
+														023 - 2026</div>
+												</div>
+												<div class="row align-items-end">
+													<div class="col-sm-6 sub-titulo">Número de Vacante:</div>
+													<div class="col-sm-6 detalle-sp">
+														2</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Inicio de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">23/10/2026
+													</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Cierre de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">05/11/2026
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12 cuadro-vacantes">
+									<div style="width: 800px;">
+										<div class="row box-mb">
+											<div class="col-sm-8">
+												
+												<div class="row box-mb" style="overflow-wrap: break-word;">
+													<div class="col-sm-12 titulo-vacante"><label>PRÁCTICAS PREPROFESIONALES LIMA</label>
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3 logo-vacante text-center">
+														
+														<img src="../resources/img/logo-talento-peru.png" width="120px" height="45px" />
+													</div>
+													<div class="col-sm-9 text-left nombre-entidad">
+														
+														SUPERINTENDENCIA NACIONAL DE ADUANAS Y DE ADMINISTRACION TRIBUTARIA - SUNAT
+													</div>
+												</div>
+												<div style="height: 15px;"></div>
+												<div class="row box-mb">
+													<div class="col-sm-3 text-left sub-titulo" style="padding-left: 10px !important;">
+														
+														Tipo de Modalidad:
+													</div>
+													<div class="col-sm-9 text-left detalle-sp">
+														
+														Practicas Pre-Profesionales
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3">
+														
+
+													</div>
+													<div class="col-sm-9 text-center">
+														
+														<div class="col-sm-12 text-center box-dig-btn"><button id="frmLstModFormativas:idPnlRepeatPuestos:8:j_idt66" name="frmLstModFormativas:idPnlRepeatPuestos:8:j_idt66" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="PF('statusDialog').show();ga('send', 'event', 'ver mas', 'Ver mas detalle modalidades', 'Ver mas detalle modalidades');;" style="border-radius: 4px !important;border: 1px solid #FFC729!important" title="Ver más" type="submit"><span class="ui-button-text ui-c">   Ver más   </span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:8:j_idt66_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_8_j_idt66",{id:"frmLstModFormativas:idPnlRepeatPuestos:8:j_idt66"});</script><button id="frmLstModFormativas:idPnlRepeatPuestos:8:j_idt68" name="frmLstModFormativas:idPnlRepeatPuestos:8:j_idt68" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="ga('send', 'event', 'Descargar word', 'Descargar word detalle modalidades', 'Descargar word detalle modalidades');;" style="border-radius:4px!important;                                white-space: pre;                                margin-top:10px;background-color: #76DCFF!important;     color: #146080;     border: 1px solid #FFC729!important" title="Convocatoria en Word" type="submit"><span class="ui-button-text ui-c">Convocatoria en
+Word</span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:8:j_idt68_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_8_j_idt68",{id:"frmLstModFormativas:idPnlRepeatPuestos:8:j_idt68"});</script>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="col-sm-4 titulo-vacante">
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Ubicación:</div>
+													<div class="col-sm-6 detalle-sp">
+														LIMA -
+														LIMA</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Número de
+														Convocatoria:</div>
+													<div class="col-sm-6 detalle-sp">
+														003 - 2026</div>
+												</div>
+												<div class="row align-items-end">
+													<div class="col-sm-6 sub-titulo">Número de Vacante:</div>
+													<div class="col-sm-6 detalle-sp">
+														103</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Inicio de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">23/10/2026
+													</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Cierre de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">05/11/2026
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12 cuadro-vacantes">
+									<div style="width: 800px;">
+										<div class="row box-mb">
+											<div class="col-sm-8">
+												
+												<div class="row box-mb" style="overflow-wrap: break-word;">
+													<div class="col-sm-12 titulo-vacante"><label>PRÁCTICAS PREPROFESIONALES ZONA 1</label>
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3 logo-vacante text-center">
+														
+														<img src="../resources/img/logo-talento-peru.png" width="120px" height="45px" />
+													</div>
+													<div class="col-sm-9 text-left nombre-entidad">
+														
+														SUPERINTENDENCIA NACIONAL DE ADUANAS Y DE ADMINISTRACION TRIBUTARIA - SUNAT
+													</div>
+												</div>
+												<div style="height: 15px;"></div>
+												<div class="row box-mb">
+													<div class="col-sm-3 text-left sub-titulo" style="padding-left: 10px !important;">
+														
+														Tipo de Modalidad:
+													</div>
+													<div class="col-sm-9 text-left detalle-sp">
+														
+														Practicas Pre-Profesionales
+													</div>
+												</div>
+												<div class="row box-mb">
+													<div class="col-sm-3">
+														
+
+													</div>
+													<div class="col-sm-9 text-center">
+														
+														<div class="col-sm-12 text-center box-dig-btn"><button id="frmLstModFormativas:idPnlRepeatPuestos:9:j_idt66" name="frmLstModFormativas:idPnlRepeatPuestos:9:j_idt66" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="PF('statusDialog').show();ga('send', 'event', 'ver mas', 'Ver mas detalle modalidades', 'Ver mas detalle modalidades');;" style="border-radius: 4px !important;border: 1px solid #FFC729!important" title="Ver más" type="submit"><span class="ui-button-text ui-c">   Ver más   </span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:9:j_idt66_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_9_j_idt66",{id:"frmLstModFormativas:idPnlRepeatPuestos:9:j_idt66"});</script><button id="frmLstModFormativas:idPnlRepeatPuestos:9:j_idt68" name="frmLstModFormativas:idPnlRepeatPuestos:9:j_idt68" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-primary btn-sensitive" onclick="ga('send', 'event', 'Descargar word', 'Descargar word detalle modalidades', 'Descargar word detalle modalidades');;" style="border-radius:4px!important;                                white-space: pre;                                margin-top:10px;background-color: #76DCFF!important;     color: #146080;     border: 1px solid #FFC729!important" title="Convocatoria en Word" type="submit"><span class="ui-button-text ui-c">Convocatoria en
+Word</span></button><script id="frmLstModFormativas:idPnlRepeatPuestos:9:j_idt68_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_idPnlRepeatPuestos_9_j_idt68",{id:"frmLstModFormativas:idPnlRepeatPuestos:9:j_idt68"});</script>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="col-sm-4 titulo-vacante">
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Ubicación:</div>
+													<div class="col-sm-6 detalle-sp">
+														CAJAMARCA -
+														CAJAMARCA</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Número de
+														Convocatoria:</div>
+													<div class="col-sm-6 detalle-sp">
+														004 - 2026</div>
+												</div>
+												<div class="row align-items-end">
+													<div class="col-sm-6 sub-titulo">Número de Vacante:</div>
+													<div class="col-sm-6 detalle-sp">
+														49</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Inicio de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">23/10/2026
+													</div>
+												</div>
+												<div class="row box-mb cuadro-detalle">
+													<div class="col-sm-6 sub-titulo">Cierre de
+														Publicación:</div>
+													<div class="col-sm-6 detalle-sp">05/11/2026
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+						</div>
+					</div>
+						<div class="row">
+							<div class="col-sm-2"></div>
+							<div class="col-sm-8"><button id="frmLstModFormativas:j_idt77" name="frmLstModFormativas:j_idt77" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left ui-state-disabled btn-paginator" onclick="PF('statusDialog').show();;PrimeFaces.ab({s:&quot;frmLstModFormativas:j_idt77&quot;,u:&quot;frmLstModFormativas:mensaje frmLstModFormativas&quot;,onco:function(xhr,status,args){PF('statusDialog').hide();;}});return false;" type="submit" disabled="disabled"><span class="ui-button-icon-left ui-icon ui-c icon-fast-backward imgIconLeft"></span><span class="ui-button-text ui-c">Primero</span></button><script id="frmLstModFormativas:j_idt77_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_j_idt77",{id:"frmLstModFormativas:j_idt77"});</script><button id="frmLstModFormativas:j_idt78" name="frmLstModFormativas:j_idt78" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left ui-state-disabled btn-paginator" onclick="PF('statusDialog').show();;PrimeFaces.ab({s:&quot;frmLstModFormativas:j_idt78&quot;,u:&quot;frmLstModFormativas:mensaje frmLstModFormativas&quot;,onco:function(xhr,status,args){PF('statusDialog').hide();;}});return false;" type="submit" disabled="disabled"><span class="ui-button-icon-left ui-icon ui-c icon-backward imgIconLeft"></span><span class="ui-button-text ui-c">Atras</span></button><script id="frmLstModFormativas:j_idt78_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_j_idt78",{id:"frmLstModFormativas:j_idt78"});</script><label class="control-label btn-paginator-cnt">Página 1 de 13</label><button id="frmLstModFormativas:j_idt80" name="frmLstModFormativas:j_idt80" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left btn-paginator position-icon-right" onclick="PF('statusDialog').show();;PrimeFaces.ab({s:&quot;frmLstModFormativas:j_idt80&quot;,u:&quot;frmLstModFormativas:mensaje frmLstModFormativas&quot;,onco:function(xhr,status,args){PF('statusDialog').hide();;}});return false;" type="submit"><span class="ui-button-icon-left ui-icon ui-c icon-forward imgIconRight"></span><span class="ui-button-text ui-c">Sig.</span></button><script id="frmLstModFormativas:j_idt80_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_j_idt80",{id:"frmLstModFormativas:j_idt80"});</script><button id="frmLstModFormativas:j_idt81" name="frmLstModFormativas:j_idt81" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left btn-paginator position-icon-right" onclick="PF('statusDialog').show();;PrimeFaces.ab({s:&quot;frmLstModFormativas:j_idt81&quot;,u:&quot;frmLstModFormativas:mensaje frmLstModFormativas&quot;,onco:function(xhr,status,args){PF('statusDialog').hide();;}});return false;" type="submit"><span class="ui-button-icon-left ui-icon ui-c icon-fast-forward imgIconRight"></span><span class="ui-button-text ui-c">Último</span></button><script id="frmLstModFormativas:j_idt81_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmLstModFormativas_j_idt81",{id:"frmLstModFormativas:j_idt81"});</script>
+							</div>
+							<div class="col-sm-2"></div>
+						</div>
+				</div>
+				
+				
+			</div><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="-6027491435500056745:-8111538251503730277" autocomplete="off" />
+</form><div id="j_idt84" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow ui-hidden-container"><div class="ui-dialog-content ui-widget-content"><img id="j_idt85" src="../resources/img/loadingbar.gif?pfdrid_c=true" alt="" /></div></div><script id="j_idt84_s" type="text/javascript">$(function(){PrimeFaces.cw("Dialog","statusDialog",{id:"j_idt84",draggable:false,resizable:false,modal:true});});</script>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div class="grisFooter">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 " style="margin-top: 6px;">
+						<p style="margin-left: 30px;">
+							<small>Aplicativo Admistrado por Subjefatura de Tecnología de la Información</small>
+						</p>
+						<p style="margin-left: 42px;">
+							<small>Pasaje Francisco de Zela 150 - Piso 10, Jesus María, Lima, Perú</small>
+						</p>
+						<p style="margin-left: -15px;">
+							<small><span class="icon-mobile"></span>(511) 206-3370
+								Anexo 2519 (empl.) 2610 (prác.) | <span class="glyphicon glyphicon-envelope"></span>
+								talentoperu@servir.gob.pe </small>
+						</p>
+					</div>
+					<div class="col-md-6 text-right">
+						<img src="../../resources/img/img_inst.png" width="450px" style="padding: 10px 0" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="redFooter">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6">
+						<span>Autoridad Nacional del Servicio Civil (SERVIR) - Todos los derechos reservados</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/jquery.jtime.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/scripts.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#time_box').jTime();
+		});
+
+		$(function() {
+			$('#defaultReal').realperson();
+		});
+
+		$(function() {
+			$('#defaultReal2').realperson();
+		});
+	</script>
+	<script type="text/javascript">
+		function start() {
+			PF('statusDialog').show();
+		}
+
+		function stop() {
+			PF('statusDialog').hide();
+		}
+	</script>
+	<script type="text/javascript">
+		function callCaptcha() {
+			$('#defaultReal').realperson();
+		}
+	</script>
+	<script type="text/javascript">
+		function callCaptcha2() {
+			$('#defaultReal2').realperson();
+		}
+	</script>
+	<script type="text/javascript">
+		function printDiv(divName) {
+			document.head
+					.insertAdjacentHTML('beforeend',
+							'<link rel="stylesheet" type="text/css" href="./css/main.css" />');
+			var printContents = document.getElementById(divName).innerHTML;
+			var originalContents = document.body.innerHTML;
+
+			document.body.innerHTML = printContents;
+
+			window.print();
+			document.body.innerHTML = originalContents;
+		}
+	</script><script type="text/javascript">$(function(){PF('statusDialog').show();PF('statusDialog').hide();ga('send', 'event', 'buscar varios prï¿½cticas', 'buscar prï¿½cticas', 'Busqueda de prï¿½cticas'); ;});</script><script type="text/javascript" src="/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=417492405" async></script></body>
+</html>

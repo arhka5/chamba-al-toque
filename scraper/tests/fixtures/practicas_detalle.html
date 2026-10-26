@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es" class="no-js" xmlns="http://www.w3.org/1999/xhtml"><head><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/theme.css?ln=primefaces-aristo" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/bootstrap.min.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/fonts.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/styles.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/css_font/fontello.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/css_font/animation.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/font-awesome.min.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/main.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/./css/jquery.realperson.css" /><link type="text/css" rel="stylesheet" href="/DifusionOfertasExterno/faces/javax.faces.resource/primefaces.css?ln=primefaces&amp;v=5.3" /><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/jquery/jquery.js?ln=primefaces&amp;v=5.3"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/jquery/jquery-plugins.js?ln=primefaces&amp;v=5.3"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/primefaces.js?ln=primefaces&amp;v=5.3"></script><script type="text/javascript">if(window.PrimeFaces){PrimeFaces.settings.projectStage='Development';}</script>
+	<meta charset="utf-8" />
+	<title>
+        .:Sistema de Difusión de Ofertas Laborales y Prácticas del Sector Público:. - Detalle de Vacante de Modalidades Formativas
+    </title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="X-UA-Compatible" content="IE=7,8,9" />
+	<link rel="shortcut icon" type="image/x-icon" href="/DifusionOfertasExterno/faces/resources/img/favicon.ico" /><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/prefixfree.min.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/barrarScroll.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/bootstrap.min.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/main/app.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/validator.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/primefaces-locale-es.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/modernizr.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/browser.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/jquery.plugin.min.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/jquery.realperson.min.js"></script><!--[if IE 7]><link rel="stylesheet" href="fontello-ie7.css" /><![endif]--><!--[if lte IE 7]><link rel="stylesfont-awesome.min.cssheet" href="ie6-ie7.css" /><![endif]-->
+		<style>
+		.titulo-seccion{
+		  color: #D3201D !important;
+		  font-size: 20px;
+		  padding-left: 0px;
+		}
+		.seccion-detalle{
+		  padding: 10px 30px 10px 30px;
+		}
+		.cuadro-seccion{
+		  margin-top: 8px;
+		  border: 1px solid #C2BEBE;
+		  -moz-box-shadow:    1px 3px 7px 6px #DCDCDC;
+		  -webkit-box-shadow: 1px 3px 7px 6px #DCDCDC;
+		  box-shadow:         1px 3px 7px 6px #DCDCDC;
+		  border-radius: 3px 3px 3px 3px;
+		  padding: 20px 15px 20px 15px;
+		  line-height: 18px;
+		}
+		.sp-aviso0{
+		  color: #146080;
+		  font-weight: 500;
+		  font-size: 20px;
+		  margin-bottom: 5px;
+		  font-family: arial; /*"Comic Sans MS", "Comic Sans", cursive;*/
+		}
+		.sp-aviso{
+		  color: #000;
+		  font-weight: 650;
+		  font-size: 13px;
+		  margin-top: 7px;
+		  font-family: arial; /*"Comic Sans MS", "Comic Sans", cursive;*/
+		}
+		.sub-titulo0{
+		  color: #000;
+		  font-weight: 650;
+		  font-size: 15px;
+		  margin-bottom: 15px;
+		}
+		.sub-titulo{
+		  color: #000;
+		  font-weight: 650;
+		  font-size: 12px;
+		  border-top: 1px solid #EFEFEF;
+		  font-family: arial; /*"Comic Sans MS", "Comic Sans", cursive;*/
+		}
+		.sub-titulo-2{
+		  color: #000;
+		  font-weight: 650;
+		  font-size: 12.6px;
+		  border-top: 1px solid #EFEFEF;
+		  font-family: arial; /*"Comic Sans MS", "Comic Sans", cursive;*/
+		}
+		.detalle-sp{
+		  color: #000;
+		  font-weight: normal;
+		  font-size: 12.5px;
+		  border-top: 1px solid #EFEFEF;
+		  
+		}
+		.cuadro-seccion-lat{
+		  margin-top: 15px;
+		  border: 1px solid #C2BEBE;
+		  -moz-box-shadow:    1px 3px 7px 6px #DCDCDC;
+		  -webkit-box-shadow: 1px 3px 7px 6px #DCDCDC;
+		  box-shadow:         1px 3px 7px 6px #DCDCDC;
+		  border-radius: 2px 2px 2px 2px;
+		  padding: 10px 15px 10px 15px;
+		}
+		.cuadro-seccion-btn{
+		  margin-top: 35px;
+		  width:100% !important;
+		  height:100% !important;
+		  border: 1px solid #fff;
+		  border-radius: 4px 4px 4px 4px;
+		  padding: 10px 15px 10px 15px;
+		  font-weight:200;
+		  color: #fff;
+		  background: #146080;
+		}
+		.cuadro-seccion-btn2{
+		  margin-top: 10px;
+		  width:100% !important;
+		  height:100% !important;
+		  border: 1px solid #fff;
+		  border-radius: 4px 4px 4px 4px;
+		  padding: 10px 15px 10px 15px;
+		  color: #fff;
+		  background: #999;
+		}
+		.ocultarImgIcon2{
+		  background-position:0 20px !important;
+		  color: #fff;
+		  text-indent:0 !important;
+		  font-size: 20px;
+		  width: 30px;
+		  height: 25px;
+		  margin-top: -15px !important;
+ 		  margin-left: 13% !important;
+		}
+ 		</style>
+ 		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		
+		  ga('create', 'UA-154559467-3', 'auto');
+		  ga('send', 'pageview', 'event');
+		</script></head><body>
+	<div class="navbar navbar-inverse set-radius-zero">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a id="box-logo" class="navbar-brand" href="https://www.servir.gob.pe/" target="_blank"> servir </a>
+			</div>
+			<div class="left-div">
+				<div>
+					<a id="box-logo3" class="navbar-brand"> Talento </a>
+				</div>
+				<div>
+					<small>Versión 1.4.1.3</small>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content-wrapper box_main_app">
+		<div id="box-top-inf">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col-sm-4">
+						<div id="box-info-user" style="font-size: 12px; font-weight: 300;">
+							<i class="fa fa-calendar" style="opacity: 0.6; margin-right: 8px;"></i> <span id="date_box"></span> <i class="fa fa-clock-o" style="opacity: 0.6; margin-left: 10px;"></i> <span id="time_box"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="box-main-container" class="container row-offcanvas">
+			<div id="menu-left" class="sidebar-offcanvas">
+				<div class="wrapper row-offcanvas row-offcanvas-left">
+					<aside class="left-side sidebar-offcanvas">
+						<section class="sidebar" id="nav_left_sgac">
+							<div id="btn-hidden-nav" class="toggleBtn">
+								<a href="#" data-toggle="offcanvas"><i class="fa fa-bars"></i>
+									Menú </a>
+							</div>
+							<ul class="sidebar-menu">
+								<li class="active"><a href="../consultas/ofertas_laborales.xhtml"> <i class="topSpace fa fa-caret-down pull-right"></i> <span><strong>Ofertas
+												Laborales (Convocatoria Pública)</strong></span>
+								</a></li>
+								<li class="active"><a href="../consultas/modalidades_formativas.xhtml"> <i class="topSpace fa fa-caret-down pull-right"></i> <span><strong>Prácticas</strong></span>
+								</a></li>
+								<li class="active"><a href="../consultas/contratacion_directa.xhtml"> <i class="topSpace fa fa-caret-down pull-right"></i> <span><strong>Contratación
+												Directa Decreto de Urgencia 029-2020</strong></span>
+								</a></li>
+								<li class="active"><a href="../consultas/cooperacion_laboral.xhtml"> <i class="topSpace fa fa-caret-down pull-right"></i> <span><strong>Cooperación
+												Laboral Decreto Legislativo N° 1456</strong></span>
+								</a></li>
+								
+								<li class="active"><a href="https://talentoentidad.servir.gob.pe/#/home" target="_blank" style="font-family: 'Cabin', sans-serif; color: rgb(2, 68, 135);"> <i class="topSpace fa fa-caret-down pull-right"></i> <span><strong>Ver Convocatorias
+												Talento V.2</strong></span>
+								</a></li>
+							</ul>
+						</section>
+					</aside>
+				</div>
+			</div>
+			<div id="main-content-sidel">
+				<div class="row spac-top-10">
+					<div class="col-md-12">
+						<ol id="info-nav" class="breadcrumb">
+		<li class="active">Modalidades Formativas</li>
+		<li>Ver mï¿½s</li>
+		<li id="box-regresar" class="active pull-right">
+<form id="frmRegresar" name="frmRegresar" method="post" action="/DifusionOfertasExterno/faces/consultas/detalle_modalidades_formativas.xhtml" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="frmRegresar" value="frmRegresar" />
+<button id="frmRegresar:j_idt30" name="frmRegresar:j_idt30" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left btnlink" onclick="" type="submit"><span class="ui-button-icon-left ui-icon ui-c fa fa-angle-double-left"></span><span class="ui-button-text ui-c">Volver a la lista</span></button><script id="frmRegresar:j_idt30_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmRegresar_j_idt30",{id:"frmRegresar:j_idt30"});</script><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="7326298883166122484:6571174432184870224" autocomplete="off" />
+</form>
+	  	</li>
+						</ol>
+					</div>
+				</div>
+<form id="frmDetaModFormat" name="frmDetaModFormat" method="post" action="/DifusionOfertasExterno/faces/consultas/detalle_modalidades_formativas.xhtml" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="frmDetaModFormat" value="frmDetaModFormat" />
+<span id="frmDetaModFormat:mensaje"></span><script id="frmDetaModFormat:mensaje_s" type="text/javascript">$(function(){PrimeFaces.cw('Growl','widget_frmDetaModFormat_mensaje',{id:'frmDetaModFormat:mensaje',sticky:false,life:5000,escape:true,msgs:[]});});</script>
+		<div class="row" style="margin: 0px;">
+
+
+		<div class="col-sm-12">			
+			<div id="idDatosConvocatoria" class="row box-mb" style="width: 870px;">
+				<div class="col-sm-8">
+					<div class="row box-mb">
+						<div class="col-sm-12 seccion-detalle">
+
+
+
+
+
+							<div class="row box-mb text-center" style="overflow-wrap: break-word;">
+								<div class="col-sm-12 cuadro-seccion">
+									<div class="sp-aviso0">PRÁCTICAS PROFESIONALES SEDES DESCONCENTRADAS</div>
+									<div class="sp-aviso">SUPERINTENDENCIA NACIONAL DE ADUANAS Y DE ADMINISTRACION TRIBUTARIA - SUNAT</div>
+									<div style="height:4px;"></div><span class="sp-aviso">Fecha de Publicación: </span>23/10/2026
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row box-mb">
+						<div class="col-sm-12 seccion-detalle">
+
+
+
+
+
+							<div class="row box-mb" style="overflow-wrap: break-word;">
+								<div class="col-sm-12 cuadro-seccion">
+									<div class="row box-mb" style="margin-bottom:5px;">
+										<div class="col-sm-2 sub-titulo-2">
+											Unidad Orgánica
+										</div>
+										<div class="col-sm-10 detalle-sp">
+											Ver Convocatoria
+										</div>
+									</div>
+
+
+
+
+
+
+
+
+									<div class="row box-mb" style="margin-bottom:5px;">
+										<div class="col-sm-2 sub-titulo-2">
+											Dirección
+										</div>
+										<div class="col-sm-10 detalle-sp">
+											Sedes o establecimientos donde opera la unidad orgánica solicitante. Modalidad: Presencial. - TACNA, TACNA, TACNA
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row box-mb" style="overflow-wrap: break-word;">
+								<div class="col-sm-12 cuadro-seccion">
+									<div class="row box-mb">
+										<div class="col-sm-12">
+											<span class="sub-titulo-2">Actividades</span>
+										</div>
+										<div class="col-sm-12">
+											<ul>
+													<li>Consolidar la formación integral del estudiante para el desarrollo de sus competencias que coadyuven a su inserción laboral en el mercado de trabajo y mejoren su futura empleabilidad; promoviendo el conocimiento de las actividades y funciones que realiza la institución.</li>
+											</ul>
+										</div>
+									</div>
+									<div class="row box-mb">
+										<div class="col-sm-12">
+											<span class="sub-titulo-2">Requerimientos</span>
+										</div>
+										<div class="col-sm-12">
+											<ul>
+												<li>Egresado</li>
+												<li>Carrera Universitaria</li>
+													<li>INGENIERÍA DE SISTEMAS</li>
+													<li>INGENIERÍA DE COMPUTACIÓN Y SISTEMAS</li>
+													<li>CONTABILIDAD</li>
+													<li>DERECHO</li>
+													<li>ADMINISTRACIÓN</li>
+													<li>ADMINISTRACIÓN PÚBLICA</li>
+													<li>INGENIERÍA INDUSTRIAL</li>
+													<li>NEGOCIOS INTERNACIONALES</li>
+													<li>ECONOMÍA</li>
+											</ul>
+										</div>
+									</div>
+									<div class="row box-mb">
+										<div class="col-sm-12">
+											<span class="sub-titulo-2">Conocimientos Básicos</span>
+										</div>
+										<div class="col-sm-12">
+											<ul>
+													<li>-Microsoft Word nivel intermedio. -Microsoft Power Point nivel intermedio. -Microsoft Excel nivel intermedio.</li>
+											</ul>
+										</div>
+									</div>
+									<div class="row box-mb">
+										<div class="col-sm-12">
+											<span class="sub-titulo-2">Beneficios</span>
+										</div>
+										<div class="col-sm-12">
+											<ul>
+												<li>Subvención Económica mensual de S/
+													1,600.00
+												</li>
+												<li>6 mes(es) de duración del convenio.</li>
+												<li>Jornada laboral formativa de 40 horas semanales.</li>
+												<li>
+													Horario de Ingreso de Prácticas 
+													08:30 AM
+												</li>
+												<li>
+													Horario de Salida de Prácticas 
+													04:30 PM
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4 seccion-detalle">
+
+
+
+
+
+					<div class="row box-mb">
+						<div class="col-sm-12 cuadro-seccion">
+							<div class="row box-mb">
+								<div class="col-sm-12 text-center">
+									<p class="sub-titulo0">Resumen del Aviso</p>
+								</div>
+							</div>
+							<div class="row box-mb">
+								<div class="col-sm-5 sub-titulo">
+									Número de Convocatoria:
+								</div>
+								<div class="col-sm-7 detalle-sp">
+									007 - 2026
+								</div>
+							</div>
+							<div class="row box-mb">
+								<div class="col-sm-5 sub-titulo">
+									Año de Convocatoria:
+								</div>
+								<div class="col-sm-7 detalle-sp">
+									2026
+								</div>
+							</div>
+							<div class="row box-mb">
+								<div class="col-sm-5 sub-titulo">
+									Número de Vacante:
+								</div>
+								<div class="col-sm-7 detalle-sp">
+									11
+								</div>
+							</div>
+							<div style="height: 5px;"></div>
+						</div>
+					</div>
+					<div class="row box-mb">
+						<div class="col-sm-12 cuadro-seccion">
+							<div class="row box-mb">
+								<div class="col-sm-12 text-center">
+									<p class="sub-titulo0">Cronograma</p>
+								</div>
+							</div>
+							<div class="row box-mb">
+								<div class="col-sm-4 sub-titulo">
+									Etapa
+								</div>
+								<div class="col-sm-4 sub-titulo">
+									Fec. Ini.
+								</div>
+								<div class="col-sm-4 sub-titulo">
+									Fec. Fin
+								</div>
+							</div>
+							<div class="row box-mb">
+								<div class="col-sm-4 sub-titulo">
+									Difusión
+								</div>
+								<div class="col-sm-4 detalle-sp">23/10/2026
+								</div>
+								<div class="col-sm-4 detalle-sp">05/11/2026
+								</div>
+							</div>
+							<div class="row box-mb">
+								<div class="col-sm-4 sub-titulo">
+									Reclutamiento
+								</div>
+								<div class="col-sm-4 detalle-sp">03/11/2026
+								</div>
+								<div class="col-sm-4 detalle-sp">05/11/2026
+								</div>
+							</div>
+							<div class="row box-mb">
+								<div class="col-sm-4 sub-titulo">
+									Evaluación
+								</div>
+								<div class="col-sm-4 detalle-sp">11/11/2026
+								</div>
+								<div class="col-sm-4 detalle-sp">03/12/2026
+								</div>
+							</div>
+							<div class="row box-mb">
+								<div class="col-sm-4 sub-titulo">
+									Entrevista
+								</div>
+								<div class="col-sm-4 detalle-sp">27/11/2026
+								</div>
+								<div class="col-sm-4 detalle-sp">03/12/2026
+								</div>
+							</div>
+							<div class="row box-mb">
+								<div class="col-sm-4 sub-titulo">
+									Elección
+								</div>
+								<div class="col-sm-4 detalle-sp">11/12/2026
+								</div>
+								<div class="col-sm-4 detalle-sp">24/12/2026
+								</div>
+							</div>
+							<div style="height: 5px;"></div>
+						</div>
+					</div>
+					<div class="row box-mb">
+						<div class="col-sm-12 cuadro-seccion">
+							<div class="row box-mb">
+								<div class="col-sm-12 text-center">
+									<p class="sub-titulo0">Contacto</p>
+								</div>
+							</div>
+							<div class="row box-mb">
+								<div class="col-sm-5 sub-titulo">
+									Correo Electrónico:
+								</div>
+								<div class="col-sm-7 detalle-sp"><span style="overflow-wrap: break-word;">convocatoriapract@sunat.gob.pe</span>
+								</div>
+							</div>
+							<div class="row box-mb">
+								<div class="col-sm-5 sub-titulo">
+									<p>Página Web:</p>
+								</div>
+								<div class="col-sm-7 detalle-sp">
+										<a href="https://unete.sunat.gob.pe/es/unete/form_proceso_convocatoria_nueva/search" target="_black" style="overflow-wrap:break-word;">
+											https://unete.sunat.gob.pe/es/unete/form_proceso_convocatoria_nueva/search
+										</a>
+								</div>
+							</div>
+							<div style="height: 5px;"></div>
+						</div>
+					</div>
+					<div class="row box-mb text-center"><button id="frmDetaModFormat:j_idt76" name="frmDetaModFormat:j_idt76" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left cuadro-seccion-btn" onclick="printDiv('idDatosConvocatoria');ga('send', 'event', 'Imprimir aviso', 'Imprimir aviso detalle modalidades', 'Imprimir aviso detalle modalidades');;" title="Imprimir aviso" type="submit"><span class="ui-button-icon-left ui-icon ui-c icon-print ocultarImgIcon2"></span><span class="ui-button-text ui-c">Imprimir aviso</span></button><script id="frmDetaModFormat:j_idt76_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmDetaModFormat_j_idt76",{id:"frmDetaModFormat:j_idt76"});</script>
+					</div>
+					<div class="row box-mb text-center"><button id="frmDetaModFormat:j_idt78" name="frmDetaModFormat:j_idt78" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only cuadro-seccion-btn2" onclick="ga('send', 'event', 'Descargar word', 'Descargar word detalle modalidades completo', 'Descargar word detalle modalidades completo');;" style="background-color: #76DCFF!important;               color: #146080;" title="Convocatoria en Word" type="submit"><span class="ui-button-text ui-c">Convocatoria en Word</span></button><script id="frmDetaModFormat:j_idt78_s" type="text/javascript">PrimeFaces.cw("CommandButton","widget_frmDetaModFormat_j_idt78",{id:"frmDetaModFormat:j_idt78"});</script>
+					</div>
+
+
+
+
+
+
+				</div>
+			</div>
+		</div>
+
+
+		</div><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="7326298883166122484:6571174432184870224" autocomplete="off" />
+</form><div id="j_idt80" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow ui-hidden-container"><div class="ui-dialog-content ui-widget-content"><img id="j_idt81" src="../resources/img/loadingbar.gif?pfdrid_c=true" alt="" /></div></div><script id="j_idt80_s" type="text/javascript">$(function(){PrimeFaces.cw("Dialog","statusDialog",{id:"j_idt80",draggable:false,resizable:false,modal:true});});</script>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div class="grisFooter">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 " style="margin-top: 6px;">
+						<p style="margin-left: 30px;">
+							<small>Aplicativo Admistrado por Subjefatura de Tecnología de la Información</small>
+						</p>
+						<p style="margin-left: 42px;">
+							<small>Pasaje Francisco de Zela 150 - Piso 10, Jesus María, Lima, Perú</small>
+						</p>
+						<p style="margin-left: -15px;">
+							<small><span class="icon-mobile"></span>(511) 206-3370
+								Anexo 2519 (empl.) 2610 (prác.) | <span class="glyphicon glyphicon-envelope"></span>
+								talentoperu@servir.gob.pe </small>
+						</p>
+					</div>
+					<div class="col-md-6 text-right">
+						<img src="../../resources/img/img_inst.png" width="450px" style="padding: 10px 0" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="redFooter">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6">
+						<span>Autoridad Nacional del Servicio Civil (SERVIR) - Todos los derechos reservados</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/jquery.jtime.js"></script><script type="text/javascript" src="/DifusionOfertasExterno/faces/javax.faces.resource/./js/scripts.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#time_box').jTime();
+		});
+
+		$(function() {
+			$('#defaultReal').realperson();
+		});
+
+		$(function() {
+			$('#defaultReal2').realperson();
+		});
+	</script>
+	<script type="text/javascript">
+		function start() {
+			PF('statusDialog').show();
+		}
+
+		function stop() {
+			PF('statusDialog').hide();
+		}
+	</script>
+	<script type="text/javascript">
+		function callCaptcha() {
+			$('#defaultReal').realperson();
+		}
+	</script>
+	<script type="text/javascript">
+		function callCaptcha2() {
+			$('#defaultReal2').realperson();
+		}
+	</script>
+	<script type="text/javascript">
+		function printDiv(divName) {
+			document.head
+					.insertAdjacentHTML('beforeend',
+							'<link rel="stylesheet" type="text/css" href="./css/main.css" />');
+			var printContents = document.getElementById(divName).innerHTML;
+			var originalContents = document.body.innerHTML;
+
+			document.body.innerHTML = printContents;
+
+			window.print();
+			document.body.innerHTML = originalContents;
+		}
+	</script><script type="text/javascript" src="/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1854616027" async></script></body>
+</html>

@@ -16,11 +16,14 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from .client import Client
+from .practicas import Practicas
 from .talento import TalentoPeru
 
 LIMA = timezone(timedelta(hours=-5))
 DETAIL_KEYS = ("id", "experiencia", "formacion", "especializacion", "conocimientos",
                "competencias", "url_bases")
+DETALLE_PRACTICA = ("actividades", "conocimientos", "condicion", "formacion", "carreras", "subvencion",
+                    "duracion_meses", "horas_semana", "modo", "url_bases")
 
 
 def load_previous(path: str | None) -> dict:
@@ -30,6 +33,45 @@ def load_previous(path: str | None) -> dict:
         return json.loads(Path(path).read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return {}
+
+
+def scrape_practicas(client: Client, previas: list[dict], today: str) -> tuple[list[dict], dict]:
+    """Prácticas (13 páginas, ~130 avisos). El detalle se pide solo para las
+    nuevas. No tienen N.° de SERVIR: su id es la clave de la lista. Si la
+    corrida falla, se conservan las anteriores que sigan vigentes."""
+    prev = {p["key"]: p for p in previas}
+    crawler = Practicas(client)
+    out: dict[str, dict] = {}
+    vistas: dict[str, int] = {}
+    error, nuevas = None, 0
+    try:
+        for page in crawler.pages():
+            for p in page.offers:
+                vistas[p["key"]] = vistas.get(p["key"], 0) + 1
+                if vistas[p["key"]] > 1:
+                    p["key"] = f"{p['key']}-{vistas[p['key']]}"
+                anterior = prev.get(p["key"])
+                if anterior and anterior.get("id"):
+                    p.update({k: anterior[k] for k in DETALLE_PRACTICA if k in anterior})
+                    p["visto"] = anterior.get("visto", today)
+                else:
+                    p["visto"] = today
+                    try:
+                        p.update(crawler.detail(p))
+                        nuevas += 1
+                    except Exception as exc:
+                        print(f"  detalle de práctica falló ({p['cargo'][:40]}): {exc}", file=sys.stderr)
+                p["id"] = p["key"]
+                p.pop("_button", None)
+                out[p["key"]] = p
+    except Exception as exc:
+        error = f"{type(exc).__name__}: {exc}"
+        print(f"ERROR en prácticas: {error}", file=sys.stderr)
+        for k, p in prev.items():
+            out.setdefault(k, p)
+    vigentes = [p for p in out.values() if not p.get("fin") or p["fin"] >= today]
+    vigentes.sort(key=lambda p: (p.get("inicio") or "", p.get("fin") or ""), reverse=True)
+    return vigentes, {"ok": error is None, "error": error, "detailsFetched": nuevas}
 
 
 def main(argv=None) -> int:
@@ -107,6 +149,10 @@ def main(argv=None) -> int:
     vigentes = [o for o in unicas if not o.get("fin") or o["fin"] >= today]
     vigentes.sort(key=lambda o: (o.get("inicio") or "", o.get("fin") or ""), reverse=True)
 
+    practicas, estado_practicas = scrape_practicas(client, previous.get("practicas", []), today)
+    print(f"{len(practicas)} prácticas vigentes · {estado_practicas['detailsFetched']} detalles nuevos"
+          + (f" · ERROR {estado_practicas['error']}" if estado_practicas["error"] else ""))
+
     result = {
         "generatedAt": datetime.now(LIMA).isoformat(timespec="seconds"),
         "source": {
@@ -122,6 +168,8 @@ def main(argv=None) -> int:
             "seconds": round(time.monotonic() - started),
         },
         "offers": vigentes,
+        "practicasSource": estado_practicas,
+        "practicas": practicas,
     }
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)

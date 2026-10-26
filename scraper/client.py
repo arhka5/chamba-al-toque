@@ -6,7 +6,7 @@ import time
 
 import requests
 
-USER_AGENT = "ChambaAlToqueBot/1.0 (+https://github.com/arhka5/chamba-al-toque)"
+USER_AGENT = "ChambaAlToqueBot/1.0 (+https://chambearhoy.toca.pe/contacto/)"
 TIMEOUT = 60
 RETRY_STATUS = {429, 500, 502, 503, 504}
 

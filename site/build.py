@@ -28,7 +28,7 @@ import textos as T  # noqa: E402
 
 LIMA = timezone(timedelta(hours=-5))
 BASE_URL = "https://chambearhoy.toca.pe"
-REPO = "https://github.com/arhka5/chamba-al-toque"
+CONTACTO = "3b3n3z3r333@gmail.com"  # único medio de contacto público
 ADSENSE = "ca-pub-6522291453297769"  # anuncios automáticos de AdSense (cuenta del dominio toca.pe)
 FUENTE_URL = "https://app.servir.gob.pe/DifusionOfertasExterno/faces/consultas/ofertas_laborales.xhtml"
 PRACTICAS_URL = "https://app.servir.gob.pe/DifusionOfertasExterno/faces/consultas/modalidades_formativas.xhtml"
@@ -690,7 +690,7 @@ def construir(sitio: Sitio, out: Path) -> None:
     env.globals.update(
         url=sitio.url, abs=sitio.abs, anio=sitio.anio, ld_json=ld_json, miles=miles, plural=plural,
         fecha_larga=fecha_larga, soles=soles, departamentos=departamentos, temas=sitio.temas,
-        css=css, repo=REPO, fuente_url=FUENTE_URL, practicas_url=PRACTICAS_URL, hoy=sitio.hoy.isoformat(),
+        css=css, contacto=CONTACTO, fuente_url=FUENTE_URL, practicas_url=PRACTICAS_URL, hoy=sitio.hoy.isoformat(),
         total_practicas=len(sitio.practicas), adsense=ADSENSE,
         actualizado_txt=f"{fecha_larga(actualizado.date().isoformat())}, {actualizado:%H:%M}",
         actualizado_corto=fecha_corta(actualizado.date().isoformat()),
@@ -699,7 +699,7 @@ def construir(sitio: Sitio, out: Path) -> None:
         entidad_indexable=sitio.entidad_indexable,
         con_articulo=con_articulo,
         de_articulo=de_articulo,
-        reportar=lambda o: (f"{REPO}/issues/new?title=" + quote(f"Reporte: oferta {o['id']}") + "&body="
+        reportar=lambda o: (f"mailto:{CONTACTO}?subject=" + quote(f"Reporte: oferta {o['id']}") + "&body="
                             + quote(f"Oferta: {sitio.abs(o['path'])}\nN.° SERVIR: {o['id']}\n\nQué está mal:\n")),
     )
 

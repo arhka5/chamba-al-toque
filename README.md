@@ -42,4 +42,4 @@ en `out/palabras-sin-diccionario.txt` las palabras frecuentes sin revisar.
 
 ## Reportar un error
 
-Abre un [issue](https://github.com/arhka5/chamba-al-toque/issues/new).
+Escribe a 3b3n3z3r333@gmail.com.

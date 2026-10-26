@@ -29,6 +29,7 @@ import textos as T  # noqa: E402
 LIMA = timezone(timedelta(hours=-5))
 BASE_URL = "https://chambearhoy.toca.pe"
 REPO = "https://github.com/arhka5/chamba-al-toque"
+ADSENSE = "ca-pub-6522291453297769"  # anuncios automáticos de AdSense (cuenta del dominio toca.pe)
 FUENTE_URL = "https://app.servir.gob.pe/DifusionOfertasExterno/faces/consultas/ofertas_laborales.xhtml"
 PRACTICAS_URL = "https://app.servir.gob.pe/DifusionOfertasExterno/faces/consultas/modalidades_formativas.xhtml"
 
@@ -106,9 +107,9 @@ INFO = [
      "desc": "Datos tomados de Talento Perú, sin cobros y sin pedir datos personales. Cómo corregir o retirar "
              "una convocatoria publicada en Chamba al Toque."},
     {"slug": "privacidad", "title": "Privacidad | Chamba al Toque", "h1": "Privacidad", "indexable": False,
-     "lastmod": "2026-10-23",
-     "desc": "Chamba al Toque no usa cookies ni pide datos personales. Qué datos técnicos puede registrar el "
-             "alojamiento del sitio."},
+     "lastmod": "2026-10-26",
+     "desc": "Chamba al Toque no pide datos personales. Los anuncios de Google AdSense usan cookies: cómo "
+             "desactivar los anuncios personalizados."},
     {"slug": "contacto", "title": "Contacto | Chamba al Toque", "h1": "Contacto", "indexable": True,
      "lastmod": "2026-10-23",
      "desc": "Cómo reportar un error o una convocatoria sospechosa en Chamba al Toque. Respondemos en 48 horas."},
@@ -690,7 +691,7 @@ def construir(sitio: Sitio, out: Path) -> None:
         url=sitio.url, abs=sitio.abs, anio=sitio.anio, ld_json=ld_json, miles=miles, plural=plural,
         fecha_larga=fecha_larga, soles=soles, departamentos=departamentos, temas=sitio.temas,
         css=css, repo=REPO, fuente_url=FUENTE_URL, practicas_url=PRACTICAS_URL, hoy=sitio.hoy.isoformat(),
-        total_practicas=len(sitio.practicas),
+        total_practicas=len(sitio.practicas), adsense=ADSENSE,
         actualizado_txt=f"{fecha_larga(actualizado.date().isoformat())}, {actualizado:%H:%M}",
         actualizado_corto=fecha_corta(actualizado.date().isoformat()),
         total_vigentes=len(sitio.vigentes),

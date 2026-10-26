@@ -20,7 +20,9 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="google-adsense-account" content="{{ adsense }}">
 <style>{{ css | safe }}</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ adsense }}" crossorigin="anonymous"></script>
 {% for bloque in ld %}<script type="application/ld+json">{{ ld_json(bloque) | safe }}</script>
 {% endfor %}
 </head>
@@ -53,7 +55,7 @@
     <ul class="pie-deps">
       {% for d in departamentos %}<li><a href="{{ url(d.path) }}">{{ d.nombre }}</a></li>{% endfor %}
     </ul>
-    <p class="pie-fuente">Datos de <a href="{{ fuente_url }}" rel="noopener">Talento Perú (SERVIR)</a>, actualizados el {{ actualizado_txt }}. Chamba al Toque no es SERVIR ni una entidad del Estado, no cobra y no pide datos personales.</p>
+    <p class="pie-fuente">Datos de <a href="{{ fuente_url }}" rel="noopener">Talento Perú (SERVIR)</a>, actualizados el {{ actualizado_txt }}. Chamba al Toque no es SERVIR ni una entidad del Estado, no cobra y no pide datos personales. Se financia con anuncios de Google.</p>
     <p class="pie-links"><a href="{{ url('/acerca/') }}">Acerca</a> · <a href="{{ url('/aviso-legal/') }}">Aviso legal</a> · <a href="{{ url('/privacidad/') }}">Privacidad</a> · <a href="{{ url('/contacto/') }}">Contacto</a></p>
   </div>
 </footer>

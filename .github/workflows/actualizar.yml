@@ -50,7 +50,7 @@ jobs:
 
       - name: Pruebas
         run: |
-          python -m pytest -q scraper/tests
+          python -m pytest -q scraper/tests herramientas/tests
           cd site && python -m pytest -q
 
       - name: Datos anteriores (rama "data")
@@ -96,6 +96,15 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT: ${{ vars.TELEGRAM_CHAT }}
+
+      - name: Avisar a Google de ofertas nuevas y cerradas (Indexing API)
+        # Igual que Telegram: si falla, el sitio ya está publicado y se reintenta en la próxima corrida.
+        continue-on-error: true
+        run: |
+          pip install -q google-auth==2.35.0
+          python herramientas/indexing.py public out/state.json
+        env:
+          GOOGLE_INDEXING_KEY: ${{ secrets.GOOGLE_INDEXING_KEY }}
 
       - name: Guardar datos en la rama "data"
         # Un solo commit que reemplaza al anterior: el historial no crece.

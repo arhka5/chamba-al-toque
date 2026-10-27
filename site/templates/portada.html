@@ -39,6 +39,16 @@
 </section>
 
 <section class="bloque">
+  <h2>Guías para postular</h2>
+  <ul class="atajos">
+    <li><a href="{{ url('/como-postular-cas/') }}">Cómo postular a un CAS</a></li>
+    <li><a href="{{ url('/como-leer-las-bases/') }}">Cómo leer las bases</a></li>
+    <li><a href="{{ url('/hoja-de-vida-documentada/') }}">Tu hoja de vida documentada</a></li>
+    <li><a href="{{ url('/errores-al-postular/') }}">10 errores al postular</a></li>
+  </ul>
+</section>
+
+<section class="bloque">
   <h2>Convocatorias por departamento</h2>
   <ul class="deps">
     {% for d in departamentos %}<li><a href="{{ url(d.path) }}">{{ d.nombre }} <span>{{ miles(d.n) }}</span></a></li>{% endfor %}

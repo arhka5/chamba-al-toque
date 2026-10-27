@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block contenido %}
+<article class="texto">
+<h1>{{ h1 }}</h1>
+<p>En las convocatorias del Estado, muchos postulantes quedan fuera en la primera revisión sin que nadie haya mirado su experiencia, por errores de forma que se pueden evitar. Estos son los más frecuentes y cómo no caer en ellos.</p>
+
+<h2>1. Postular sin cumplir un requisito mínimo</h2>
+<p>«Me falta solo un curso, pero tengo más experiencia de la que piden» no sirve: la evaluación curricular verifica cada requisito por separado y es eliminatoria. Postula solo a plazas cuyo perfil cumples completo. Si recién empiezas, busca las que piden <a href="{{ url('/sin-experiencia/') }}">sin experiencia</a> o <a href="{{ url('/hasta-un-ano-de-experiencia/') }}">hasta 1 año</a>.</p>
+
+<h2>2. Declarar experiencia que no puedes demostrar</h2>
+<p>Lo que pongas en la ficha tiene que estar respaldado por un certificado, una constancia o un contrato con <strong>fechas de inicio y fin</strong> y el <strong>cargo</strong>. Un documento sin fechas no permite contar el tiempo, y lo que no se puede contar no suma.</p>
+
+<h2>3. Dejar la postulación para la última hora</h2>
+<p>El plazo suele ser corto y los sistemas en línea se saturan el último día. Lo que llega fuera de la hora límite no se evalúa, aunque sea por un minuto. Envía con margen y guarda la constancia: el correo enviado, el cargo de mesa de partes o la captura de la pantalla final.</p>
+
+<h2>4. No firmar o no llenar los anexos</h2>
+<p>La ficha del postulante y las declaraciones juradas son obligatorias y tienen que ir firmadas. Usa los formatos de esa convocatoria: los de otra entidad o de otro año pueden no aceptarse.</p>
+
+<h2>5. Enviar documentos ilegibles o desordenados</h2>
+<p>Una foto torcida, oscura o cortada cuenta como no presentada. Escanea o fotografía con buena luz, junta todo en un PDF en el orden que piden las bases y revisa que el archivo no pase el tamaño máximo, si lo indican.</p>
+
+<h2>6. No seguir el canal ni el formato pedido</h2>
+<p>Si las bases dicen «un solo PDF», «asunto: código de la plaza y nombres» o «postular por el sistema en línea», hazlo exactamente así. Mandar a otro correo, con otro asunto o en varios archivos sueltos puede dejar tu expediente fuera.</p>
+
+<h2>7. Postular a varias plazas cuando no se permite</h2>
+<p>Algunas convocatorias tienen varias plazas a la vez y solo dejan postular a una. Si postulas a dos, pueden descalificarte en ambas. Revísalo en las bases.</p>
+
+<h2>8. No revisar los resultados de cada etapa</h2>
+<p>La entidad publica en su web la lista de quienes pasan y la fecha y hora de la siguiente etapa, normalmente sin avisar por correo ni por teléfono. Quien no se presenta a la entrevista queda fuera. Revisa la página de la convocatoria cada día que dure el proceso.</p>
+
+<h2>9. Olvidar pedir la bonificación</h2>
+<p>Si eres licenciado de las Fuerzas Armadas, persona con discapacidad o deportista calificado, la bonificación se aplica solo si la <strong>declaras y la acreditas al postular</strong>, con el documento correspondiente. Si no lo adjuntas a tiempo, no se suma después.</p>
+
+<h2>10. Pagarle a alguien para «asegurar» la plaza</h2>
+<p>Postular al Estado es gratis y nadie puede venderte una plaza, las preguntas del examen ni un «puesto seguro». Si alguien te pide dinero, es una estafa. Si ves una convocatoria sospechosa en este sitio, <a href="mailto:{{ contacto }}">escríbenos</a>.</p>
+
+<p>Para preparar tu postulación sin estos errores, lee <a href="{{ url('/como-leer-las-bases/') }}">cómo leer las bases</a>, <a href="{{ url('/hoja-de-vida-documentada/') }}">cómo armar tu hoja de vida documentada</a> y <a href="{{ url('/como-postular-cas/') }}">cómo postular a un CAS paso a paso</a>. Hoy hay {{ miles(total_vigentes) }} convocatorias vigentes en <a href="{{ url('/') }}">Chamba al Toque</a>.</p>
+</article>
+{% endblock %}

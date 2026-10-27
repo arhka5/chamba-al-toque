@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block contenido %}
+<article class="texto">
+<h1>{{ h1 }}</h1>
+<p>En el Estado no basta con un CV bonito: lo que se evalúa es la <strong>hoja de vida documentada</strong>, es decir, tu hoja de vida más los documentos que prueban cada dato. El comité solo puede contar lo que está respaldado. Esta guía explica cómo armarla una vez y reutilizarla en cada convocatoria.</p>
+
+<h2>1. Junta tus documentos en una carpeta</h2>
+<p>Ten escaneados, en buena calidad y con nombres claros, estos documentos:</p>
+<ul>
+  <li><strong>DNI</strong>, por ambos lados.</li>
+  <li><strong>Formación:</strong> certificado de secundaria, diploma de bachiller o título, constancia de egresado o de estudios, según tu nivel.</li>
+  <li><strong>Experiencia:</strong> certificados o constancias de trabajo, contratos, órdenes de servicio con su conformidad, o constancias de prácticas. Cada uno con <strong>cargo, fecha de inicio y fecha de fin</strong>.</li>
+  <li><strong>Cursos y capacitaciones:</strong> certificados que indiquen el <strong>número de horas</strong> y la institución.</li>
+  <li><strong>Colegiatura y habilitación</strong>, si tu profesión lo exige para el puesto.</li>
+  <li><strong>Documentos de bonificación</strong>, si te corresponden: documento de licenciamiento de las Fuerzas Armadas, certificado de discapacidad o resolución del CONADIS, o la acreditación de deportista calificado.</li>
+</ul>
+<p>Nombra los archivos para encontrarlos rápido, por ejemplo <em>03-experiencia-municipalidad-2024.pdf</em>.</p>
+
+<h2>2. Arma una tabla de tu experiencia</h2>
+<p>Haz una lista con cada trabajo: entidad o empresa, cargo, funciones principales, fecha de inicio, fecha de fin y el documento que lo prueba. Suma el tiempo total y, aparte, el tiempo en funciones parecidas a las que sueles postular. Así, cuando leas un perfil, sabrás en un minuto si cumples la experiencia general y la específica.</p>
+<p>Recuerda que las prácticas preprofesionales y profesionales cuentan como experiencia laboral según la Ley 31396; revisa en las bases cómo las cuenta cada entidad.</p>
+
+<h2>3. Para cada convocatoria, adapta el orden</h2>
+<p>No envíes todo lo que tienes. Arma el PDF con lo que pide el perfil, en el orden que indican las bases. Si no indican orden, usa este:</p>
+<ol>
+  <li>Ficha del postulante y anexos firmados (declaraciones juradas).</li>
+  <li>DNI.</li>
+  <li>Formación académica.</li>
+  <li>Cursos o especialización que pide el perfil.</li>
+  <li>Experiencia, de la más reciente a la más antigua.</li>
+  <li>Documentos de bonificación, si corresponde.</li>
+</ol>
+<p>Si las bases piden foliar (numerar las hojas) o firmar cada una, hazlo. Si piden un tamaño máximo de archivo, comprime el PDF sin que pierda legibilidad.</p>
+
+<h2>4. Revisa antes de enviar</h2>
+<ul>
+  <li>Cada requisito del perfil tiene al menos un documento que lo prueba.</li>
+  <li>Las fechas de la ficha coinciden con las de los certificados.</li>
+  <li>Todas las páginas se leen bien, están derechas y completas.</li>
+  <li>Los anexos son los de esta convocatoria y están firmados.</li>
+  <li>Guardaste una copia de lo que enviaste y la constancia de envío.</li>
+</ul>
+
+<h2>5. Mantenla al día</h2>
+<p>Cada vez que termines un trabajo o un curso, pide el certificado con fechas y horas y agrégalo a tu carpeta. Así, cuando aparezca una plaza que cierra en dos días, solo tendrás que elegir los documentos y llenar los anexos.</p>
+
+<p>Sigue con <a href="{{ url('/como-leer-las-bases/') }}">cómo leer las bases</a>, <a href="{{ url('/errores-al-postular/') }}">los errores más comunes al postular</a> y <a href="{{ url('/como-postular-cas/') }}">cómo postular a un CAS paso a paso</a>. Hoy hay {{ miles(total_vigentes) }} convocatorias vigentes en <a href="{{ url('/') }}">Chamba al Toque</a>.</p>
+</article>
+{% endblock %}

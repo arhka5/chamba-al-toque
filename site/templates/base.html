@@ -59,7 +59,8 @@
       {% for d in departamentos %}<li><a href="{{ url(d.path) }}">{{ d.nombre }}</a></li>{% endfor %}
     </ul>
     <p class="pie-fuente">Datos de <a href="{{ fuente_url }}" rel="noopener">Talento Perú (SERVIR)</a>, actualizados el {{ actualizado_txt }}. Chamba al Toque no es SERVIR ni una entidad del Estado, no cobra y no pide datos personales.</p>
-    <p class="pie-links"><a href="{{ url('/como-postular-cas/') }}">Cómo postular a un CAS</a>{% for h in hubs %} · <a href="{{ url(h.path) }}">Convocatorias {{ h.corto }}</a>{% endfor %}</p>
+    <p class="pie-links"><a href="{{ url('/como-postular-cas/') }}">Cómo postular a un CAS</a> · <a href="{{ url('/como-leer-las-bases/') }}">Cómo leer las bases</a> · <a href="{{ url('/hoja-de-vida-documentada/') }}">Hoja de vida documentada</a> · <a href="{{ url('/errores-al-postular/') }}">Errores al postular</a></p>
+    <p class="pie-links">{% for h in hubs %}{{ ' · ' if not loop.first }}<a href="{{ url(h.path) }}">Convocatorias {{ h.corto }}</a>{% endfor %}</p>
     <p class="pie-links"><a href="{{ url('/acerca/') }}">Acerca</a> · <a href="{{ url('/aviso-legal/') }}">Aviso legal</a> · <a href="{{ url('/privacidad/') }}">Privacidad</a></p>
     <p><a class="pie-contacto" href="https://toca.pe/#contacto">Contacto</a></p>
   </div>

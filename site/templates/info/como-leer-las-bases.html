@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block contenido %}
+<article class="texto">
+<h1>{{ h1 }}</h1>
+<p>Las bases son el documento que publica la entidad con todas las reglas de su convocatoria: qué perfil busca, cuánto paga, cómo va a evaluar y en qué fechas. Leerlas bien antes de postular te ahorra el error más común, que es quedar fuera por un detalle que estaba escrito. Esta guía explica cómo leerlas en orden, sin perderse en las 15 o 20 páginas que suelen tener.</p>
+
+<h2>1. Empieza por el cuadro del perfil del puesto</h2>
+<p>Es la parte más importante. Lee cada requisito como una casilla que tienes que poder <strong>demostrar con un documento</strong>:</p>
+<ul>
+  <li><strong>Formación académica:</strong> fíjate en el nivel (secundaria completa, técnico, egresado, bachiller, título) y en la carrera. «Egresado» no es lo mismo que «bachiller», y «título técnico» no es lo mismo que «estudios técnicos».</li>
+  <li><strong>Experiencia general:</strong> todo el tiempo que has trabajado. Revisa desde cuándo se cuenta: algunas bases solo cuentan la experiencia desde que egresaste.</li>
+  <li><strong>Experiencia específica:</strong> el tiempo en funciones o puestos parecidos al que se convoca, y a veces cuánto de eso debe ser en el sector público.</li>
+  <li><strong>Cursos o programas de especialización:</strong> suelen pedir un mínimo de horas por curso. Un certificado sin horas puede no contar.</li>
+  <li><strong>Conocimientos:</strong> por ejemplo ofimática o un idioma. A veces basta con declararlos y a veces se pide un certificado: las bases lo dicen.</li>
+</ul>
+<p>Si te falta un requisito mínimo, no postules a esa plaza: la evaluación curricular es eliminatoria y no se compensa con lo demás.</p>
+
+<h2>2. Revisa las condiciones del contrato</h2>
+<p>En el mismo anexo o al lado del perfil están la <strong>remuneración mensual</strong>, el <strong>lugar donde se trabaja</strong> (que puede ser otra sede u otra ciudad), la <strong>duración</strong> del contrato y, a veces, el horario o la modalidad. Comprueba que te convenga antes de armar tu expediente.</p>
+
+<h2>3. Copia el cronograma a tu calendario</h2>
+<p>El cronograma tiene la fecha y la hora de cada etapa: postulación, evaluación curricular, publicación de resultados, entrevista, resultado final y firma de contrato. Fíjate en tres cosas:</p>
+<ul>
+  <li>La <strong>hora límite</strong> de postulación, no solo el día. Lo que llega un minuto tarde no se evalúa.</li>
+  <li>Dónde se publican los <strong>resultados</strong> de cada etapa (casi siempre en la web de la entidad), porque ahí sale la hora de tu entrevista.</li>
+  <li>Que las fechas pueden cambiar con un comunicado: vuelve a mirar la página de la convocatoria cada día que dure el proceso.</li>
+</ul>
+
+<h2>4. Mira cómo se reparten los puntos</h2>
+<p>Las bases tienen un cuadro con los factores de evaluación, el puntaje mínimo para pasar y el máximo de cada etapa. Te dice dónde concentrar el esfuerzo: si la entrevista pesa más que la hoja de vida, prepárala con tiempo. También dice qué puntaje necesitas para pasar a la siguiente etapa.</p>
+
+<h2>5. Lee la forma de presentación y los anexos</h2>
+<p>Esta parte explica <strong>cómo</strong> postular: por un sistema en línea, por correo, por mesa de partes virtual o en persona; si se pide todo en un solo PDF, en qué orden, con qué asunto o con qué nombre de archivo; si hay que foliar o firmar cada hoja. Los anexos son formatos que tienes que llenar y firmar (ficha de postulante y declaraciones juradas). Úsalos tal cual vienen: un formato distinto puede no aceptarse.</p>
+
+<h2>6. Busca las causales de descalificación</h2>
+<p>Casi todas las bases tienen un apartado de motivos para quedar fuera: postular fuera de plazo, no firmar los anexos, presentar documentos ilegibles, postular a más de una plaza cuando no está permitido o no presentarse a una etapa. Léelo al final, como lista de control, antes de enviar.</p>
+
+<h2>Antes de postular, pregúntate</h2>
+<ul>
+  <li>¿Puedo probar cada requisito del perfil con un documento?</li>
+  <li>¿Sé la hora exacta en que cierra la postulación?</li>
+  <li>¿Llené y firmé todos los anexos en el formato de la entidad?</li>
+  <li>¿Sé dónde se publicarán los resultados?</li>
+</ul>
+<p>Para el resto del proceso, mira <a href="{{ url('/como-postular-cas/') }}">cómo postular a un CAS paso a paso</a>, <a href="{{ url('/hoja-de-vida-documentada/') }}">cómo armar tu hoja de vida documentada</a> y <a href="{{ url('/errores-al-postular/') }}">los errores más comunes al postular</a>. Hoy hay {{ miles(total_vigentes) }} convocatorias vigentes en <a href="{{ url('/') }}">Chamba al Toque</a>.</p>
+</article>
+{% endblock %}

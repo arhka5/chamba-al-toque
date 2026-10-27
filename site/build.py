@@ -135,6 +135,18 @@ INFO = [
      "h1": "Cómo postular a una convocatoria CAS, paso a paso", "indexable": True, "lastmod": "2026-10-26",
      "desc": "Guía para postular a un CAS en el Estado: dónde encontrar la convocatoria, cómo leer las bases, "
              "qué documentos preparar, las etapas de evaluación y las bonificaciones."},
+    {"slug": "como-leer-las-bases", "title": "Cómo leer las bases de una convocatoria del Estado ({anio})",
+     "h1": "Cómo leer las bases de una convocatoria del Estado", "indexable": True, "lastmod": "2026-10-27",
+     "desc": "Qué mirar en las bases de una convocatoria CAS: el perfil del puesto, las condiciones, el "
+             "cronograma, los puntajes, los anexos y las causales de descalificación."},
+    {"slug": "errores-al-postular", "title": "10 errores al postular al Estado y cómo evitarlos ({anio})",
+     "h1": "Errores comunes al postular al Estado (y cómo evitarlos)", "indexable": True, "lastmod": "2026-10-27",
+     "desc": "Los errores que dejan fuera a más postulantes en las convocatorias del Estado: requisitos, "
+             "plazos, anexos sin firmar, documentos ilegibles, bonificaciones y estafas."},
+    {"slug": "hoja-de-vida-documentada", "title": "Cómo armar tu hoja de vida documentada para el Estado ({anio})",
+     "h1": "Cómo armar tu hoja de vida documentada para el Estado", "indexable": True, "lastmod": "2026-10-27",
+     "desc": "Qué documentos juntar, cómo probar tu experiencia y en qué orden enviar tu hoja de vida "
+             "documentada en una convocatoria CAS."},
 ]
 
 # Entidades muy buscadas que publican con varios nombres en Talento Perú (sede, cortes,

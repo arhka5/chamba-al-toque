@@ -88,7 +88,8 @@ def main(argv: list[str]) -> int:
     for u in viejas:
         avisadas[u] = "sitemap"
 
-    tk, enviadas, cupo_lleno = token(json.loads(clave)), {"nuevas": 0, "cerradas": 0}, False
+    # lstrip: si el secreto se cargó desde PowerShell, llega con BOM al inicio
+    tk, enviadas, cupo_lleno = token(json.loads(clave.lstrip("﻿"))), {"nuevas": 0, "cerradas": 0}, False
     # primero las nuevas (más recientes antes); lo que sobre del cupo, para las cerradas
     for tipo, lista in (("nuevas", nuevas), ("cerradas", cerradas)):
         for url in lista:

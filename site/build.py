@@ -66,6 +66,16 @@ REGIMENES = {
     "Ley del Servicio Civil": ("Ley del Servicio Civil (Ley 30057)", "Convocatoria del Servicio Civil", ["FULL_TIME"]),
 }
 
+def tipo_jornada(o: dict) -> str | None:
+    """employmentType de las convocatorias sin régimen (jueces, docentes universitarios). Sin dato, nada."""
+    texto = f"{o.get('convocatoria') or ''} {o.get('cargo') or ''}".upper()
+    if "TIEMPO PARCIAL" in texto:
+        return "PART_TIME"
+    if "JUECES" in texto or re.search(r"TIEMPO COMPLETO|DEDICACI[OÓ]N EXCLUSIVA", texto):
+        return "FULL_TIME"
+    return None
+
+
 TEMAS = [
     {
         "slug": "convocatorias-cas", "nombre": "Convocatorias CAS",
@@ -572,7 +582,7 @@ class Sitio:
         p["entidad_txt"] = T.nombre_propio(T.normalizar_entidad(o["entidad"]))
         dep = (o.get("departamento") or "").upper().strip()
         p["dep_txt"] = DEPARTAMENTOS.get(dep, T.nombre_propio(dep) or "Perú")
-        prov = T.nombre_propio(o.get("provincia") or "")
+        prov = p["localidad_txt"] = T.nombre_propio(o.get("provincia") or "")
         p["lugar_txt"] = p["dep_txt"] if prov.upper() == p["dep_txt"].upper() or not prov else f"{prov}, {p['dep_txt']}"
         modalidad = (o.get("modalidad") or "").lower()
         p["modalidad_txt"] = ("Prácticas preprofesionales" if "pre" in modalidad else
@@ -646,6 +656,8 @@ class Sitio:
                                                           "addressRegion": p["dep_txt"], "addressCountry": "PE"}},
             "directApply": False, "totalJobOpenings": p["vacantes"], "url": self.abs(p["path"]),
         }
+        if p["localidad_txt"]:
+            jp["jobLocation"]["address"]["addressLocality"] = p["localidad_txt"]
         if p.get("fin") and p["fin"] >= p["inicio"]:
             jp["validThrough"] = f"{p['fin']}T23:59:59-05:00"
         if p.get("subvencion"):
@@ -732,13 +744,18 @@ class Sitio:
             "totalJobOpenings": o["vacantes"],
             "url": self.abs(o["path"]),
         }
-        if o["localidad_txt"] and o["localidad_txt"] != o["dep_txt"]:
+        # "Lima, Lima" también va: la ciudad de Lima es la localidad (Search Console avisa si falta)
+        if o["localidad_txt"]:
             jp["jobLocation"]["address"]["addressLocality"] = o["localidad_txt"]
         if o.get("fin") and (not o.get("inicio") or o["fin"] >= o["inicio"]):
             jp["validThrough"] = f"{o['fin']}T23:59:59-05:00"
         reg = REGIMENES.get(o.get("regimen") or "")
         if reg:
             jp["employmentType"] = reg[2]
+        else:
+            jornada = tipo_jornada(o)
+            if jornada:
+                jp["employmentType"] = [jornada]
         if o.get("sueldo") and o["sueldo"] > 0:
             jp["baseSalary"] = {"@type": "MonetaryAmount", "currency": "PEN", "value": {
                 "@type": "QuantitativeValue",

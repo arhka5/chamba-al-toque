@@ -1,6 +1,6 @@
 {% macro tarjeta(o, mostrar_lugar=True, nivel=3) %}
 <article class="tarjeta">
-  <p class="t-entidad">{{ o.entidad_txt }}</p>
+  <p class="t-entidad">{% if o.sigla %}<span class="t-sigla" aria-hidden="true">{{ o.sigla }}</span>{% endif %}{{ o.entidad_txt }}</p>
   <h{{ nivel }} class="t-cargo"><a href="{{ url(o.path) }}">{{ o.cargo_txt }}</a></h{{ nivel }}>
   <p class="t-datos">
     {% if o.sueldo_txt %}<strong class="t-sueldo">{{ o.sueldo_txt }} <small>al mes</small></strong>{% else %}<span class="t-sueldo t-sin">{{ 'Subvención no indicada' if o.modalidad_txt else 'Sueldo no indicado' }}</span>{% endif %}

@@ -443,6 +443,15 @@ class Sitio:
             self.temas.append({**t, "ofertas": lista, "indexable": len(lista) >= UMBRAL_TEMA,
                                "path": f"/{t['slug']}/"})
 
+        # Por carrera: solo las que tienen ofertas suficientes se indexan
+        self.carreras = []
+        for c in T.CARRERAS:
+            lista = [o for o in self.vigentes if c["slug"] in o["carreras"]]
+            if lista:
+                self.carreras.append({**{k: v for k, v in c.items() if not k.startswith("re")}, "ofertas": lista,
+                                      "indexable": len(lista) >= UMBRAL_TEMA, "path": f"/carrera/{c['slug']}/"})
+        self.carreras.sort(key=lambda c: -len(c["ofertas"]))
+
         self.hubs = []
         for h in HUBS:
             lista = [o for o in self.vigentes if re.search(h["patron"], o["entidad"].upper())]
@@ -538,6 +547,8 @@ class Sitio:
             p["lugar_txt"] = ", ".join(x for x in (p["localidad_txt"], p["dep_txt"]) if x)
         p["entidad_slug"] = self.entidad_slug(o["entidad"].upper(), p["entidad_txt"])
         p["req"] = T.requisitos(o)
+        p["carreras"] = T.carreras(o.get("formacion"), o.get("cargo"))
+        p["sigla"] = T.sigla(o["entidad"])
         p["especializacion_txt"] = "" if T._no_aplica(o.get("especializacion")) else T.oracion(o["especializacion"])
         p["conocimientos_txt"] = "" if T._no_aplica(o.get("conocimientos")) else T.oracion(o["conocimientos"])
         p["competencias_txt"] = "" if T._no_aplica(o.get("competencias")) else T.oracion(o["competencias"])
@@ -827,6 +838,7 @@ def construir(sitio: Sitio, out: Path) -> None:
     env.globals.update(
         url=sitio.url, abs=sitio.abs, anio=sitio.anio, ld_json=ld_json, miles=miles, plural=plural,
         fecha_larga=fecha_larga, soles=soles, departamentos=departamentos, temas=sitio.temas,
+        carreras=sitio.carreras,
         css=css, contacto=CONTACTO, fuente_url=FUENTE_URL, practicas_url=PRACTICAS_URL, hoy=sitio.hoy.isoformat(),
         total_practicas=len(sitio.practicas), adsense=ADSENSE, hubs=sitio.hubs,
         actualizado_txt=f"{fecha_larga(actualizado.date().isoformat())}, {actualizado:%H:%M}",
@@ -915,6 +927,7 @@ def construir(sitio: Sitio, out: Path) -> None:
              top_entidades=[{"nombre": sitio.por_entidad[s][0]["entidad_txt"], "slug": s, "n": n}
                             for n, s in top_entidades],
              por_vencer=sum(1 for o in sitio.vigentes if o["dias"] is not None and o["dias"] <= 3),
+             cierran_hoy=sum(1 for o in sitio.vigentes if o["dias"] == 0),
              ld=portada_ld)
 
     # Ofertas vigentes
@@ -945,7 +958,8 @@ def construir(sitio: Sitio, out: Path) -> None:
                  descripcion=descripcion, o=o, migas=migas,
                  misma_entidad=misma_entidad, n_entidad=len(sitio.por_entidad[o["entidad_slug"]]),
                  similares=[x for x in sitio.similares(o, 12) if x not in misma_entidad][:6],
-                 temas_oferta=[t for t in sitio.temas if t["filtro"](o)],
+                 temas_oferta=[t for t in sitio.temas if t["filtro"](o)]
+                 + [c for c in sitio.carreras if c["indexable"] and c["slug"] in o["carreras"]],
                  ld=[x for x in (jp, sitio.breadcrumbs(migas)) if x])
 
     # Ofertas cerradas (noindex, sin JobPosting)
@@ -1035,6 +1049,43 @@ def construir(sitio: Sitio, out: Path) -> None:
                       f"Actualizado el {hoy_txt}."]),
                [{"titulo": dep, "enlaces": sorted(v, key=lambda e: e["nombre"])} for dep, v in sorted(ent_por_dep.items())],
                intro=f"Entidades con {UMBRAL_ENTIDAD} o más convocatorias vigentes, agrupadas por departamento.")
+
+    # Por carrera (/carrera/derecho/…) y su índice
+    for c in sitio.carreras:
+        r = sitio.resumen_listado(c["ofertas"], None)
+        h1 = f"Trabajos en el Estado para {c['para']} {sitio.anio}"
+        listado(c["path"], c["ofertas"], c["indexable"],
+                elegir(f"Convocatorias para {c['para']} {sitio.anio}: {cifras(r)}",
+                       f"Convocatorias para {c['para']} {sitio.anio}",
+                       f"Trabajos de {c['nombre'].lower()} en el Estado {sitio.anio}"),
+                h1,
+                armar([f"{plural(r['n'], 'convocatoria vigente', 'convocatorias vigentes')} del Estado que piden "
+                       f"formación en {c['nombre'].lower()}"
+                       + (f", con sueldos desde {r['min']} hasta {r['max']} al mes." if r["min"] and r["min"] != r["max"] else "."),
+                       f"Actualizado el {hoy_txt}."]),
+                [("Inicio", "/"), ("Carreras", "/carrera/"), (c["nombre"], None)],
+                intro=f"Convocatorias cuyo perfil pide estudios de {c['nombre'].lower()}, según el campo de "
+                      "formación académica de cada aviso. Muchas aceptan varias carreras: revisa el perfil completo.",
+                extra={"tipo": "tema", "resumen": r})
+    directorio("/carrera/", "Convocatorias por carrera", f"Trabajos en el Estado por carrera {sitio.anio}",
+               armar(["Convocatorias de trabajo vigentes en el Estado según la carrera que piden: Derecho, "
+                      "Contabilidad, Enfermería, Ingeniería y más.", f"Actualizado el {hoy_txt}."]),
+               [{"titulo": "", "enlaces": [{"nombre": c["nombre"], "path": c["path"], "n": len(c["ofertas"])}
+                                          for c in sitio.carreras if c["indexable"]]}],
+               intro="Según la formación académica que pide cada aviso. Una convocatoria puede aparecer en "
+                     "varias carreras.")
+
+    # Cierran hoy: cambia cada día, se indexa como página fija
+    hoy_lista = sorted((o for o in sitio.vigentes if o["dias"] == 0), key=lambda o: o["cargo_txt"])
+    listado("/cierran-hoy/", hoy_lista, True,
+            con_marca(f"Convocatorias que cierran hoy ({hoy_txt})"),
+            "Convocatorias que cierran hoy",
+            armar([f"{plural(len(hoy_lista), 'convocatoria del Estado cierra', 'convocatorias del Estado cierran')} "
+                   f"hoy, {hoy_txt}.", "Revisa la hora límite en las bases de cada una."]),
+            [("Inicio", "/"), ("Cierran hoy", None)],
+            intro="Último día para postular. La hora límite cambia según la entidad y está en las bases: "
+                  "algunas cierran a mediodía.",
+            extra={"tipo": "tema"})
 
     # Temas nacionales
     for t in sitio.temas:

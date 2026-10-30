@@ -58,6 +58,8 @@ main{padding-bottom:32px}
 .tarjeta:hover{border-color:var(--tinta);border-left-color:var(--sol)}
 .tarjeta:focus-within{outline:3px solid var(--foco);outline-offset:2px}
 .t-entidad{margin:0 0 4px;font-size:.85rem;color:var(--mute);line-height:1.3}
+.t-sigla{display:inline-block;margin-right:6px;padding:1px 6px;border-radius:4px;background:var(--cab);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.03em;vertical-align:1px}
+.contador-hoy{color:inherit;text-decoration-color:var(--sol);text-decoration-thickness:2px}
 .t-cargo{font-size:1.15rem;font-weight:800;margin-bottom:8px}
 .t-cargo a{color:var(--tinta);text-decoration:none}
 .t-cargo a:focus-visible{outline:0}

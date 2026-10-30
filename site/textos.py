@@ -445,3 +445,100 @@ def cargo_titulo(cargo_legible: str, maximo: int = 70) -> str:
     if len(c) > maximo:
         c = c[:maximo].rsplit(" ", 1)[0].rstrip(",;:-")
     return c.rstrip(" .")
+
+
+# ---------------------------------------------------------------- carreras
+# Carrera o profesión que pide cada oferta, leída del campo "formación" (y del
+# cargo para profesiones de salud: "CIRUJANO DENTISTA" con formación "TITULADO").
+# Patrones sobre el texto en mayúsculas y sin tildes. Una oferta puede pedir
+# varias carreras ("Administración, Contabilidad o Economía").
+_TEC_ENF = r"(TECNIC\w*|AUXILIAR\w*)\s+(ASISTENCIAL\s+)?(EN|DE)\s+ENFERMERIA"
+CARRERAS = [
+    {"slug": "derecho", "nombre": "Derecho", "para": "abogados", "patron": r"\bDERECHO\b|\bABOGAD"},
+    {"slug": "contabilidad", "nombre": "Contabilidad", "para": "contadores", "patron": r"CONTABILIDAD|CONTADOR|CIENCIAS CONTABLES"},
+    {"slug": "administracion", "nombre": "Administración", "para": "administradores", "patron": r"\bADMINISTRACION( DE EMPRESAS| PUBLICA)?\b(?! DE (?!EMPRESAS))|ADMINISTRADOR"},
+    {"slug": "economia", "nombre": "Economía", "para": "economistas", "patron": r"\bECONOMIA\b|ECONOMISTA"},
+    {"slug": "enfermeria", "nombre": "Enfermería", "para": "enfermeras y enfermeros", "patron": r"ENFERMER", "excluir": _TEC_ENF},
+    {"slug": "tecnico-en-enfermeria", "nombre": "Técnico en enfermería", "para": "técnicos en enfermería", "patron": _TEC_ENF},
+    {"slug": "medicina", "nombre": "Medicina", "para": "médicos", "patron": r"MEDICO CIRUJANO|MEDICINA HUMANA|(?<!TECNOLOGO )\bMEDICO\b(?! VETERINARIO)", "cargo": True},
+    {"slug": "obstetricia", "nombre": "Obstetricia", "para": "obstetras", "patron": r"OBSTETR", "cargo": True},
+    {"slug": "odontologia", "nombre": "Odontología", "para": "odontólogos", "patron": r"ODONTOLOG|CIRUJANO DENTISTA", "cargo": True},
+    {"slug": "psicologia", "nombre": "Psicología", "para": "psicólogos", "patron": r"PSICOLOG"},
+    {"slug": "trabajo-social", "nombre": "Trabajo social", "para": "trabajadores sociales", "patron": r"TRABAJO SOCIAL|ASISTENT[AE] SOCIAL|TRABAJADOR\w* SOCIAL"},
+    {"slug": "quimica-farmaceutica", "nombre": "Química farmacéutica", "para": "químicos farmacéuticos", "patron": r"QUIMIC\w* FARMACEUT|FARMACIA Y BIOQUIMICA", "cargo": True},
+    {"slug": "tecnologia-medica", "nombre": "Tecnología médica", "para": "tecnólogos médicos", "patron": r"TECNOLOGIA MEDICA|TECNOLOGO MEDICO", "cargo": True},
+    {"slug": "nutricion", "nombre": "Nutrición", "para": "nutricionistas", "patron": r"NUTRICION|NUTRICIONISTA", "cargo": True},
+    {"slug": "biologia", "nombre": "Biología", "para": "biólogos", "patron": r"BIOLOG"},
+    {"slug": "medicina-veterinaria", "nombre": "Medicina veterinaria", "para": "veterinarios y zootecnistas", "patron": r"VETERINAR|ZOOTECN"},
+    {"slug": "ingenieria-civil", "nombre": "Ingeniería civil", "para": "ingenieros civiles", "patron": r"INGENIERI?[AO]S? CIVIL"},
+    {"slug": "ingenieria-de-sistemas", "nombre": "Ingeniería de sistemas e informática", "para": "ingenieros de sistemas e informáticos",
+     "patron": r"\bSISTEMAS\b(?! ADMINISTRATIV)|INFORMATICA|COMPUTACION|SOFTWARE"},
+    {"slug": "ingenieria-industrial", "nombre": "Ingeniería industrial", "para": "ingenieros industriales", "patron": r"INGENIERI?[AO]S? INDUSTRIAL"},
+    {"slug": "ingenieria-ambiental", "nombre": "Ingeniería ambiental", "para": "ingenieros ambientales", "patron": r"AMBIENTAL"},
+    {"slug": "agronomia", "nombre": "Agronomía", "para": "agrónomos", "patron": r"AGRONOM|INGENIERI?[AO]S? AGRICOLA"},
+    {"slug": "ingenieria-mecanica-y-electrica", "nombre": "Ingeniería mecánica y eléctrica", "para": "ingenieros mecánicos, eléctricos y electrónicos",
+     "patron": r"INGENIERI?[AO]S? (MECANIC|ELECTRIC|ELECTRONIC)"},
+    {"slug": "arquitectura", "nombre": "Arquitectura", "para": "arquitectos", "patron": r"ARQUITECT"},
+    {"slug": "educacion", "nombre": "Educación", "para": "docentes y educadores",
+     "patron": r"(LICENCIAD\w*|TITULO\w*|BACHILLER\w*|PROFESOR\w*|CARRERA\w*)( PROFESIONAL)?( UNIVERSITARI\w*)? (EN|DE) EDUCACION|DOCENTE|PEDAGOG"},
+    {"slug": "comunicacion", "nombre": "Comunicación", "para": "comunicadores y periodistas",
+     "patron": r"CIENCIAS DE LA COMUNICACION|COMUNICACION SOCIAL|\bCOMUNICACION(ES)?\b(?! Y )|PERIODISMO|PERIODISTA|COMUNICADOR"},
+    {"slug": "estadistica", "nombre": "Estadística", "para": "estadísticos", "patron": r"ESTADISTIC"},
+    {"slug": "secretariado", "nombre": "Secretariado", "para": "secretarias y secretarios", "patron": r"SECRETARIAD|SECRETARI[AO] EJECUTIV"},
+]
+for _c in CARRERAS:
+    _c["re"] = re.compile(_c["patron"])
+    _c["re_excluir"] = re.compile(_c["excluir"]) if _c.get("excluir") else None
+
+
+def _mayus_plano(texto: str | None) -> str:
+    return unicodedata.normalize("NFKD", texto or "").encode("ascii", "ignore").decode().upper()
+
+
+def carreras(formacion: str | None, cargo: str | None = None) -> list[str]:
+    """Slugs de las carreras que pide la oferta ('Título en Derecho' -> ['derecho'])."""
+    f, c = _mayus_plano(formacion), _mayus_plano(cargo)
+    salida = []
+    for k in CARRERAS:
+        texto = f + " | " + c if k.get("cargo") else f
+        if k["re"].search(texto) and not (k["re_excluir"] and k["re_excluir"].search(texto)):
+            salida.append(k["slug"])
+    return salida
+
+
+_SIGLA_EXPLICITA = re.compile(r"(?:\(|\s[-–]\s*)([A-ZÑ][A-ZÑ0-9.&-]{1,9})\)?\s*$")
+# Siglas oficiales que las iniciales no reproducen (sin ellas saldría "ME" para el Minedu).
+_SIGLAS_OFICIALES = [
+    ("MINISTERIO DE EDUCACION", "MINEDU"), ("MINISTERIO DE SALUD", "MINSA"),
+    ("MINISTERIO DE ECONOMIA", "MEF"), ("MINISTERIO DE LA MUJER", "MIMP"),
+    ("MINISTERIO DE JUSTICIA", "MINJUSDH"), ("MINISTERIO DEL INTERIOR", "MININTER"),
+    ("MINISTERIO DE DEFENSA", "MINDEF"), ("MINISTERIO DE TRABAJO", "MTPE"),
+    ("MINISTERIO DE CULTURA", "MINCUL"), ("MINISTERIO DEL AMBIENTE", "MINAM"),
+    ("MINISTERIO DE VIVIENDA", "MVCS"), ("MINISTERIO DE ENERGIA", "MINEM"),
+    ("MINISTERIO DE DESARROLLO AGRARIO", "MIDAGRI"), ("MINISTERIO DE DESARROLLO E INCLUSION", "MIDIS"),
+    ("MINISTERIO DE TRANSPORTES", "MTC"), ("MINISTERIO DE LA PRODUCCION", "PRODUCE"),
+    ("MINISTERIO DE RELACIONES EXTERIORES", "RREE"), ("MINISTERIO DE COMERCIO EXTERIOR", "MINCETUR"),
+    ("MINISTERIO PUBLICO", "MP"), ("PODER JUDICIAL", "PJ"), ("SEGURO SOCIAL DE SALUD", "ESSALUD"),
+    ("POLICIA NACIONAL", "PNP"), ("CONTRALORIA GENERAL", "CGR"), ("DEFENSORIA DEL PUEBLO", "DP"),
+    ("SUPERINTENDENCIA NACIONAL DE ADUANAS", "SUNAT"), ("REGISTRO NACIONAL DE IDENTIFICACION", "RENIEC"),
+    ("INSTITUTO NACIONAL DE DEFENSA CIVIL", "INDECI"), ("ZONA REGISTRAL", "SUNARP"),
+    ("SUPERINTENDENCIA NACIONAL DE LOS REGISTROS", "SUNARP"), ("MUNICIPALIDAD METROPOLITANA DE LIMA", "MML"),
+    ("FUERZA AEREA", "FAP"), ("MARINA DE GUERRA", "MGP"), ("EJERCITO DEL PERU", "EP"),
+    ("INSTITUTO NACIONAL DE ENFERMEDADES NEOPLASICAS", "INEN"), ("PROGRAMA NACIONAL CUNA MAS", "CUNA MÁS"),
+]
+
+
+def sigla(entidad: str | None) -> str:
+    """Distintivo corto para la tarjeta: la sigla que trae el nombre ('... - ESSALUD')
+    o una sigla oficial conocida; si no hay, vacío."""
+    t = _mayus_plano(entidad).strip()
+    m = _SIGLA_EXPLICITA.search(t)
+    if m and len(m.group(1).replace(".", "")) <= 8 and not m.group(1).isdigit():
+        return m.group(1).replace(".", "")
+    if "UGEL" in t or "UNIDAD DE GESTION EDUCATIVA LOCAL" in t:
+        return "UGEL"
+    for prefijo, s in _SIGLAS_OFICIALES:
+        if t.startswith(prefijo):
+            return s
+    # Sin sigla real no se inventa una con iniciales ("UEUC", "INDC" en vez de INDECI).
+    return ""

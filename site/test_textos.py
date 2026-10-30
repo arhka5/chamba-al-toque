@@ -1,3 +1,4 @@
+import textos as T
 from textos import (experiencia_resumen, formacion_resumen, nombre_propio, normalizar_entidad, oracion,
                     requisitos, slug, slug_oferta)
 
@@ -82,3 +83,22 @@ def test_requisitos():
     assert r["frase"] == "Pide secundaria completa y no exige experiencia."
     assert r["corto"] == "Secundaria completa · Sin experiencia"
     assert r["solo_secundaria"] and r["sin_experiencia"]
+
+
+def test_carreras_desde_formacion():
+    assert T.carreras("TÍTULO PROFESIONAL EN CONTABILIDAD, ECONOMÍA O ADMINISTRACIÓN") == \
+        ["contabilidad", "administracion", "economia"]
+    assert T.carreras("TÉCNICO EN ENFERMERÍA") == ["tecnico-en-enfermeria"]
+    assert T.carreras("LICENCIADA EN ENFERMERÍA") == ["enfermeria"]
+    assert T.carreras("TITULADO", "CIRUJANO DENTISTA") == ["odontologia"]
+    assert "medicina" not in T.carreras("TECNÓLOGO MÉDICO EN PATOLOGÍA CLÍNICA")
+    assert "comunicacion" not in T.carreras("INGENIERÍA DE TELECOMUNICACIONES")
+    assert T.carreras("SECUNDARIA COMPLETA") == []
+
+
+def test_sigla():
+    assert T.sigla("SEGURO SOCIAL DE SALUD - ESSALUD") == "ESSALUD"
+    assert T.sigla("MINISTERIO DE EDUCACION") == "MINEDU"
+    assert T.sigla("MUNICIPALIDAD DISTRITAL DE PUEBLO LIBRE") == ""  # sin sigla real, no se inventa
+    assert T.sigla("UNIDAD DE GESTION EDUCATIVA LOCAL 03") == "UGEL"
+    assert T.sigla("UNIDAD EJECUTORA 311 UGEL DE CALCA") == "UGEL"

@@ -13,8 +13,9 @@
     </select>
     <button type="submit">Buscar</button>
   </form>
-  <p class="contador">{{ miles(total_vigentes) }} convocatorias vigentes de {{ miles(total_entidades) }} entidades. Actualizado el {{ actualizado_txt }}.</p>
+  <p class="contador">{{ miles(total_vigentes) }} convocatorias vigentes de {{ miles(total_entidades) }} entidades{% if cierran_hoy %} · <a class="contador-hoy" href="{{ url('/cierran-hoy/') }}">{{ plural(cierran_hoy, 'cierra', 'cierran') }} hoy</a>{% endif %}. Actualizado el {{ actualizado_txt }}.</p>
   <ul class="atajos" aria-label="Atajos">
+    {% if cierran_hoy %}<li><a href="{{ url('/cierran-hoy/') }}">Cierran hoy ({{ miles(cierran_hoy) }})</a></li>{% endif %}
     {% if total_practicas %}<li><a href="{{ url('/practicas/') }}">Prácticas ({{ miles(total_practicas) }})</a></li>{% endif %}
     <li><a href="{{ url('/hasta-un-ano-de-experiencia/') }}">Hasta 1 año de experiencia</a></li>
     <li><a href="{{ url('/secundaria-completa/') }}">Solo secundaria</a></li>
@@ -30,6 +31,12 @@
     {% for o in ultimas %}{{ tarjeta(o) }}{% endfor %}
   </div>
   <p class="mas"><a href="{{ url('/nuevas/') }}">Ver las convocatorias nuevas de hoy</a></p>
+</section>
+
+<section class="bloque">
+  <h2>Convocatorias por carrera</h2>
+  <ul class="atajos">{% for c in carreras if c.indexable %}{% if loop.index <= 16 %}<li><a href="{{ url(c.path) }}">{{ c.nombre }} ({{ miles(c.ofertas|length) }})</a></li>{% endif %}{% endfor %}</ul>
+  <p class="mas"><a href="{{ url('/carrera/') }}">Ver todas las carreras</a></p>
 </section>
 
 <section class="bloque">

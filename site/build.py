@@ -891,6 +891,10 @@ def construir(sitio: Sitio, out: Path) -> None:
             txt += f", {maximo}" if r["min_n"] == r["max_n"] else f", hasta {maximo}"
         return txt
 
+    def mayoria_cas(ofertas: list[dict]) -> bool:
+        """'CAS' en el título solo si de verdad lo son la mayoría (la gente busca 'convocatorias CAS')."""
+        return sum(1 for o in ofertas if o.get("regimen") == "CAS") * 2 > len(ofertas)
+
     hoy_txt = fecha_corta(sitio.hoy.isoformat())
 
     # Portada
@@ -958,10 +962,12 @@ def construir(sitio: Sitio, out: Path) -> None:
     for d in departamentos:
         ofertas = sitio.por_dep[d["slug"]]
         r = sitio.resumen_listado(ofertas, d["nombre"])
-        titulo = elegir(f"Trabajos en {d['nombre']} {sitio.anio}: {cifras(r)}",
+        titulo = elegir(f"Convocatorias CAS en {d['nombre']} {sitio.anio}: {cifras(r)}" if mayoria_cas(ofertas) else "",
+                        f"Trabajos en {d['nombre']} {sitio.anio}: {cifras(r)}",
                         f"Trabajos en {d['nombre']} {sitio.anio}: convocatorias CAS y del Estado")
         desc = armar([
-            f"{plural(r['n'], 'convocatoria vigente', 'convocatorias vigentes')} en {d['nombre']}"
+            f"{plural(r['n'], 'convocatoria vigente', 'convocatorias vigentes')}"
+            + (f" ({plural(r['plazas'], 'plaza', 'plazas')})" if r["plazas"] != r["n"] else "") + f" en {d['nombre']}"
             + (f", con sueldos desde {r['min']} hasta {r['max']} al mes." if r["min"] and r["min"] != r["max"] else "."),
             f"{plural(r['sin_exp'], 'no pide', 'no piden')} experiencia." if r["sin_exp"] else "",
             f"Actualizado el {hoy_txt}.",
@@ -970,7 +976,7 @@ def construir(sitio: Sitio, out: Path) -> None:
         cierran = sorted((o for o in ofertas if o["dias"] is not None and o["dias"] <= 7),
                          key=lambda o: (o["dias"], o["cargo_txt"]))[:8]
         listado(d["path"], ofertas, len(ofertas) > 0, titulo, f"Trabajos en el Estado en {d['nombre']} {sitio.anio}",
-                desc, [("Inicio", "/"), (d["nombre"], None)],
+                desc, [("Inicio", "/"), ("Departamentos", "/departamento/"), (d["nombre"], None)],
                 extra={"tipo": "departamento", "resumen": r, "cierran": cierran, "dep": d,
                        "poca_exp": sum(1 for o in ofertas if o["req"]["hasta_un_anio"]) >= UMBRAL_DEP_TEMA})
         # Departamento + poca experiencia, solo si hay suficientes
@@ -990,7 +996,8 @@ def construir(sitio: Sitio, out: Path) -> None:
         nombre = ofertas[0]["entidad_txt"]
         dep = Counter((o["dep_txt"], o["dep_slug"]) for o in ofertas).most_common(1)[0][0]
         r = sitio.resumen_listado(ofertas, None)
-        titulo = elegir(f"Convocatorias {nombre} {sitio.anio}: {cifras(r)}",
+        titulo = elegir(f"Convocatorias CAS {nombre} {sitio.anio}: {cifras(r)}" if mayoria_cas(ofertas) else "",
+                        f"Convocatorias {nombre} {sitio.anio}: {cifras(r)}",
                         f"Convocatorias {nombre} {sitio.anio}: {plural(r['plazas'], 'plaza', 'plazas')}",
                         f"Convocatorias {nombre} {sitio.anio}")
         cargos = lista_cargos([o["cargo_txt"].lower() for o in ofertas])
@@ -1005,6 +1012,29 @@ def construir(sitio: Sitio, out: Path) -> None:
                 desc, [("Inicio", "/"), (dep[0], f"/departamento/{dep[1]}/"), (nombre, None)],
                 extra={"tipo": "entidad", "resumen": r, "entidad": nombre, "primera": fecha_larga(primera),
                        "hub": sitio.hub_de_entidad.get(s)})
+
+    # Índices: /departamento/ y /entidad/ (las migas y el pie llevan aquí)
+    def directorio(path: str, h1: str, titulo: str, descripcion: str, grupos: list[dict], intro: str = ""):
+        migas = [("Inicio", "/"), (h1, None)]
+        escribir(path, "directorio.html", True, None, titulo=con_marca(titulo), h1=h1, descripcion=descripcion,
+                 intro=intro, grupos=grupos, migas=migas, ld=[sitio.breadcrumbs(migas)])
+
+    directorio("/departamento/", "Convocatorias por departamento", f"Convocatorias CAS por departamento {sitio.anio}",
+               armar([f"Convocatorias de trabajo vigentes en el Estado en los {len(departamentos)} departamentos "
+                      "del Perú.", f"Actualizado el {hoy_txt}."]),
+               [{"titulo": "", "enlaces": departamentos}])
+    ent_por_dep: dict[str, list[dict]] = {}
+    for s, ofertas in sitio.por_entidad.items():
+        if sitio.entidad_indexable[s]:
+            dep = Counter(o["dep_txt"] for o in ofertas).most_common(1)[0][0]
+            ent_por_dep.setdefault(dep, []).append(
+                {"nombre": ofertas[0]["entidad_txt"], "path": f"/entidad/{s}/", "n": len(ofertas)})
+    directorio("/entidad/", "Convocatorias por entidad", f"Entidades del Estado con convocatorias {sitio.anio}",
+               armar([f"{plural(sum(len(v) for v in ent_por_dep.values()), 'entidad pública', 'entidades públicas')} "
+                      "con varias convocatorias vigentes: municipalidades, hospitales, UGEL, ministerios y más.",
+                      f"Actualizado el {hoy_txt}."]),
+               [{"titulo": dep, "enlaces": sorted(v, key=lambda e: e["nombre"])} for dep, v in sorted(ent_por_dep.items())],
+               intro=f"Entidades con {UMBRAL_ENTIDAD} o más convocatorias vigentes, agrupadas por departamento.")
 
     # Temas nacionales
     for t in sitio.temas:

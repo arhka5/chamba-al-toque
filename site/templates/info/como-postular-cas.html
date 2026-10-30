@@ -4,6 +4,24 @@
 <h1>{{ h1 }}</h1>
 <p>El CAS (Contrato Administrativo de Servicios, Decreto Legislativo 1057) es el régimen con el que más contrata el Estado peruano: municipalidades, ministerios, hospitales, UGEL y gobiernos regionales lo usan todo el año. Postular es gratis y se hace siempre ante la entidad que convoca, siguiendo sus bases. Esta guía resume los pasos que se repiten en casi todas las convocatorias.</p>
 
+<figure class="video">
+  <button type="button" class="video-portada" data-video="o1ygAv0ArFw" aria-label="Ver el video: cómo postular a una convocatoria CAS en 8 pasos (2 minutos)">
+    <img src="{{ url('/img/tutorial-cas.jpg') }}" alt="" width="960" height="540" loading="lazy">
+    <span class="video-play" aria-hidden="true">▶ Ver video</span>
+  </button>
+  <figcaption>Los 8 pasos en 2 minutos. El video se carga desde YouTube solo si lo reproduces. <a href="https://www.youtube.com/watch?v=o1ygAv0ArFw" rel="noopener">Verlo en YouTube</a>.</figcaption>
+</figure>
+<script>
+document.querySelector(".video-portada").addEventListener("click", function () {
+  var f = document.createElement("iframe");
+  f.src = "https://www.youtube-nocookie.com/embed/" + this.dataset.video + "?autoplay=1&rel=0";
+  f.title = "Cómo postular a una convocatoria CAS en 8 pasos";
+  f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+  f.allowFullscreen = true;
+  this.replaceWith(f);
+});
+</script>
+
 <h2>1. Busca una plaza cuyos requisitos cumplas</h2>
 <p>Hoy hay {{ miles(total_vigentes) }} convocatorias vigentes. Para no perder tiempo, empieza por las que encajan contigo: <a href="{{ url('/sin-experiencia/') }}">sin experiencia</a>, <a href="{{ url('/hasta-un-ano-de-experiencia/') }}">hasta 1 año de experiencia</a>, <a href="{{ url('/secundaria-completa/') }}">solo secundaria</a> o las de <a href="{{ url('/') }}#contenido">tu departamento</a>. Si estudias o acabas de egresar, revisa también las <a href="{{ url('/practicas/') }}">prácticas en el Estado</a>.</p>
 

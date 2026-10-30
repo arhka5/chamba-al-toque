@@ -125,14 +125,14 @@ INFO = [
      "desc": "Datos tomados de Talento Perú, sin cobros y sin pedir datos personales. Cómo corregir o retirar "
              "una convocatoria publicada en Chamba al Toque."},
     {"slug": "privacidad", "title": "Privacidad | Chamba al Toque", "h1": "Privacidad", "indexable": False,
-     "lastmod": "2026-10-26",
+     "lastmod": "2026-10-29",
      "desc": "Chamba al Toque no pide datos personales. Visitas contadas sin cookies; los anuncios de Google "
              "AdSense sí usan cookies y cómo desactivarlos."},
     {"slug": "contacto", "title": "Contacto | Chamba al Toque", "h1": "Contacto", "indexable": True,
      "lastmod": "2026-10-23",
      "desc": "Cómo reportar un error o una convocatoria sospechosa en Chamba al Toque. Respondemos en 48 horas."},
     {"slug": "como-postular-cas", "title": "Cómo postular a una convocatoria CAS paso a paso ({anio})",
-     "h1": "Cómo postular a una convocatoria CAS, paso a paso", "indexable": True, "lastmod": "2026-10-26",
+     "h1": "Cómo postular a una convocatoria CAS, paso a paso", "indexable": True, "lastmod": "2026-10-29",
      "desc": "Guía para postular a un CAS en el Estado: dónde encontrar la convocatoria, cómo leer las bases, "
              "qué documentos preparar, las etapas de evaluación y las bonificaciones."},
     {"slug": "como-leer-las-bases", "title": "Cómo leer las bases de una convocatoria del Estado ({anio})",

@@ -841,7 +841,7 @@ def construir(sitio: Sitio, out: Path) -> None:
     actualizado = datetime.fromisoformat(sitio.generado)
     env.globals.update(
         url=sitio.url, abs=sitio.abs, anio=sitio.anio, ld_json=ld_json, miles=miles, plural=plural,
-        fecha_larga=fecha_larga, soles=soles, departamentos=departamentos, temas=sitio.temas,
+        fecha_larga=fecha_larga, fecha_corta=fecha_corta, soles=soles, departamentos=departamentos, temas=sitio.temas,
         carreras=sitio.carreras,
         css=css, contacto=CONTACTO, fuente_url=FUENTE_URL, practicas_url=PRACTICAS_URL, hoy=sitio.hoy.isoformat(),
         total_practicas=len(sitio.practicas), adsense=ADSENSE, hubs=sitio.hubs,

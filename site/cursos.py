@@ -27,6 +27,9 @@ TEMAS = [
     {"slug": "word", "nombre": "Word",
      "oferta": r"\bWORD\b|PROCESADOR(ES)? DE TEXTO",
      "cursos": [r"^word basico$", r"^word intermedio$"]},
+    {"slug": "powerpoint", "nombre": "PowerPoint",
+     "oferta": r"POWER ?POINT|PROGRAMAS? DE PRESENTACION",
+     "cursos": [r"^powerpoint basico$", r"^powerpoint intermedio$"]},
     {"slug": "ofimatica", "nombre": "Ofimática",
      "oferta": r"OFIMATICA|OFFICE|COMPUTACION|INFORMATICA (BASICA|A NIVEL|NIVEL)|MANEJO DE (PC|COMPUTADORA)",
      "cursos": [r"^word y excel para el trabajo", r"^computacion facil", r"^excel basico$"]},
@@ -114,11 +117,18 @@ class Catalogo:
         return cls(datos.get("cursos", []), hoy)
 
     def para_oferta(self, o: dict) -> dict | None:
-        texto = plano(f"{o.get('especializacion') or ''} {o.get('conocimientos') or ''}").upper()
-        temas = [t for t in self.temas if t["_re"].search(texto)]
-        # Si piden Excel o Word, "ofimática" sobra
-        if any(t["slug"] in ("excel", "word") for t in temas):
-            temas = [t for t in temas if t["slug"] != "ofimatica"]
-        if not temas:
+        """Temas por campo, para mostrarlos debajo del requisito que los pide.
+        Un tema que aparece en los dos campos va solo bajo Especialización."""
+        por_campo = {campo: [t for t in self.temas if t["_re"].search(plano(o.get(campo) or "").upper())]
+                     for campo in ("especializacion", "conocimientos")}
+        todos = por_campo["especializacion"] + [t for t in por_campo["conocimientos"]
+                                                 if t not in por_campo["especializacion"]]
+        # Si piden Excel, Word o PowerPoint, "ofimática" sobra
+        if any(t["slug"] in ("excel", "word", "powerpoint") for t in todos):
+            todos = [t for t in todos if t["slug"] != "ofimatica"]
+        todos = todos[:MAX_TEMAS]
+        if not todos:
             return None
-        return {"temas": temas[:MAX_TEMAS], "horas_min": horas_minimas(o.get("especializacion") or "")}
+        esp = [t for t in todos if t in por_campo["especializacion"]]
+        return {"temas": todos, "especializacion": esp, "conocimientos": [t for t in todos if t not in esp],
+                "horas_min": horas_minimas(o.get("especializacion") or "")}

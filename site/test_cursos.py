@@ -47,6 +47,13 @@ def test_gestion_publica_enap_vigente():
     assert r["temas"][0]["lista"][0]["url"] == "u/gp"
 
 
+def test_cada_tema_bajo_el_requisito_que_lo_pide():
+    r = cat().para_oferta({"especializacion": "CURSO EN GESTIÓN PÚBLICA, EXCEL",
+                           "conocimientos": "EXCEL Y GESTIÓN DE RECURSOS HUMANOS"})
+    assert [t["slug"] for t in r["especializacion"]] == ["excel", "gestion-publica"]
+    assert [t["slug"] for t in r["conocimientos"]] == ["recursos-humanos"]  # Excel no se repite
+
+
 def test_horas_minimas_y_sin_tema():
     assert C.horas_minimas("CURSOS NO MENOR A (20) HORAS ACADÉMICAS O 12 HORAS") == 20
     assert cat().para_oferta({"especializacion": "DERECHO PENAL", "conocimientos": "LEY 27444"}) is None

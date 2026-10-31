@@ -1,5 +1,24 @@
 {% extends "base.html" %}
 {% from "_tarjeta.html" import tarjeta %}
+{# Cursos gratuitos con certificado, debajo del requisito (especialización o conocimientos) que los pide #}
+{% macro cursos_gratis(o, campo) %}
+{% if o.cursos and o.cursos[campo] and not o.cerrada %}
+<div class="o-cursos">
+  <p class="o-cursos-titulo">Llévalo gratis y con certificado:</p>
+  <ul>
+    {% for t in o.cursos[campo] %}
+    {% for c in t.lista %}
+    <li><a href="{{ c.url }}" rel="noopener" target="_blank">{{ c.titulo }}</a> <span class="o-curso-dato">{{ c.horas ~ ' h · ' if c.horas }}{{ c.certifica }}{{ ' · inscripción hasta el ' ~ fecha_corta(c.hasta) if c.hasta }}</span></li>
+    {% endfor %}
+    {% if t.enap and not t.lista %}
+    <li><a href="{{ enap_catalogo }}" rel="noopener" target="_blank">Cursos MOOC de la ENAP (SERVIR)</a> <span class="o-curso-dato">abre cursos de {{ t.nombre|lower }} varias veces al año</span></li>
+    {% endif %}
+    {% endfor %}
+  </ul>
+  {% if campo == 'especializacion' and o.cursos.horas_min %}<p class="o-curso-dato">Piden al menos {{ o.cursos.horas_min }} horas: revisa que el certificado las cumpla.</p>{% endif %}
+</div>
+{% endif %}
+{% endmacro %}
 {% block contenido %}
 <article class="oferta">
   {% if o.cerrada %}
@@ -33,29 +52,12 @@
     <dl class="o-req">
       <div><dt>Formación</dt><dd>{{ o.formacion_original or 'No indicada en la convocatoria' }}</dd></div>
       <div><dt>Experiencia</dt><dd>{{ o.experiencia_original or ('No se exige experiencia' if o.req.sin_experiencia else 'No indicada en la convocatoria; revisa las bases') }}</dd></div>
-      {% if o.especializacion_txt %}<div><dt>Especialización</dt><dd>{{ o.especializacion_txt }}</dd></div>{% endif %}
-      {% if o.conocimientos_txt %}<div><dt>Conocimientos</dt><dd>{{ o.conocimientos_txt }}</dd></div>{% endif %}
+      {% if o.especializacion_txt %}<div><dt>Especialización</dt><dd>{{ o.especializacion_txt }}{{ cursos_gratis(o, 'especializacion') }}</dd></div>{% endif %}
+      {% if o.conocimientos_txt %}<div><dt>Conocimientos</dt><dd>{{ o.conocimientos_txt }}{{ cursos_gratis(o, 'conocimientos') }}</dd></div>{% endif %}
       {% if o.competencias_txt %}<div><dt>Competencias</dt><dd>{{ o.competencias_txt }}</dd></div>{% endif %}
     </dl>
+    {% if o.cursos and not o.cerrada %}<p class="o-curso-dato">Confirma en las bases qué cursos aceptan. <a href="{{ url('/cursos-gratis/') }}">Ver todos los cursos gratis con certificado</a>.</p>{% endif %}
   </section>
-
-  {% if o.cursos and not o.cerrada %}
-  <section class="o-seccion o-cursos">
-    <h2>Cursos gratis para lo que piden</h2>
-    <p>Esta convocatoria pide {% for t in o.cursos.temas %}{{ t.nombre|lower if t.slug not in ('excel', 'word') else t.nombre }}{{ ', ' if not loop.last and loop.revindex > 2 else (' y ' if not loop.last else '') }}{% endfor %}. Puedes estudiarlo gratis y con certificado:</p>
-    <ul>
-      {% for t in o.cursos.temas %}
-      {% for c in t.lista %}
-      <li><a href="{{ c.url }}" rel="noopener" target="_blank">{{ c.titulo }}</a> <span class="o-curso-dato">· {{ c.horas ~ ' horas · ' if c.horas }}certifica {{ c.certifica }}{{ ' · inscripción hasta el ' ~ fecha_larga(c.hasta) if c.hasta }}</span></li>
-      {% endfor %}
-      {% if t.enap and not t.lista %}
-      <li><a href="{{ enap_catalogo }}" rel="noopener" target="_blank">Cursos MOOC de la ENAP (SERVIR)</a> <span class="o-curso-dato">· abre cursos gratuitos con certificado varias veces al año</span></li>
-      {% endif %}
-      {% endfor %}
-    </ul>
-    <p class="o-curso-nota">{% if o.cursos.horas_min %}Las bases piden cursos de al menos {{ o.cursos.horas_min }} horas: revisa que el certificado las cumpla. {% endif %}Confirma en las bases qué cursos aceptan. <a href="{{ url('/cursos-gratis/') }}">Ver todos los cursos gratis</a>.</p>
-  </section>
-  {% endif %}
 
   {% if not o.cerrada %}
   <section class="o-seccion">

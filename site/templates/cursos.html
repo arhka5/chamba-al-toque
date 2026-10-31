@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block contenido %}
+<article class="texto">
+<h1>{{ h1 }}</h1>
+<p>Casi todas las convocatorias del Estado piden cursos o conocimientos: ofimática, gestión pública, inglés y otros. Aquí están los que puedes llevar <strong>gratis, en línea y con certificado</strong>, ofrecidos por el Ministerio de Trabajo (plataforma <a href="https://capacitacionlaboral.trabajo.gob.pe/" rel="noopener">Capacíta-T</a>) y por la Escuela Nacional de Administración Pública de SERVIR (<a href="{{ enap_catalogo }}" rel="noopener">cursos MOOC de la ENAP</a>).</p>
+<p>Antes de inscribirte, revisa en las bases de la convocatoria cuántas horas debe tener el curso. Muchas piden un mínimo, como 12, 20 o 90 horas, y un certificado con menos horas puede no contar.</p>
+
+{% for t in temas_cursos %}
+<h2 id="{{ t.slug }}">{{ t.nombre }}</h2>
+{% if pedidos[t.slug] %}<p>Lo piden {{ miles(pedidos[t.slug]) }} {{ 'convocatoria vigente' if pedidos[t.slug] == 1 else 'convocatorias vigentes' }}.</p>{% endif %}
+<ul>
+  {% for c in t.lista %}
+  <li><a href="{{ c.url }}" rel="noopener">{{ c.titulo }}</a>: {{ c.horas ~ ' horas, ' if c.horas }}certifica {{ c.certifica }}{{ '. Inscripción hasta el ' ~ fecha_larga(c.hasta) if c.hasta }}.</li>
+  {% endfor %}
+  {% if t.enap %}
+  <li><a href="{{ enap_catalogo }}" rel="noopener">Todos los cursos MOOC de la ENAP (SERVIR)</a>: gratuitos, con certificado si apruebas la evaluación final; abren nuevas ediciones varias veces al año.</li>
+  {% endif %}
+</ul>
+{% endfor %}
+
+<h2>¿Y el SIAF o el SIGA?</h2>
+<p>Son de los cursos más pedidos, pero el Ministerio de Economía y Finanzas no tiene hoy un curso gratuito abierto al público con certificado. Desconfía de quien te «garantice» una plaza por llevar su curso pagado: ningún curso asegura que te contraten.</p>
+</article>
+{% endblock %}

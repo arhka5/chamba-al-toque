@@ -1,0 +1,1967 @@
+{
+ "actualizado": "2026-10-30T20:47:54",
+ "cursos": [
+  {
+   "fuente": "enap",
+   "titulo": "Inteligencia Artificial para Servidores Públicos",
+   "url": "https://www.gob.pe/institucion/enap/campa%C3%B1as/140307-curso-mooc-inteligencia-artificial-para-servidores-publicos",
+   "horas": 24,
+   "certifica": "ENAP – SERVIR",
+   "categoria": "Gestión pública",
+   "hasta": "2026-11-06"
+  },
+  {
+   "fuente": "enap",
+   "titulo": "Transformación digital en el Perú",
+   "url": "https://www.gob.pe/institucion/enap/campa%C3%B1as/39913-curso-mooc-transversal-transformacion-digital-en-el-peru",
+   "horas": 24,
+   "certifica": "ENAP – SERVIR",
+   "categoria": "Gestión pública",
+   "hasta": "2026-11-08"
+  },
+  {
+   "fuente": "enap",
+   "titulo": "Gestión de los recursos humanos para la generación de valor público",
+   "url": "https://www.gob.pe/institucion/enap/campa%C3%B1as/56570-curso-mooc-gestion-de-los-recursos-humanos-para-la-generacion-de-valor-publico",
+   "horas": 16,
+   "certifica": "ENAP – SERVIR",
+   "categoria": "Gestión pública",
+   "hasta": "2026-11-01"
+  },
+  {
+   "fuente": "enap",
+   "titulo": "Gestión Pública para la inclusión de las personas con discapacidad desde una perspectiva de derechos",
+   "url": "https://www.gob.pe/institucion/enap/campañas/66317-curso-mooc-gestion-publica-para-la-inclusion-de-las-personas-con-discapacidad",
+   "horas": 24,
+   "certifica": "ENAP – SERVIR",
+   "categoria": "Gestión pública",
+   "hasta": "2026-11-01"
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Costos para emprender",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/costos-para-emprender/",
+   "horas": 8,
+   "certifica": "Fundación Romero",
+   "categoria": "Emprendimiento",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Prevención y reporte del hostigamiento sexual laboral",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/prevencion-y-reporte-del-hostigamiento-sexual-laboral/",
+   "horas": 6,
+   "certifica": "Ministerio de Trabajo y Promoción del Empleo",
+   "categoria": "Bienestar, seguridad y salud para el trabajo.",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Introducción a ciberseguridad",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/introduccion-a-la-ciberseguridad/",
+   "horas": 6,
+   "certifica": "Cisco N.A.",
+   "categoria": "Analista Junior en Ciberseguridad",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Competencias socioemocionales para la empleabilidad",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/competencias-socioemocionales-para-la-empleabilidad/",
+   "horas": 18,
+   "certifica": "Ministerio de Trabajo y Promoción del Empleo",
+   "categoria": "Competencias socioemocionales para el empleo",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Prevención de riesgos laborales",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/prevencion-de-riesgos-laborales/",
+   "horas": 16,
+   "certifica": "Ministerio de Trabajo y Promoción del Empleo",
+   "categoria": "Bienestar, seguridad y salud para el trabajo.",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Herramientas para la búsqueda de empleo",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/herramientas-para-la-busqueda-de-empleo/",
+   "horas": 8,
+   "certifica": "Ministerio de Trabajo y Promoción del Empleo",
+   "categoria": "Competencias socioemocionales para el empleo",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Aprendiendo a aprender",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/aprendiendo-a-aprender/",
+   "horas": 8,
+   "certifica": "Ministerio de Trabajo y Promoción del Empleo",
+   "categoria": "Fortalece tus competencias cognitivas para el empleo",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Motivación para el aprendizaje virtual",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/motivacion-para-el-aprendizaje-virtual/",
+   "horas": 4,
+   "certifica": "Ministerio de Trabajo y Promoción del Empleo",
+   "categoria": "Competencias digitales básicas para el empleo",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Empleabilidad: todo lo que debes saber de tu relación laboral",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/empleabilidad-todo-lo-que-debes-saber-de-tu-relacion-laboral/",
+   "horas": 8,
+   "certifica": "Ministerio de Trabajo y Promoción del Empleo",
+   "categoria": "Bienestar, seguridad y salud para el trabajo.",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Mejora tus habilidades lectoras para el trabajo",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/mejora-tus-habilidades-lectoras-para-el-trabajo/",
+   "horas": 8,
+   "certifica": "Ministerio de Trabajo y Promoción del Empleo",
+   "categoria": "Fortalece tus competencias cognitivas para el empleo",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Mejora tus habilidades matemáticas para el trabajo",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/mejora-tus-habilidades-matematicas-para-el-trabajo/",
+   "horas": 8,
+   "certifica": "Ministerio de Trabajo y Promoción del Empleo",
+   "categoria": "Fortalece tus competencias cognitivas para el empleo",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "ABC Digital",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/abc-digital/",
+   "horas": 8,
+   "certifica": "Ministerio de Trabajo y Promoción del Empleo",
+   "categoria": "Competencias digitales básicas para el empleo",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Adaptación al cambio",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/adaptacion-al-cambio/",
+   "horas": 15,
+   "certifica": "Ministerio de Trabajo y Promoción del Empleo",
+   "categoria": "Competencias socioemocionales para el empleo",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Word y Excel para el trabajo – nivel básico",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/word-y-excel-para-el-trabajo-nivel-basico/",
+   "horas": 6,
+   "certifica": "Ministerio de Trabajo y Promoción del Empleo",
+   "categoria": "Competencias digitales básicas para el empleo",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Potencia tu creatividad y cumple tus metas",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/potencia-tu-creatividad-y-cumple-tus-metas/",
+   "horas": 16,
+   "certifica": "Ministerio de Trabajo y Promoción del Empleo",
+   "categoria": "Fortalece tus competencias cognitivas para el empleo",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Gestión efectiva del tiempo",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/gestion-efectiva-del-tiempo/",
+   "horas": 8,
+   "certifica": "Ministerio de Trabajo y Promoción del Empleo",
+   "categoria": "Competencias socioemocionales para el empleo",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Conceptos básicos de redes",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/conceptos-basicos-de-redes/",
+   "horas": 22,
+   "certifica": "Cisco N.A.",
+   "categoria": "Analista Junior en Ciberseguridad",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Dispositivos de red y configuración inicial",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/dispositivos-de-red-y-configuracion-inicial/",
+   "horas": 22,
+   "certifica": "Cisco N.A.",
+   "categoria": "Analista Junior en Ciberseguridad",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Soporte y seguridad de red",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/soporte-y-seguridad-de-red/",
+   "horas": 12,
+   "certifica": "Cisco N.A.",
+   "categoria": "Técnico de redes",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Direccionamiento de red y solución de problemas básicos",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/direccionamiento-de-red-y-solucion-de-problemas-basicos/",
+   "horas": 14,
+   "certifica": "Cisco N.A.",
+   "categoria": "Técnico de redes",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Introducción a la ciencia de datos",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/introduccion-a-la-ciencia-de-datos/",
+   "horas": 6,
+   "certifica": "Cisco N.A.",
+   "categoria": "Fundamentos de Python y Ciencias de Datos",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Conceptos básicos de hardware de computadora",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/conceptos-basicos-de-hardware-de-computadora/",
+   "horas": 6,
+   "certifica": "Cisco N.A.",
+   "categoria": "Sistemas Operativos y Tecnologías de la Información",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Fundamentos de Python 1",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/fundamentos-de-python-1/",
+   "horas": 30,
+   "certifica": "Cisco N.A.",
+   "categoria": "Fundamentos de Python y Ciencias de Datos",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Fundamentos de Python 2",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/fundamentos-de-python-2/",
+   "horas": 40,
+   "certifica": "Cisco N.A.",
+   "categoria": "Fundamentos de Python y Ciencias de Datos",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Administración de amenazas cibernéticas",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/administracion-de-amenazas-ciberneticas/",
+   "horas": 16,
+   "certifica": "Cisco N.A.",
+   "categoria": "Analista Junior en Ciberseguridad",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Seguridad de terminales",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/seguridad-de-terminales/",
+   "horas": 27,
+   "certifica": "Cisco N.A.",
+   "categoria": "Analista Junior en Ciberseguridad",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Defensa de la red",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/defensa-de-la-red/",
+   "horas": 27,
+   "certifica": "Cisco N.A.",
+   "categoria": "Analista Junior en Ciberseguridad",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Introducción al internet de las cosas y transformación digital",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/introduccion-al-internet-de-las-cosas-y-transformacion-digital/",
+   "horas": 6,
+   "certifica": "Cisco N.A.",
+   "categoria": "Sistemas Operativos y Tecnologías de la Información",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Excel básico",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/excel-basico/",
+   "horas": null,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Excel básico",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Excel intermedio",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/excel-intermedio/",
+   "horas": 2,
+   "certifica": "Fundación Romero",
+   "categoria": "Excel intermedio",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Power Point básico *",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/power-point-basico/",
+   "horas": null,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Power Point básico *",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Power Point intermedio *",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/power-point-intermedio/",
+   "horas": 2,
+   "certifica": "Fundación Romero",
+   "categoria": "Power Point intermedio *",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Word básico *",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/word-basico/",
+   "horas": null,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Word básico *",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Word intermedio *",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/word-intermedio/",
+   "horas": 2,
+   "certifica": "Fundación Romero",
+   "categoria": "Word intermedio *",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Introducción para emprender *",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/beca-introduccion-para-emprender/",
+   "horas": null,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Introducción para emprender *",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Plan de marketing para emprender *",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/beca-plan-de-marketing-para-emprender/",
+   "horas": 2,
+   "certifica": "Fundación Romero",
+   "categoria": "Plan de marketing para emprender *",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Inteligencia emocional *",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/inteligencia-emocional/",
+   "horas": 3,
+   "certifica": "Fundación Romero",
+   "categoria": "Inteligencia emocional *",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Transformación digital en las empresas",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/transformacion-digital-en-las-empresas-2/",
+   "horas": 4,
+   "certifica": "Fundación Romero",
+   "categoria": "Transformación digital en las empresas",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "El rol del líder en la transformación digital",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/el-rol-del-lider-en-la-transformacion-digital/",
+   "horas": 3,
+   "certifica": "Fundación Romero",
+   "categoria": "El rol del líder en la transformación digital",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Digital Acceleration",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/digital-acceleration/",
+   "horas": 3,
+   "certifica": "Fundación Romero",
+   "categoria": "Digital Acceleration",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Agile mindset",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/agile-mindset/",
+   "horas": 2,
+   "certifica": "Fundación Romero (Generación Plateada)",
+   "categoria": "Agile mindset",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Cómo realizar entrevistas de trabajo exitosas",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/como-realizar-entrevistas-de-trabajo-exitosas/",
+   "horas": null,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Cómo realizar entrevistas de trabajo exitosas",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Reinserción al mercado laboral *",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/reinsercion-al-mercado-laboral/",
+   "horas": 4,
+   "certifica": "Fundación Romero",
+   "categoria": "Reinserción al mercado laboral *",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Comunicación asertiva *",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/comunicacion-asertiva/",
+   "horas": 3,
+   "certifica": "Fundación Romero",
+   "categoria": "Comunicación asertiva *",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Comunicación corporativa y palabras mayores *",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/comunicacion-corporativa-y-palabras-mayores/",
+   "horas": 4,
+   "certifica": "Fundación Romero",
+   "categoria": "Comunicación corporativa y palabras mayores *",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Comunicación persuasiva *",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/comunicacion-persuasiva/",
+   "horas": 3,
+   "certifica": "Fundación Romero",
+   "categoria": "Comunicación persuasiva *",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Modelo Canvas *",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/beca-modelo-canvas/",
+   "horas": 3,
+   "certifica": "Fundación Romero",
+   "categoria": "Modelo Canvas *",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Gestión del cambio",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/gestion-del-cambio/",
+   "horas": 4,
+   "certifica": "Fundación Romero",
+   "categoria": "Gestión del cambio",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Administración de restaurantes",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/administracion-de-restaurantes/",
+   "horas": 3,
+   "certifica": "Fundación Romero",
+   "categoria": "Gestión de restaurantes",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Analiza y crea un restaurante",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/analiza-y-crea-un-restaurante/",
+   "horas": 9,
+   "certifica": "Fundación Romero",
+   "categoria": "Gestión de restaurantes",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Cómo operar un restaurante",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/como-operar-un-restaurante/",
+   "horas": 10,
+   "certifica": "Fundación Romero",
+   "categoria": "Gestión de restaurantes",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Costos de un restaurante",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/costos-de-un-restaurante/",
+   "horas": 9,
+   "certifica": "Fundación Romero",
+   "categoria": "Gestión de restaurantes",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Equipamiento de restaurantes",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/equipamiento-de-restaurantes/",
+   "horas": 9,
+   "certifica": "Fundación Romero",
+   "categoria": "Gestión de restaurantes",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Logística de un restaurante",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/logistica-de-un-restaurante/",
+   "horas": 8,
+   "certifica": "Fundación Romero",
+   "categoria": "Gestión de restaurantes",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Dirección de personal",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/direccion-de-personal/",
+   "horas": 8,
+   "certifica": "Fundación Romero",
+   "categoria": "Gestión de recursos humanos",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Gestión del desempeño y desarrollo de competencias",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/gestion-del-desempeno-y-desarrollo-de-competencias/",
+   "horas": 10,
+   "certifica": "Fundación Romero",
+   "categoria": "Gestión de recursos humanos",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Estrategias de motivación del personal",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/estrategias-de-motivacion-del-personal/",
+   "horas": 9,
+   "certifica": "Fundación Romero",
+   "categoria": "Gestión de recursos humanos",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Mindfulness en las empresas",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/mindfulness-en-las-empresas/",
+   "horas": 9,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Gestión de recursos humanos",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Herramientas para la comunicación interna",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/herramientas-para-la-comunicacion-interna/",
+   "horas": 15,
+   "certifica": "Fundación Romero",
+   "categoria": "Gestión de recursos humanos",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Recursos humanos en épocas de transformación digital",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/recursos-humanos-en-epocas-de-transformacion-digital/",
+   "horas": 6,
+   "certifica": "Fundación Romero",
+   "categoria": "Gestión de recursos humanos",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Gestión de equipos remotos",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/gestion-de-equipos-remotos/",
+   "horas": 2,
+   "certifica": "Fundación Romero",
+   "categoria": "Gestión de recursos humanos",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Formación en ventas",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/formacion-en-ventas/",
+   "horas": 16,
+   "certifica": "Fundación Romero",
+   "categoria": "Venta estratégica",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Venta emocional",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/venta-emocional/",
+   "horas": 16,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Venta estratégica",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Venta consultiva",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/venta-consultiva/",
+   "horas": 9,
+   "certifica": "Fundación Romero",
+   "categoria": "Venta estratégica",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Cierre de ventas",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/cierre-de-ventas/",
+   "horas": 8,
+   "certifica": "Fundación Romero",
+   "categoria": "Venta estratégica",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Representante de ventas en trabajo remoto",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/representante-de-ventas-en-trabajo-remoto/",
+   "horas": 20,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Venta estratégica",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Manejo de objeciones",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/manejo-de-objeciones/",
+   "horas": 2,
+   "certifica": "Fundación Romero",
+   "categoria": "Servicio al cliente",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Tácticas de negociación efectiva",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/tacticas-de-negocion-efectiva/",
+   "horas": 15,
+   "certifica": "Fundación Romero",
+   "categoria": "Venta estratégica",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Plan de negocios",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/plan-de-negocios/",
+   "horas": 32,
+   "certifica": "Fundación Romero",
+   "categoria": "Desarrollo de negocios",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Pensamiento estratégico",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/pensamiento-estrategico/",
+   "horas": 14,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Desarrollo de negocios",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Negocios e innovación",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/negocios-e-innovacion/",
+   "horas": 2,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Desarrollo de negocios",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Estrategias ágiles para empresas",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/estrategias-agiles-para-empresas/",
+   "horas": 2,
+   "certifica": "Fundación Romero",
+   "categoria": "Desarrollo de negocios",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Ética en los negocios",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/etica-en-los-negocios/",
+   "horas": 2,
+   "certifica": "Fundación Romero",
+   "categoria": "Desarrollo de negocios",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Orientación al cliente – Fidelización",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/orientacion-al-cliente/",
+   "horas": 4,
+   "certifica": "Fundación Romero",
+   "categoria": "Servicio al cliente",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Comportamiento del consumidor",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/comportamiento-del-consumidor/",
+   "horas": 16,
+   "certifica": "Fundación Romero",
+   "categoria": "Servicio al cliente",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Administración de las relaciones con los clientes",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/administracion-de-las-relaciones-con-los-clientes/",
+   "horas": 9,
+   "certifica": "Fundación Romero",
+   "categoria": "Servicio al cliente",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "La experiencia del cliente nunca termina",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/la-experiencia-del-cliente-nunca-termina/",
+   "horas": 7,
+   "certifica": "Fundación Romero",
+   "categoria": "Servicio al cliente",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Introducción y conceptos generales de finanzas",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/introduccion-y-conceptos-generales-de-finanzas/",
+   "horas": 7,
+   "certifica": "Fundación Romero",
+   "categoria": "Finanzas para no financieros",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Economía",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/economia/",
+   "horas": 12,
+   "certifica": "Fundación Romero",
+   "categoria": "Finanzas para no financieros",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Finanzas",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/finanzas/",
+   "horas": 5,
+   "certifica": "Fundación Romero",
+   "categoria": "Finanzas para no financieros",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Contabilidad de costos",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/contabilidad-de-costos/",
+   "horas": 10,
+   "certifica": "Fundación Romero",
+   "categoria": "Finanzas para no financieros",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Análisis financiero",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/analisis-financiero/",
+   "horas": 10,
+   "certifica": "Fundación Romero",
+   "categoria": "Finanzas para no financieros",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Rentabilidad de operaciones",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/rentabilidad-de-operaciones/",
+   "horas": 8,
+   "certifica": "Fundación Romero",
+   "categoria": "Finanzas para no financieros",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Gestión del capital de trabajo",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/gestion-del-capital-de-trabajo/",
+   "horas": 8,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Finanzas para no financieros",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "PowerPoint básico",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/powerpoint-basico/",
+   "horas": 6,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel básico)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Introducción al Power BI",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/introduccion-al-power-bi/",
+   "horas": 15,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel básico)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Análisis de datos con Power BI",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/analisis-de-datos-con-power-bi/",
+   "horas": 10,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel intermedio)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Cómo gestionar tu equipo de trabajo",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/como-gestionar-tu-equipo-de-trabajo/",
+   "horas": 16,
+   "certifica": "Fundación Romero",
+   "categoria": "Gestión de equipos",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Gestión de equipos de alto desempeño",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/gestion-de-equipos-de-alto-desempeno/",
+   "horas": 7,
+   "certifica": "Fundación Romero",
+   "categoria": "Gestión de equipos",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Salud y seguridad para ambientes de trabajo moderno",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/salud-y-seguridad-para-ambientes-de-trabajo-moderno/",
+   "horas": 16,
+   "certifica": "Fundación Romero",
+   "categoria": "Gestión de equipos",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Retroalimentación en las organizaciones",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/retroalimentacion-en-las-organizaciones/",
+   "horas": 7,
+   "certifica": "Fundación Romero",
+   "categoria": "Gestión de equipos",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Inteligencia emocional I",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/inteligencia-emocional-i/",
+   "horas": 15,
+   "certifica": "Fundación Romero",
+   "categoria": "Desarrollo personal",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Gestión de estrés y ansiedad",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/gestion-de-estres-y-ansiedad/",
+   "horas": 16,
+   "certifica": "Fundación Romero",
+   "categoria": "Desarrollo personal",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Autoconocimiento",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/autoconocimiento/",
+   "horas": 6,
+   "certifica": "Fundación Romero",
+   "categoria": "Desarrollo personal",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Formalizando mi emprendimiento",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/formalizando-mi-emprendimiento/",
+   "horas": 20,
+   "certifica": "Fundación Romero",
+   "categoria": "Emprendimiento",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Plan de operaciones",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/plan-de-operaciones/",
+   "horas": 8,
+   "certifica": "Fundación Romero",
+   "categoria": "Emprendimiento",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Finanzas para emprender",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/finanzas-para-emprender/",
+   "horas": 16,
+   "certifica": "Fundación Romero",
+   "categoria": "Emprendimiento",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Diseño y creación de un emprendimiento social",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/diseno-y-creacion-de-un-emprendimiento-social/",
+   "horas": 12,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Emprendimiento",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Crea tu propio emprendimiento digital",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/crea-tu-propio-emprendimiento-digital/",
+   "horas": 14,
+   "certifica": "Fundación Romero",
+   "categoria": "Emprendimiento",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Educación financiera y economía básica",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/educacion-financiera-y-economia-basica/",
+   "horas": 6,
+   "certifica": "Fundación Romero",
+   "categoria": "Finanzas para no financieros",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Contabilidad financiera básica",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/contabilidad-financiera-basica/",
+   "horas": 9,
+   "certifica": "Fundación Romero",
+   "categoria": "Finanzas para no financieros",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "PowerPoint intermedio",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/powerpoint-intermedio/",
+   "horas": 13,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel intermedio)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Cómo utilizar la experiencia como fortaleza",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/como-utilizar-la-experiencia-como-fortaleza/",
+   "horas": 15,
+   "certifica": "Fundación Romero",
+   "categoria": "Empleabilidad eficaz",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Crea tu emprendimiento digital – Lengua de Señas Peruana (LSP)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/crea-tu-emprendimiento-digital-lengua-de-senas-peruana-lsp/",
+   "horas": 14,
+   "certifica": "Fundación Romero",
+   "categoria": "Emprendimiento - Lengua de señas peruana (LSP)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Negocios digitales – quechua",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/negocios-digitales-quechua/",
+   "horas": 14,
+   "certifica": "Fundación Romero",
+   "categoria": "Emprendimiento - quechua",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Fijación y ejecución de objetivos",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/fijacion-y-ejecucion-de-objetivos/",
+   "horas": 2,
+   "certifica": "Fundación Romero",
+   "categoria": "Éxito Laboral",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Finanzas personales para emprendedores – quechua",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/finanzas-personales-para-emprendedores-quechua/",
+   "horas": 16,
+   "certifica": "Fundación Romero",
+   "categoria": "Emprendimiento - quechua",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "LinkedIn",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/linkedin/",
+   "horas": 15,
+   "certifica": "Fundación Romero",
+   "categoria": "Empleabilidad eficaz",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Finanzas personales para emprendedores – Lengua de Señas Peruana (LSP)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/finanzas-personales-para-emprendedores-lengua-de-senas-peruana-lsp/",
+   "horas": 2,
+   "certifica": "Fundación Romero",
+   "categoria": "Emprendimiento - Lengua de señas peruana (LSP)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Aprende a vender – quechua",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/formacion-en-ventas-quechua/",
+   "horas": 11,
+   "certifica": "Fundación Romero",
+   "categoria": "Emprendimiento - quechua",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Generación de ideas disruptivas",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/generacion-de-ideas-disruptivas/",
+   "horas": 9,
+   "certifica": "Fundación Romero",
+   "categoria": "Innovación Empresarial",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Gestión de la innovación",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/gestion-de-la-innovacion/",
+   "horas": 9,
+   "certifica": "Fundación Romero",
+   "categoria": "Innovación Empresarial",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Hostigamiento sexual laboral – Lengua de Señas Peruana (LSP)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/hostigamiento-sexual-laboral-lengua-de-senas-peruana-lsp/",
+   "horas": 2,
+   "certifica": "Fundación Romero",
+   "categoria": "Desarrollo organizacional - Lengua de Señas Peruana (LSP)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Estrategias de motivación del personal – Lengua de Señas Peruana (LSP)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/estrategias-de-motivacion-del-personal-lengua-de-senas-peruana-lsp/",
+   "horas": 9,
+   "certifica": "Fundación Romero",
+   "categoria": "Desarrollo organizacional - Lengua de Señas Peruana (LSP)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Salud y seguridad para ambientes de trabajo moderno – Lengua de Señas Peruana (LSP)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/salud-y-seguridad-para-ambientes-de-trabajo-moderno-lengua-de-senas-peruana-lsp/",
+   "horas": 9,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Desarrollo organizacional - Lengua de Señas Peruana (LSP)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Prevención del HAS en el trabajo – quechua",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/prevencion-del-has-en-el-trabajo-quechua/",
+   "horas": 4,
+   "certifica": "Fundación Romero",
+   "categoria": "Desarrollo organizacional - quechua",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Motivando a tu personal – quechua",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/motivando-a-tu-personal-quechua/",
+   "horas": 15,
+   "certifica": "Fundación Romero",
+   "categoria": "Desarrollo organizacional - quechua",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Ambiente laboral seguro, saludable y productivo – quechua",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/ambiente-laboral-seguro-saludable-y-productivo-quechua/",
+   "horas": 8,
+   "certifica": "Fundación Romero",
+   "categoria": "Desarrollo organizacional - quechua",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Word intermedio – quechua",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/word-intermedio-quechua/",
+   "horas": 15,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel intermedio) - quechua",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Excel Intermedio – quechua",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/excel-intermedio-quechua/",
+   "horas": 20,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel intermedio) - quechua",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "PowerPoint intermedio – quechua",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/power-point-intermedio-quechua/",
+   "horas": 20,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel intermedio) - quechua",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Word básico – quechua",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/word-basico-quechua/",
+   "horas": 15,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel básico) - quechua",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Excel básico – quechua",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/excel-basico-quechua/",
+   "horas": 16,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel básico) - quechua",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "PowerPoint básico – quechua",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/power-point-basico-quechua/",
+   "horas": 18,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel básico) - quechua",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Empoderamiento – quechua",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/empoderamiento-quechua/",
+   "horas": 7,
+   "certifica": "Fundación Romero",
+   "categoria": "Emprendimiento - quechua",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Construcción de marca – quechua",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/construccion-de-marca-quechua/",
+   "horas": 7,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Emprendimiento - quechua",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Bienestar emocional en el trabajo – quechua",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/bienestar-emocional-en-el-trabajo-quechua/",
+   "horas": 2,
+   "certifica": "Fundación Romero",
+   "categoria": "Emprendimiento - quechua",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Marketing en redes sociales – quechua",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/marketing-en-redes-sociales-quechua/",
+   "horas": 15,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Contenido en redes sociales - quechua",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Publicidad en redes sociales – quechua",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/publicidad-en-redes-sociales-quechua/",
+   "horas": 2,
+   "certifica": "Fundación Romero",
+   "categoria": "Contenido en redes sociales - quechua",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Contenido persuasivo para redes sociales – quechua",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/contenido-persuasivao-para-redes-sociales-quechua/",
+   "horas": 15,
+   "certifica": "Fundación Romero",
+   "categoria": "Contenido en redes sociales - quechua",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Encuentra tu empleo en redes sociales – quechua",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/encuentra-tu-empleo-en-redes-sociales-quechua/",
+   "horas": 15,
+   "certifica": "Fundación Romero",
+   "categoria": "Contenido en redes sociales - quechua",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Word básico – Aimara",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/word-basico-aimara/",
+   "horas": 13,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel básico) - aimara",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Excel básico – aimara",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/excel-basico-aimara/",
+   "horas": 18,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Habilidades digitales (nivel básico) - aimara",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "PowerPoint básico – aimara",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/power-point-basico-aimara/",
+   "horas": 18,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel básico) - aimara",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Word básico – Lengua de Señas Peruana (LSP)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/word-basico-lengua-de-senas-peruana-lsp/",
+   "horas": 3,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel básico) - Lengua de Señas Peruana (LSP)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Excel básico – Lengua de Señas Peruana (LSP)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/excel-basico-lengua-de-senas-peruana-lsp/",
+   "horas": 3,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel básico) - Lengua de Señas Peruana (LSP)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "PowerPoint básico – Lengua de Señas Peruana (LSP)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/powerpoint-basico-lengua-de-senas-peruana-lsp/",
+   "horas": 3,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel básico) - Lengua de Señas Peruana (LSP)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Word intermedio – Lengua de Señas Peruana (LSP)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/word-intermedio-lengua-de-senas-peruana-lsp/",
+   "horas": 3,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Habilidades digitales (nivel intermedio) - Lengua de Señas Peruana (LSP)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Excel intermedio – Lengua de Señas Peruana (LSP)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/excel-intermedio-lengua-de-senas-peruana-lsp/",
+   "horas": 3,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel intermedio) - Lengua de Señas Peruana (LSP)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "PowerPoint intermedio – Lengua de Señas Peruana (LSP)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/powerpoint-intermedio-lengua-de-senas-peruana-lsp/",
+   "horas": 3,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel intermedio) - Lengua de Señas Peruana (LSP)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Empoderamiento en el mundo laboral – Lengua de Señas Peruana (LSP)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/empoderamiento-en-el-mundo-laboral-lengua-de-senas-peruana-lsp/",
+   "horas": 2,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Emprendimiento - Lengua de señas peruana (LSP)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Seguridad psicológica – Lengua de Señas Peruana (LSP)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/seguridad-psicologica-lengua-de-senas-peruana-lsp/",
+   "horas": 2,
+   "certifica": "Fundación Romero",
+   "categoria": "Emprendimiento - Lengua de señas peruana (LSP)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Social media marketing – Lengua de Señas Peruana (LSP)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/social-media-marketing-lengua-de-senas-peruana-lsp/",
+   "horas": 2,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Contenido en redes sociales – Lengua de Señas Peruana (LSP)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Marketing digital para redes sociales – Lengua de Señas Peruana (LSP)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/marketing-digital-para-redes-sociales-lengua-de-senas-peruana-lsp/",
+   "horas": 2,
+   "certifica": "Fundación Romero",
+   "categoria": "Contenido en redes sociales – Lengua de Señas Peruana (LSP)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Redacción persuasiva para redes sociales – Lengua de Señas Peruana (LSP)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/redaccion-persuasiva-para-redes-sociales-lengua-de-senas-peruana-lsp/",
+   "horas": 2,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Contenido en redes sociales – Lengua de Señas Peruana (LSP)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Encuentra tu empleo en redes sociales – Lengua de Señas Peruana (LSP)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/encuentra-tu-empleo-en-redes-sociales-lengua-de-senas-peruana-lsp/",
+   "horas": 2,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Contenido en redes sociales – Lengua de Señas Peruana (LSP)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Trendhunting",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/trendhunting/",
+   "horas": 9,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Innovación Empresarial",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Océano azul",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/oceano-azul/",
+   "horas": 2,
+   "certifica": "Fundación Romero",
+   "categoria": "Innovación Empresarial",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Innovación",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/innovacion/",
+   "horas": 7,
+   "certifica": "Fundación Romero",
+   "categoria": "Innovación Empresarial",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Metodología Lean Start Up",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/metodologia-lean-start-up/",
+   "horas": 8,
+   "certifica": "Fundación Romero",
+   "categoria": "Innovación Empresarial",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Introducción a la Lengua de Señas Peruana 1",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/introduccion-a-la-lengua-de-senas-peruana-1/",
+   "horas": 4,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Aprende la Lengua de Señas Peruana - LSP",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Introducción a la Lengua de Señas Peruana 2",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/introduccion-a-la-lengua-de-senas-peruana-2/",
+   "horas": 4,
+   "certifica": "Fundación Romero",
+   "categoria": "Aprende la Lengua de Señas Peruana - LSP",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Servicio al cliente en Lengua de Señas Peruana (LSP)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/servicio-al-cliente-en-lengua-de-senas-peruana/",
+   "horas": 4,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Aprende la Lengua de Señas Peruana - LSP",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Empoderamiento en el mundo laboral",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/empoderamiento-en-el-mundo-laboral/",
+   "horas": 7,
+   "certifica": "Fundación Romero",
+   "categoria": "Éxito Laboral",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Encuentra tu empleo con redes sociales",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/encuentra-tu-empleo-con-redes-sociales/",
+   "horas": 19,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Empleabilidad eficaz",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Word básico",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/word-basico-2/",
+   "horas": 5,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel básico)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Word intermedio",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/word-intermedio-2/",
+   "horas": 15,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel intermedio)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Relaciones en el trabajo",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/relaciones-en-el-trabajo/",
+   "horas": 5,
+   "certifica": "Fundación Romero",
+   "categoria": "Éxito Laboral",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Reinserción al mercado laboral",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/reinsercion-al-mercado-laboral-2/",
+   "horas": 16,
+   "certifica": "Fundación Romero",
+   "categoria": "Empleabilidad eficaz",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Programación neurolingüística",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/programacion-neurolinguistica/",
+   "horas": 14,
+   "certifica": "Fundación Romero",
+   "categoria": "Venta estratégica",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Productividad en el trabajo",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/productividad-en-el-trabajo/",
+   "horas": 8,
+   "certifica": "Fundación Romero",
+   "categoria": "Éxito Laboral",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Potencia tu marketing personal",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/potencia-tu-marketing-personal/",
+   "horas": 8,
+   "certifica": "Fundación Romero",
+   "categoria": "Empleabilidad eficaz",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Plan de marketing para emprender",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/plan-de-marketing-para-emprender/",
+   "horas": 12,
+   "certifica": "Fundación Romero",
+   "categoria": "Emprendimiento",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Modelo Canvas",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/modelo-canvas/",
+   "horas": 14,
+   "certifica": "Fundación Romero",
+   "categoria": "Desarrollo de negocios",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Introducción para emprender",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/introduccion-para-emprender/",
+   "horas": 9,
+   "certifica": "Fundación Romero",
+   "categoria": "Emprendimiento",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Intrapreneurship y mentalidad de crecimiento",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/intrapreneurship-y-mentalidad-de-crecimiento/",
+   "horas": 10,
+   "certifica": "Fundación Romero",
+   "categoria": "Éxito Laboral",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Habilidades de organización y planificación",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/habilidades-de-organizacion-y-planificacion/",
+   "horas": 5,
+   "certifica": "Fundación Romero",
+   "categoria": "Éxito Laboral",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Guía para entrevistas de trabajo exitosas",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/guia-para-entrevistas-de-trabajo-exitosas/",
+   "horas": 19,
+   "certifica": "Fundación Romero",
+   "categoria": "Empleabilidad eficaz",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Generación de nuevos negocios en la era digital",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/generacion-de-nuevos-negocios-en-la-era-digital/",
+   "horas": 16,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Emprendimiento",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Excel intermedio",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/excel-intermedio-2/",
+   "horas": 20,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel intermedio)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Excel básico",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/excel-basico-2/",
+   "horas": 10,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel básico)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Emprendimiento",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/emprendimiento-2/",
+   "horas": 8,
+   "certifica": "Fundación Romero",
+   "categoria": "Emprendimiento",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Design Thinking",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/design-thinking/",
+   "horas": 4,
+   "certifica": "Fundación Romero",
+   "categoria": "Innovación Empresarial",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Comunicación asertiva",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/comunicacion-asertiva-2/",
+   "horas": 5,
+   "certifica": "Fundación Romero",
+   "categoria": "Gestión de equipos",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Desarrolla tu pensamiento crítico",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/desarrolla-tu-prensamiento-critico/",
+   "horas": 10,
+   "certifica": "Ministerio de Promoción y del Empleo",
+   "categoria": "Fortalece tus competencias cognitivas para el empleo",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Word intermedio – aimara",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/word-intermedio-aimara/",
+   "horas": 20,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Habilidades digitales (nivel intermedio) - aimara",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Excel intermedio – aimara",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/excel-intermedio-aimara/",
+   "horas": 20,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel intermedio) - aimara",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "PowerPoint intermedio – aimara",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/powerpoint-intermedio-aimara/",
+   "horas": 20,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Habilidades digitales (nivel intermedio) - aimara",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "English for IT 1",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/english-for-it-1/",
+   "horas": 50,
+   "certifica": "Cisco N.A.",
+   "categoria": "English For IT",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "English for IT 2",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/english-for-it-2/",
+   "horas": 50,
+   "certifica": "Cisco N.A.",
+   "categoria": "English For IT",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Effective Business Presentations",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/effective-business-presentations/",
+   "horas": null,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Effective Business Presentations",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Leading and participating successfully in business meetings",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/leading-and-participating-successfully-in-business-meetings/",
+   "horas": null,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Leading and participating successfully in business meetings",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Desarrollo Front-End (Nivel básico)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/desarrollo-front-end-nivel-basico/",
+   "horas": 30,
+   "certifica": "Ministerio de Trabajo y Promoción del Empleo",
+   "categoria": "Desarrollo de aplicaciones web (nivel básico)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Basic A1 (Inglés básico – Nivel A1)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/basic-a1-ingles-basico-nivel-a1/",
+   "horas": 2,
+   "certifica": "Fundación Romero",
+   "categoria": "Inglés para atención al cliente",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Customer Service (Atención al cliente)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/customer-service/",
+   "horas": 2,
+   "certifica": "Fundación Romero",
+   "categoria": "Inglés para atención al cliente",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Hospitality (hospitalidad)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/hospitality/",
+   "horas": 15,
+   "certifica": "Fundación Romero",
+   "categoria": "Inglés para atención al cliente",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Desarrollo Back-End (Nivel básico)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/desarrollo-back-end-nivel-basico/",
+   "horas": 30,
+   "certifica": "Ministerio de Trabajo y Promoción del Empleo",
+   "categoria": "Desarrollo de aplicaciones web (nivel básico)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Fundamentos de IA con IBM SkillsBuild",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/fundamentos-de-ia-con-ibm-skillsbuild/",
+   "horas": 10,
+   "certifica": "Cisco N.A.",
+   "categoria": "Inteligencia Artificial y Ciencia de Datos",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Comenzando mi vida financiera y laboral",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/comenzando-mi-vida-financiera-y-laboral/",
+   "horas": null,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Comenzando mi vida financiera y laboral",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Conciencia Digital",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/conciencia-digital/",
+   "horas": 6,
+   "certifica": "Cisco N.A.",
+   "categoria": "Conciencia Digital",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Introduction to Modern AI",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/introduction-to-modern-ai/",
+   "horas": 6,
+   "certifica": "Cisco N.A.",
+   "categoria": "Inteligencia Artificial y Ciencia de Datos",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Descripción General de la IA",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/ai-basics-overview-of-ai/",
+   "horas": 10,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Innovación y transformación digital: IA y servicios de la nube",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Búsqueda e IA",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/busqueda-e-ia/",
+   "horas": 2,
+   "certifica": "Huawei del Perú",
+   "categoria": "Innovación y transformación digital: IA y servicios de la nube",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Descripción general de las tecnologías de IoT",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/descripcion-general-de-las-tecnologias-de-iot/",
+   "horas": 64,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Conectando el futuro: 5G y IOT (Internet de las cosas)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Comunicación de datos y tecnología de redes",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/comunicacion-de-datos-y-tecnologia-de-redes/",
+   "horas": 83,
+   "certifica": "Huawei del Perú",
+   "categoria": "Conectividad Inteligente: Redes y Big Data",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Representación de la información y organización de los datos",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/representacion-de-la-informacion-y-organizacion-de-los-datos/",
+   "horas": 2,
+   "certifica": "Huawei del Perú",
+   "categoria": "Conectividad Inteligente: Redes y Big Data",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Gestión y análisis de datos",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/gestion-y-analisis-de-datos/",
+   "horas": 2,
+   "certifica": "Huawei del Perú",
+   "categoria": "Conectividad Inteligente: Redes y Big Data",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Conceptos básicos de la nube: desarrollo y conceptos básicos",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/conceptos-basicos-de-la-nube-desarrollo-y-conceptos-basicos/",
+   "horas": 2,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Innovación y transformación digital: IA y servicios de la nube",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Curso de Redes de Computadoras",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/curso-de-redes-de-computadoras/",
+   "horas": 2,
+   "certifica": "Huawei del Perú",
+   "categoria": "Conectividad Inteligente: Redes y Big Data",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Cloud Advanced: Arquitectura y Tecnologías",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/cloud-advanced-arquitectura-y-tecnologias/",
+   "horas": 2,
+   "certifica": "Huawei del Perú",
+   "categoria": "Innovación y transformación digital: IA y servicios de la nube",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Arquitectura de red 5G y tecnologías clave",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/arquitectura-de-red-5g-y-tecnologias-clave/",
+   "horas": 64,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Conectando el futuro: 5G y IOT (Internet de las cosas)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Conceptos básicos de 5G: de qué se trata",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/conceptos-basicos-de-5g-de-que-se-trata/",
+   "horas": 64,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Conectando el futuro: 5G y IOT (Internet de las cosas)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Curso HCIA-Datacom V1.0",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/curso-hcia-datacom-v1-0/",
+   "horas": 64,
+   "certifica": "Huawei del Perú",
+   "categoria": "Conectando el futuro: 5G y IOT (Internet de las cosas)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Curso HCIA-Cloud Computing V5.5",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/curso-hcia-cloud-computing-v5-5/",
+   "horas": 10,
+   "certifica": "Ministerio de Trabajo (Capacíta-T)",
+   "categoria": "Innovación y transformación digital: IA y servicios de la nube",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Curso HCIA-5G V2.0",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/curso-hcia-5g-v2-0/",
+   "horas": 10,
+   "certifica": "Huawei del Perú",
+   "categoria": "Conectando el futuro: 5G y IOT (Internet de las cosas)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Inglés básico para el trabajo (nivel A1)",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/ingles-basico-para-el-trabajo-nivel-a1/",
+   "horas": 20,
+   "certifica": "Ministerio de Trabajo y Promoción del Empleo",
+   "categoria": "Fortalece tus competencias cognitivas para el empleo",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Computación fácil para la vida diaria",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/computacion-facil-para-la-vida-diaria/",
+   "horas": 20,
+   "certifica": "Fundación Romero",
+   "categoria": "Habilidades digitales (nivel básico)",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Logística 360°. Claves para una gestión moderna y eficiente",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/logistica-360-claves-para-una-gestion-moderna-y-eficiente/",
+   "horas": 20,
+   "certifica": "Fundación Romero",
+   "categoria": "Éxito Laboral",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Vende mejor: técnicas y herramientas clave",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/vende-mejor-tecnicas-y-herramientas-clave/",
+   "horas": 20,
+   "certifica": "Fundación Romero",
+   "categoria": "Venta estratégica",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Atención centrada en la persona silver en equipos intergeneracionales",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/atencion-centrada-en-la-persona-silver-en-equipos-intergeneracionales/",
+   "horas": 20,
+   "certifica": "Fundación Romero (Generación Plateada)",
+   "categoria": "Atención centrada en la persona silver en equipos intergeneracionales",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Diseña tu idea de negocio después de los 50: Encuentra qué vender y cómo empezar",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/disena-tu-idea-de-negocio-despues-de-los-50-encuentra-que-vender-y-como-empezar/",
+   "horas": 15,
+   "certifica": "Fundación Romero (Generación Plateada)",
+   "categoria": "Diseña tu idea de negocio después de los 50: Encuentra qué vender y cómo empezar",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Empatía y comunicación efectiva con personas silvers",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/empatia-y-comunicacion-efectiva-con-personas-silvers/",
+   "horas": 18,
+   "certifica": "Fundación Romero (Generación Plateada)",
+   "categoria": "Empatía y comunicación efectiva con personas silvers",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Técnicas de motivación y apoyo emocional para la generación plateada",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/tecnicas-de-motivacion-y-apoyo-emocional-para-la-generacion-plateada/",
+   "horas": 20,
+   "certifica": "Fundación Romero (Generación Plateada)",
+   "categoria": "Técnicas de motivación y apoyo emocional para la generación plateada",
+   "hasta": null
+  },
+  {
+   "fuente": "capacitat",
+   "titulo": "Vende con Confianza en el Mundo Digital",
+   "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/vende-con-confianza-en-el-mundo-digital/",
+   "horas": 15,
+   "certifica": "Fundación Romero (Generación Plateada)",
+   "categoria": "Vende con Confianza en el Mundo Digital",
+   "hasta": null
+  }
+ ]
+}

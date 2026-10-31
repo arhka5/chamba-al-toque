@@ -124,6 +124,9 @@ main{padding-bottom:32px}
 .o-seccion{margin-bottom:28px}
 .o-seccion h2{padding-bottom:6px;border-bottom:3px solid var(--tinta)}
 .o-frase{font-size:1.15rem;font-weight:700}
+.o-cursos ul{padding-left:20px}
+.o-cursos li{margin:8px 0}
+.o-curso-dato,.o-curso-nota{font-size:.9rem;color:var(--mute)}
 .o-req div{padding:10px 0;border-bottom:1px solid var(--linea)}
 .o-req dt{font-size:.9rem;font-weight:800;color:var(--mute)}
 .o-req dd{margin:2px 0 0}

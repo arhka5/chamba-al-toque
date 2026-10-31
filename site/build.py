@@ -26,6 +26,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE))
 import textos as T  # noqa: E402
+import cursos as C  # noqa: E402
 
 LIMA = timezone(timedelta(hours=-5))
 BASE_URL = "https://chambearhoy.toca.pe"
@@ -362,6 +363,8 @@ class Sitio:
         self.errores: list[str] = []
         self.telegram: dict | None = None  # mensaje para el canal, si hay ofertas por anunciar
         self.paginas: list[dict] = []  # para sitemaps: {path, lastmod, indexable}
+        self.catalogo = C.Catalogo.cargar(HERE / "cursos.json", hoy)
+        self.catalogo_actualizado = cargar_json(HERE / "cursos.json", {}).get("actualizado", "")[:10] or None
 
         crudas = {}
         self.descartadas = 0
@@ -552,6 +555,7 @@ class Sitio:
         p["especializacion_txt"] = "" if T._no_aplica(o.get("especializacion")) else T.oracion(o["especializacion"])
         p["conocimientos_txt"] = "" if T._no_aplica(o.get("conocimientos")) else T.oracion(o["conocimientos"])
         p["competencias_txt"] = "" if T._no_aplica(o.get("competencias")) else T.oracion(o["competencias"])
+        p["cursos"] = self.catalogo.para_oferta(o)
         p["experiencia_original"] = "" if T._no_aplica(o.get("experiencia")) else T.oracion(o["experiencia"]).strip(' "-')
         p["formacion_original"] = "" if T._no_aplica(o.get("formacion")) else T.oracion(o["formacion"]).strip(' "-')
         p["sueldo_txt"] = soles(o.get("sueldo"))
@@ -848,6 +852,7 @@ def construir(sitio: Sitio, out: Path) -> None:
         entidad_indexable=sitio.entidad_indexable,
         con_articulo=con_articulo,
         de_articulo=de_articulo,
+        enap_catalogo=C.ENAP_CATALOGO,
         reportar=lambda o: (f"mailto:{CONTACTO}?subject=" + quote(f"Reporte: oferta {o['id']}") + "&body="
                             + quote(f"Oferta: {sitio.abs(o['path'])}\nN.° SERVIR: {o['id']}\n\nQué está mal:\n")),
     )
@@ -1217,6 +1222,17 @@ def construir(sitio: Sitio, out: Path) -> None:
         escribir(f"/{p['slug']}/", f"info/{p['slug']}.html", p["indexable"], p["lastmod"],
                  titulo=p["title"].format(anio=sitio.anio), h1=p["h1"], descripcion=p["desc"],
                  migas=[("Inicio", "/"), (p["h1"], None)], ld=[])
+
+    # Cursos gratuitos con certificado, por tema, con cuántas ofertas vigentes lo piden
+    pedidos = Counter(t["slug"] for o in sitio.vigentes if o["cursos"] for t in o["cursos"]["temas"])
+    temas_cursos = sorted(sitio.catalogo.temas, key=lambda t: -pedidos[t["slug"]])
+    escribir("/cursos-gratis/", "cursos.html", True, sitio.catalogo_actualizado,
+             titulo=f"Cursos gratis con certificado para postular al Estado ({sitio.anio})",
+             h1="Cursos gratis con certificado para postular al Estado",
+             descripcion="Cursos virtuales gratuitos y con certificado (Ministerio de Trabajo y SERVIR) para cumplir "
+                         "lo que piden las convocatorias: Excel, Word, gestión pública, inglés y más.",
+             temas_cursos=temas_cursos, pedidos=pedidos, enap_catalogo=C.ENAP_CATALOGO,
+             migas=[("Inicio", "/"), ("Cursos gratis", None)], ld=[])
 
     # 404 (GitHub Pages la sirve desde la raíz del proyecto)
     html = env.get_template("404.html").render(path="/404.html", canonical=sitio.abs("/404.html"), indexable=False,

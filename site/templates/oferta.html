@@ -39,6 +39,24 @@
     </dl>
   </section>
 
+  {% if o.cursos and not o.cerrada %}
+  <section class="o-seccion o-cursos">
+    <h2>Cursos gratis para lo que piden</h2>
+    <p>Esta convocatoria pide {% for t in o.cursos.temas %}{{ t.nombre|lower if t.slug not in ('excel', 'word') else t.nombre }}{{ ', ' if not loop.last and loop.revindex > 2 else (' y ' if not loop.last else '') }}{% endfor %}. Puedes estudiarlo gratis y con certificado:</p>
+    <ul>
+      {% for t in o.cursos.temas %}
+      {% for c in t.lista %}
+      <li><a href="{{ c.url }}" rel="noopener" target="_blank">{{ c.titulo }}</a> <span class="o-curso-dato">· {{ c.horas ~ ' horas · ' if c.horas }}certifica {{ c.certifica }}{{ ' · inscripción hasta el ' ~ fecha_larga(c.hasta) if c.hasta }}</span></li>
+      {% endfor %}
+      {% if t.enap and not t.lista %}
+      <li><a href="{{ enap_catalogo }}" rel="noopener" target="_blank">Cursos MOOC de la ENAP (SERVIR)</a> <span class="o-curso-dato">· abre cursos gratuitos con certificado varias veces al año</span></li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+    <p class="o-curso-nota">{% if o.cursos.horas_min %}Las bases piden cursos de al menos {{ o.cursos.horas_min }} horas: revisa que el certificado las cumpla. {% endif %}Confirma en las bases qué cursos aceptan. <a href="{{ url('/cursos-gratis/') }}">Ver todos los cursos gratis</a>.</p>
+  </section>
+  {% endif %}
+
   {% if not o.cerrada %}
   <section class="o-seccion">
     <h2>Cómo postular</h2>

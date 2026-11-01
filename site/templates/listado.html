@@ -4,7 +4,9 @@
 <header class="l-cab">
   <h1>{{ h1 }}{% if pagina > 1 %} <span class="l-pag">(página {{ pagina }})</span>{% endif %}</h1>
   {% set r = extra.resumen %}
-  {% if pagina == 1 and r %}
+  {% if extra.tipo == 'entidad_vacia' %}
+  <p class="aviso-cerrada" role="status">Ahora no hay convocatorias abiertas de {{ extra.entidad }} en Talento Perú. Abajo tienes las que siguen abiertas en <a href="{{ url('/departamento/' ~ extra.dep.dep_slug ~ '/') }}">{{ extra.dep.dep_txt }}</a>, o <a href="{{ url('/buscar/') }}?q={{ extra.entidad|urlencode }}">busca {{ extra.entidad }}</a> más tarde.</p>
+  {% elif pagina == 1 and r %}
     {% if extra.tipo == 'departamento' %}
     <p class="l-intro">Hay {{ plural(r.n, 'convocatoria vigente', 'convocatorias vigentes') }} de entidades públicas en {{ r.lugar }}{% if r.min and r.min != r.max %}, con sueldos desde {{ r.min }} hasta {{ r.max }} al mes{% elif r.min %}, con un sueldo de {{ r.min }} al mes{% endif %}.{% if r.sin_exp %} {{ plural(r.sin_exp, 'no pide', 'no piden') }} experiencia.{% endif %}{% if r.secundaria %} {{ plural(r.secundaria, 'pide', 'piden') }} como máximo secundaria completa.{% endif %}{% if r.top|length > 1 %} Las entidades con más plazas son {% elif r.top %} La entidad con más plazas es {% endif %}{% if r.top %}{% for e in r.top %}{% if e.indexable %}<a href="{{ url('/entidad/' ~ e.slug ~ '/') }}">{{ e.nombre }}</a>{% else %}{{ e.nombre }}{% endif %}{{ ', ' if not loop.last and loop.revindex > 2 else (' y ' if not loop.last else '') }}{% endfor %}.{% endif %}</p>
     {% elif extra.tipo == 'practicas' %}
@@ -25,6 +27,9 @@
   <p class="l-act">Actualizado el {{ actualizado_txt }}</p>
 </header>
 
+{% if extra.tipo == 'entidad_vacia' and total > ofertas|length %}
+<p class="mas-links"><a href="{{ url('/departamento/' ~ extra.dep.dep_slug ~ '/') }}">Ver las {{ miles(total) }} convocatorias de {{ extra.dep.dep_txt }}</a></p>
+{% endif %}
 {% if pagina == 1 and extra.cierran %}
 <section class="bloque l-cierran">
   <h2>Cierran esta semana</h2>
@@ -34,7 +39,7 @@
 {% endif %}
 
 {% if ofertas %}
-<h2 class="rejilla-tit">{{ 'Prácticas vigentes' if extra.tipo == 'practicas' else 'Convocatorias vigentes' }} ({{ miles(total) }})</h2>
+<h2 class="rejilla-tit">{{ 'Prácticas vigentes' if extra.tipo == 'practicas' else 'Convocatorias vigentes' }}{{ ' en ' ~ extra.dep.dep_txt if extra.tipo == 'entidad_vacia' }} ({{ miles(total) }})</h2>
 <div class="rejilla">
   {% for o in ofertas %}{{ tarjeta(o, extra.tipo != 'departamento') }}{% endfor %}
 </div>

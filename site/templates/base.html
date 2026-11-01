@@ -28,7 +28,8 @@
 {% for bloque in ld %}<script type="application/ld+json">{{ ld_json(bloque) | safe }}</script>
 {% endfor %}
 <!-- Visitas anónimas, sin cookies (GoatCounter) -->
-<script>window.goatcounter = {path: function (p) { return location.host + p }}</script>
+{# En la 404 el canonical es /404.html: se cuenta la URL que de verdad falló, con prefijo /404 #}
+<script>window.goatcounter = {path: function (p) { return location.host + {% if es_404 %}"/404" + location.pathname{% else %}p{% endif %} }}</script>
 <script data-goatcounter="https://3b3n3z3r333.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>

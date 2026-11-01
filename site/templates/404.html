@@ -1,7 +1,35 @@
 {% extends "base.html" %}
 {% block contenido %}
 <h1>{{ h1 }}</h1>
+<p id="sugerencia" class="aviso-cerrada" role="status" hidden></p>
 <p>Las convocatorias se retiran del sitio unos días después de cerrar. Busca otras parecidas por departamento o por tema:</p>
 <ul class="deps">{% for d in departamentos %}<li><a href="{{ url(d.path) }}">{{ d.nombre }} <span>{{ miles(d.n) }}</span></a></li>{% endfor %}</ul>
 <p><a href="{{ url('/') }}">Ir a la portada</a> · <a href="{{ url('/hasta-un-ano-de-experiencia/') }}">Poca experiencia</a> · <a href="{{ url('/buscar/') }}">Buscar</a></p>
+{% endblock %}
+{% block scripts %}
+<script>
+(function () {
+  // Enlaces viejos que Google aún tiene: página N que ya no existe -> el listado; práctica -> todas las
+  // prácticas; entidad u oferta -> búsqueda con su nombre. Se espera un momento para que GoatCounter
+  // registre la URL original.
+  var base = {{ url('')|tojson }};
+  var ruta = location.pathname.slice(base.length);
+  var pag = ruta.match(/^(\/.+\/)pagina\/\d+\/?$/);
+  var destino = pag ? pag[1] : /^\/practica\//.test(ruta) ? "/practicas/" : null;
+  if (destino) {
+    setTimeout(function () { location.replace(base + destino); }, 800);
+    return;
+  }
+  var m = ruta.match(/^\/(entidad|oferta)\/([^/]+)/);
+  if (!m) return;
+  var q = m[2].replace(/-\d+$|-[0-9a-f]{6}$/, "").replace(/-/g, " ");
+  var s = document.getElementById("sugerencia");
+  var a = document.createElement("a");
+  a.href = base + "/buscar/?q=" + encodeURIComponent(q);
+  a.textContent = "Buscar «" + q + "»";
+  s.textContent = m[1] === "entidad" ? "Esa entidad ya no tiene convocatorias abiertas aquí. " : "Esa convocatoria ya cerró. ";
+  s.appendChild(a);
+  s.hidden = false;
+})();
+</script>
 {% endblock %}

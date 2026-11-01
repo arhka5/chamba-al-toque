@@ -40,6 +40,7 @@ UMBRAL_ENTIDAD = 3
 UMBRAL_TEMA = 20
 UMBRAL_DEP_TEMA = 10
 DIAS_CERRADA = 30
+DIAS_ENTIDAD_VACIA = 90  # la página de una entidad sin ofertas sigue (noindex) para no dar 404 desde Google
 MIN_PROPORCION = 0.5  # salvaguarda: no publicar si llega menos de la mitad
 PORTADA_ULTIMAS = 24
 SUELDO_MINIMO_CREIBLE = 300  # por debajo es un error de carga (hay ofertas con "S/ 1")
@@ -436,9 +437,28 @@ class Sitio:
             idx = len(lista) >= UMBRAL_ENTIDAD or (st.get("indexable") and len(lista) > 0)
             st["indexable"] = bool(idx)
             self.entidad_indexable[slug_] = bool(idx)
-        for slug_ in list(self.state["entidades"]):
-            if slug_ not in self.por_entidad:
+            dep = Counter((o["dep_txt"], o["dep_slug"]) for o in lista).most_common(1)[0][0]
+            st.update(nombre=lista[0]["entidad_txt"], dep_txt=dep[0], dep_slug=dep[1])
+            st.pop("vacia_desde", None)
+        # Entidades que se quedaron sin ofertas: su página sigue DIAS_ENTIDAD_VACIA días (noindex) para que
+        # quien llega desde Google vea las vigentes de su departamento en vez de un 404. Las cerradas
+        # recuperan las que se borraron antes de guardar nombre y departamento.
+        for o in self.cerradas:
+            if o["entidad_slug"] not in self.por_entidad:
+                st = self.state["entidades"].setdefault(o["entidad_slug"], {})
+                st.setdefault("nombre", o["entidad_txt"])
+                st.setdefault("dep_txt", o["dep_txt"])
+                st.setdefault("dep_slug", o["dep_slug"])
+        self.entidades_vacias = {}
+        for slug_, st in list(self.state["entidades"].items()):
+            if slug_ in self.por_entidad:
+                continue
+            st["indexable"] = False
+            st.setdefault("vacia_desde", hoy_iso)
+            if not st.get("nombre") or (hoy - date.fromisoformat(st["vacia_desde"])).days > DIAS_ENTIDAD_VACIA:
                 del self.state["entidades"][slug_]
+                continue
+            self.entidades_vacias[slug_] = st
 
         self.temas = []
         for t in TEMAS:
@@ -508,10 +528,21 @@ class Sitio:
                 vistos[p["titulo_txt"]] += 1
                 if vistos[p["titulo_txt"]] > 1:
                     p["titulo_txt"] += f" ({vistos[p['titulo_txt']]})"
+        # Prácticas cerradas: como las ofertas, se conservan DIAS_CERRADA días (noindex) en vez de dar 404.
         vigentes_p = {p["id"] for p in self.practicas}
-        for id_ in list(self.state["practicas"]):
-            if id_ not in vigentes_p:
+        self.practicas_cerradas = []
+        for id_, st in list(self.state["practicas"].items()):
+            if id_ in vigentes_p:
+                st.pop("closed_at", None)
+                continue
+            st.setdefault("closed_at", hoy_iso)
+            if (hoy - date.fromisoformat(st["closed_at"])).days > DIAS_CERRADA or not st.get("snapshot"):
                 del self.state["practicas"][id_]
+                continue
+            p = self.preparar_practica(st["snapshot"])
+            p["titulo_txt"], p["cerrada"] = p["cargo_txt"], True
+            p["cerrada_el"] = min(st["closed_at"], st["snapshot"].get("fin") or st["closed_at"])
+            self.practicas_cerradas.append(p)
 
     # -- URLs
     def url(self, path: str) -> str:
@@ -654,6 +685,7 @@ class Sitio:
             self.state["practicas"][o["id"]] = st
         elif st.get("hash") != h:
             st["hash"], st["lastmod"] = h, hoy
+        st["snapshot"] = o  # para seguir mostrando la página (cerrada) cuando salga de SERVIR
         p["slug"], p["lastmod"] = st["slug"], st["lastmod"]
         p["path"] = f"/practica/{p['slug']}/"
         return p
@@ -1031,6 +1063,15 @@ def construir(sitio: Sitio, out: Path) -> None:
                 desc, [("Inicio", "/"), (dep[0], f"/departamento/{dep[1]}/"), (nombre, None)],
                 extra={"tipo": "entidad", "resumen": r, "entidad": nombre, "primera": fecha_larga(primera),
                        "hub": sitio.hub_de_entidad.get(s)})
+    for s, st in sitio.entidades_vacias.items():
+        migas = [("Inicio", "/"), (st["dep_txt"], f"/departamento/{st['dep_slug']}/"), (st["nombre"], None)]
+        del_dep = destacadas(sitio.por_dep.get(st["dep_slug"], []), 12)
+        escribir(f"/entidad/{s}/", "listado.html", False, None,
+                 titulo=f"Convocatorias de {st['nombre']} (sin convocatorias abiertas)",
+                 h1=f"Convocatorias de {st['nombre']}", descripcion=f"Ahora no hay convocatorias abiertas de {st['nombre']}.",
+                 ofertas=del_dep, pagina=1, paginas=1, base_listado=f"/entidad/{s}/", migas=migas, intro="",
+                 extra={"tipo": "entidad_vacia", "entidad": st["nombre"], "dep": st},
+                 total=len(sitio.por_dep.get(st["dep_slug"], [])), ld=[sitio.breadcrumbs(migas)])
 
     # Índices: /departamento/ y /entidad/ (las migas y el pie llevan aquí)
     def directorio(path: str, h1: str, titulo: str, descripcion: str, grupos: list[dict], intro: str = ""):
@@ -1148,6 +1189,14 @@ def construir(sitio: Sitio, out: Path) -> None:
                  descripcion=armar([a, b, c, p["req"]["frase"]]), o=p, migas=migas,
                  otras=[x for x in pr if x["id"] != p["id"] and x["dep_txt"] == p["dep_txt"]][:4],
                  ld=[x for x in (jp, sitio.breadcrumbs(migas)) if x])
+    # Prácticas cerradas (noindex, sin JobPosting)
+    for p in sitio.practicas_cerradas:
+        migas = [("Inicio", "/"), ("Prácticas", "/practicas/"), (p["cargo_txt"], None)]
+        escribir(p["path"], "practica.html", False, None,
+                 titulo=f"{p['cargo_txt']} en {p['entidad_txt']} (cerrada)", h1=f"{p['cargo_txt']} en {p['entidad_txt']}",
+                 descripcion=f"Esta convocatoria de prácticas cerró el {fecha_larga(p['cerrada_el'])}.", o=p,
+                 migas=migas, otras=[x for x in pr if x["dep_txt"] == p["dep_txt"]][:4],
+                 ld=[sitio.breadcrumbs(migas)])
 
     # Nuevas y por vencer (cambian a diario: noindex)
     nuevas = [o for o in sitio.vigentes if sitio.state["ofertas"][o["id"]]["first_seen"] == sitio.hoy.isoformat()]
@@ -1235,7 +1284,7 @@ def construir(sitio: Sitio, out: Path) -> None:
              migas=[("Inicio", "/"), ("Cursos gratis", None)], ld=[])
 
     # 404 (GitHub Pages la sirve desde la raíz del proyecto)
-    html = env.get_template("404.html").render(path="/404.html", canonical=sitio.abs("/404.html"), indexable=False,
+    html = env.get_template("404.html").render(path="/404.html", canonical=sitio.abs("/404.html"), indexable=False, es_404=True,
                                                titulo="Página no encontrada", h1="Esta página no existe o ya cerró",
                                                descripcion="", ld=[])
     (out / "404.html").write_text(html, encoding="utf-8")

@@ -4,18 +4,23 @@
 <article class="oferta">
   <p class="o-entidad">{{ o.entidad_txt }}</p>
   <h1>{{ h1 }}</h1>
+  {% if o.cerrada %}
+  <p class="aviso-cerrada" role="status">Esta convocatoria de prácticas cerró el {{ fecha_larga(o.cerrada_el) }}. Abajo tienes otras prácticas que siguen abiertas.</p>
+  {% endif %}
 
   <dl class="o-claves">
     <div><dt>Subvención mensual</dt><dd class="o-sueldo">{{ o.sueldo_txt or 'No indicada en el aviso' }}</dd></div>
-    <div><dt>Fecha límite</dt><dd>{% if o.fin %}<time datetime="{{ o.fin }}">{{ o.fin_txt }}</time>{% if o.dias is not none and o.dias <= 7 %}<br><span class="o-cierre{{ ' urgente' if o.urgente }}">{{ o.cierre_txt }}</span>{% endif %}{% else %}No indicada{% endif %}</dd></div>
+    <div><dt>Fecha límite</dt><dd>{% if o.fin %}<time datetime="{{ o.fin }}">{{ o.fin_txt }}</time>{% if not o.cerrada and o.dias is not none and o.dias <= 7 %}<br><span class="o-cierre{{ ' urgente' if o.urgente }}">{{ o.cierre_txt }}</span>{% endif %}{% else %}No indicada{% endif %}</dd></div>
     <div><dt>Lugar</dt><dd>{{ o.lugar_txt }}{% if o.modo %} ({{ o.modo|lower }}){% endif %}</dd></div>
     <div><dt>Tipo</dt><dd>{{ o.modalidad_txt }}</dd></div>
     <div><dt>Vacantes</dt><dd>{{ o.vacantes }}</dd></div>
     {% if o.duracion_meses %}<div><dt>Duración</dt><dd>{{ plural(o.duracion_meses, 'mes', 'meses') }}{% if o.horas_semana %}, {{ o.horas_semana }} horas a la semana{% endif %}</dd></div>{% endif %}
   </dl>
 
+  {% if not o.cerrada %}
   <p class="o-cta"><a class="boton" href="{{ o.url_bases or practicas_url }}" rel="noopener" target="_blank">Ver convocatoria y postular</a>
   <span class="o-cta-nota">{% if o.url_bases %}Las bases y la postulación están en la web {{ de_articulo(o.entidad_txt) }}.{% else %}Busca el aviso en el portal de prácticas de Talento Perú.{% endif %}</span></p>
+  {% endif %}
 
   <section class="o-seccion">
     <h2>Para quién es</h2>
@@ -39,7 +44,7 @@
   <h2>Más prácticas</h2>
   <p class="mas-links"><a href="{{ url('/practicas/') }}">Todas las prácticas en el Estado</a></p>
   {% if otras %}
-  <h3>Otras prácticas en {{ o.dep_txt }}</h3>
+  <h3>{{ 'Prácticas abiertas' if o.cerrada else 'Otras prácticas' }} en {{ o.dep_txt }}</h3>
   <div class="rejilla">{% for x in otras %}{{ tarjeta(x, False, 4) }}{% endfor %}</div>
   {% endif %}
 </section>

@@ -32,6 +32,16 @@ main{padding-bottom:32px}
 .cab-nav{display:flex;width:100%;border-top:1px solid #ffffff2e}
 .cab-nav a{flex:1;display:flex;align-items:center;justify-content:center;min-height:44px;padding:0 4px;color:#fff;font-size:.8rem;line-height:1.15;font-weight:600;text-align:center;text-decoration:none}
 .cab-nav a:hover{background:#ffffff1a}
+.cab-nav .cab-nav-destacado{margin:2px 4px;min-height:40px;border-radius:999px;background:var(--sol);color:var(--sobre-sol);font-weight:800;box-shadow:0 0 0 2px #ffffff40}
+.cab-nav .cab-nav-destacado:hover{background:#ffcd29}
+@media(min-width:760px){.cab-nav .cab-nav-destacado::before{content:"🎓";margin-right:5px}}
+.cab-buscar{position:sticky;top:0;z-index:50;background:var(--cab);padding:8px 0;box-shadow:0 2px 6px #0003}
+.cab-buscar form{display:flex;gap:8px}
+.cab-buscar input{flex:1;min-width:0;min-height:44px;padding:0 12px;border:0;border-radius:6px;background:#fff;color:#121a1c;font:inherit;font-size:1rem}
+.cab-buscar button{min-height:44px;padding:0 16px;border:0;border-radius:6px;background:var(--sol);color:var(--sobre-sol);font:inherit;font-weight:800;cursor:pointer}
+.cab-buscar-flota{position:fixed;left:0;right:0;transition:transform .2s,visibility .2s}
+.cab-buscar-oculto{transform:translateY(-110%);visibility:hidden}
+@media(prefers-reduced-motion:reduce){.cab-buscar-flota{transition:none}}
 .cab :focus-visible{outline-color:var(--sol)}
 .migas{padding:12px 0 4px;font-size:.88rem;color:var(--mute)}
 .migas ol{list-style:none;display:flex;flex-wrap:wrap;gap:2px 0}

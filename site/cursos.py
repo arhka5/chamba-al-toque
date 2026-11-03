@@ -35,7 +35,7 @@ TEMAS = [
      "cursos": [r"^word y excel para el trabajo", r"^computacion facil", r"^excel basico$"]},
     {"slug": "gestion-publica", "nombre": "Gestión pública",
      "oferta": r"GESTION PUBLICA|ADMINISTRACION PUBLICA|MODERNIZACION|ESTADO PERUANO|FUNCION PUBLICA",
-     "cursos": [r"enap:.*gestion publica", r"enap:."], "enap": True},
+     "cursos": [r"enap:.*(gestion publica|modernizacion|estado peruano|funcion publica)"], "enap": True},
     {"slug": "recursos-humanos", "nombre": "Recursos humanos",
      "oferta": r"RECURSOS HUMANOS|GESTION DE PERSONAS|SERVICIO CIVIL|BIENESTAR SOCIAL|PLANILLAS?",
      "cursos": [r"enap:.*recursos humanos", r"^gestion del desempeno", r"^direccion de personal"], "enap": True},

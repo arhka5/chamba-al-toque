@@ -38,14 +38,29 @@
   <div class="envoltura cab-fila">
     <a class="marca" href="{{ url('/') }}" aria-label="Chamba al Toque, inicio"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="7" fill="#f2b705"/><circle cx="16" cy="16" r="3.6" fill="#0b4a53"/><circle cx="16" cy="16" r="8" fill="none" stroke="#0b4a53" stroke-width="2.4"/><path d="M16 2.8v3.2M29.2 16H26M16 29.2V26M2.8 16H6" stroke="#0b4a53" stroke-width="2.4" stroke-linecap="round"/></svg><b>Chamba <span>al Toque</span></b></a>
     <nav class="cab-nav" aria-label="Principal">
-      <a href="{{ url('/buscar/') }}">Buscar</a>
       <a href="{{ url('/practicas/') }}">Prácticas</a>
       <a href="{{ url('/hasta-un-ano-de-experiencia/') }}">Poca experiencia</a>
       <a href="{{ url('/por-vencer/') }}">Cierran pronto</a>
-      <a href="{{ url('/cursos-gratis/') }}">Cursos gratis</a>
+      <a class="cab-nav-destacado" href="{{ url('/cursos-gratis/') }}">Cursos gratis</a>
     </nav>
   </div>
 </header>
+{% if path != '/buscar/' %}
+{# Buscador siempre a mano: queda pegado arriba al bajar. En la portada aparece al pasar el buscador grande. #}
+<div class="cab-buscar{{ ' cab-buscar-flota cab-buscar-oculto' if path == '/' }}" id="cab-buscar">
+  <form class="envoltura" action="{{ url('/buscar/') }}" method="get" role="search">
+    <input name="q" type="search" placeholder="Buscar trabajo: chofer, enfermera, UGEL…" aria-label="Buscar convocatorias por cargo o entidad" autocomplete="off" enterkeyhint="search">
+    <button type="submit">Buscar</button>
+  </form>
+</div>
+{% if path == '/' %}
+<script>(function () {
+  var barra = document.getElementById("cab-buscar"), heroe = document.querySelector(".buscador");
+  if (!heroe || !("IntersectionObserver" in window)) { barra.classList.remove("cab-buscar-oculto"); return; }
+  new IntersectionObserver(function (e) { barra.classList.toggle("cab-buscar-oculto", e[0].isIntersecting); }).observe(heroe);
+})();</script>
+{% endif %}
+{% endif %}
 <main id="contenido" class="envoltura">
 {% if migas and migas|length > 1 %}
 <nav class="migas" aria-label="Migas de pan"><ol>

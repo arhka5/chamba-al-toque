@@ -4,7 +4,8 @@ La búsqueda de ChatGPT usa el índice de Bing, y ChatGPT ya trae más visitas q
 a las ofertas: cuanto antes Bing conozca una oferta, antes puede citarse. IndexNow
 avisa también a Yandex, Seznam y Naver con la misma llamada.
 
-    python herramientas/indexnow.py public out/state.json
+    python herramientas/indexnow.py --remoto https://chambearhoy.toca.pe out/pc/indexnow.json
+    python herramientas/indexnow.py public out/state.json   (desde un build local)
 
 Lee los sitemaps de public/ y avisa las URL cuyo lastmod cambió desde el último aviso
 (guardado en state["indexnow"]). La clave es pública por diseño: el archivo
@@ -65,12 +66,29 @@ def avisar(urls: list[str]) -> int:
         return e.code
 
 
+def urls_del_sitio_publicado(base: str) -> dict[str, str]:
+    """Lo mismo, leyendo los sitemaps ya publicados (modo --remoto)."""
+    def bajar(url):
+        with urllib.request.urlopen(url, timeout=60) as r:
+            return r.read().decode("utf-8")
+    salida = {}
+    for hijo in re.findall(r"<sitemap><loc>([^<]+)</loc>", bajar(base.rstrip("/") + "/sitemap.xml")):
+        for loc, lastmod in URL_LASTMOD.findall(bajar(hijo)):
+            salida[loc] = lastmod or ""
+    return salida
+
+
 def main(argv=None) -> int:
     args = argv or sys.argv[1:]
-    sitio, state_path = Path(args[0]), Path(args[1])
+    # IndexNow responde 403 a las IP de GitHub Actions (como SERVIR): se avisa desde la PC,
+    # con `--remoto https://chambearhoy.toca.pe out/pc/indexnow.json`, tras publicar.
+    remoto = args[0] == "--remoto"
+    if remoto:
+        args = args[1:]
+    origen, state_path = args[0], Path(args[1])
     state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
     avisadas = state.setdefault("indexnow", {})
-    actuales = urls_del_sitemap(sitio)
+    actuales = urls_del_sitio_publicado(origen) if remoto else urls_del_sitemap(Path(origen))
     lista = pendientes(actuales, avisadas)
     if not lista:
         print("IndexNow: nada nuevo")

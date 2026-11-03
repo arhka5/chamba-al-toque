@@ -15,6 +15,7 @@ from __future__ import annotations
 import json
 import subprocess
 import sys
+import time
 from datetime import datetime
 from pathlib import Path
 
@@ -97,7 +98,28 @@ def main() -> int:
     subprocess.run(["gh", "workflow", "run", "actualizar.yml", "-f", "solo_publicar=true"],
                    cwd=REPO, check=True, capture_output=True, creationflags=SIN_VENTANA)
     log("Publicación lanzada en GitHub Actions.")
+    avisar_a_bing()
     return 0
+
+
+def avisar_a_bing() -> None:
+    """IndexNow da 403 a GitHub Actions: se avisa desde aquí cuando la publicación terminó."""
+    time.sleep(20)  # que la corrida recién lanzada aparezca en la lista
+    rid = subprocess.run(["gh", "run", "list", "--workflow", "actualizar.yml", "--limit", "1",
+                          "--json", "databaseId", "-q", ".[0].databaseId"], cwd=REPO, capture_output=True,
+                         text=True, creationflags=SIN_VENTANA).stdout.strip()
+    if not rid:
+        log("IndexNow: no encontré la corrida; se avisa en la próxima ejecución.")
+        return
+    fin = subprocess.run(["gh", "run", "watch", rid, "--exit-status"], cwd=REPO, capture_output=True,
+                         creationflags=SIN_VENTANA)
+    if fin.returncode != 0:
+        log("IndexNow: la publicación falló; no se avisa a Bing.")
+        return
+    r = subprocess.run([sys.executable, str(REPO / "herramientas" / "indexnow.py"), "--remoto",
+                        "https://chambearhoy.toca.pe", str(TRABAJO / "indexnow.json")],
+                       cwd=REPO, capture_output=True, text=True, creationflags=SIN_VENTANA)
+    log((r.stdout or r.stderr).strip().replace("\n", " | "))
 
 
 if __name__ == "__main__":

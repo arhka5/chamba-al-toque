@@ -15,6 +15,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+import time
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -36,6 +37,19 @@ def urls_del_sitemap(sitio: Path) -> dict[str, str]:
 
 def pendientes(actuales: dict[str, str], avisadas: dict[str, str]) -> list[str]:
     return [u for u, lm in actuales.items() if avisadas.get(u) != lm]
+
+
+def clave_publicada(host: str, intentos: int = 12, espera: int = 15) -> bool:
+    """Justo después del deploy, GitHub Pages tarda en servir el archivo nuevo: sin él, Bing da 403."""
+    for _ in range(intentos):
+        try:
+            with urllib.request.urlopen(f"https://{host}/{CLAVE}.txt", timeout=20) as r:
+                if r.read().decode().strip() == CLAVE:
+                    return True
+        except (urllib.error.URLError, TimeoutError):
+            pass
+        time.sleep(espera)
+    return False
 
 
 def avisar(urls: list[str]) -> int:
@@ -60,6 +74,9 @@ def main(argv=None) -> int:
     lista = pendientes(actuales, avisadas)
     if not lista:
         print("IndexNow: nada nuevo")
+        return 0
+    if not clave_publicada(urlparse(lista[0]).netloc):
+        print("IndexNow: la clave aún no se sirve; se reintenta en la próxima corrida")
         return 0
     enviadas = 0
     for i in range(0, len(lista), LOTE):

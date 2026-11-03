@@ -30,7 +30,7 @@ main{padding-bottom:32px}
 .marca svg{width:34px;height:34px;flex:none}
 .marca span{color:var(--sol)}
 .cab-nav{display:flex;width:100%;border-top:1px solid #ffffff2e}
-.cab-nav a{flex:1;display:flex;align-items:center;justify-content:center;min-height:44px;padding:0 6px;color:#fff;font-size:.9rem;font-weight:600;text-align:center;text-decoration:none}
+.cab-nav a{flex:1;display:flex;align-items:center;justify-content:center;min-height:44px;padding:0 4px;color:#fff;font-size:.8rem;line-height:1.15;font-weight:600;text-align:center;text-decoration:none}
 .cab-nav a:hover{background:#ffffff1a}
 .cab :focus-visible{outline-color:var(--sol)}
 .migas{padding:12px 0 4px;font-size:.88rem;color:var(--mute)}
@@ -105,6 +105,7 @@ main{padding-bottom:32px}
 .aviso-cerrada{margin:0 0 16px;padding:14px 16px;background:var(--suave);border-left:5px solid var(--mute);font-weight:600}
 .o-entidad{margin:0 0 6px;font-size:1rem;font-weight:600}
 .o-entidad a{color:var(--mute)}
+.o-resumen{margin:4px 0 16px;font-size:1.05rem;line-height:1.5;color:var(--mute)}
 .oferta h1{font-size:1.7rem;font-weight:900;margin-bottom:16px}
 .o-claves{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin:0 0 20px;background:var(--linea);border:1px solid var(--linea);border-radius:4px;overflow:hidden}
 .o-claves div{margin:0;padding:12px 14px;background:var(--caja)}

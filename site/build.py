@@ -607,6 +607,13 @@ class Sitio:
         p["conv_txt"] = (f"N.° {p['conv_corto']}" + (f" ({', '.join(detalles)})" if detalles else "")
                          if reg and p["conv_corto"] else (o.get("convocatoria") or ""))
         p["vacantes"] = o.get("vacantes") or 1
+        # Una línea con lo esencial, arriba de la ficha: la leen personas apuradas y los asistentes de IA
+        p["resumen"] = " ".join(x for x in (
+            f"{p['cargo_txt']} en {p['entidad_txt']} ({p['lugar_txt']})"
+            + (f", {plural(p['vacantes'], 'vacante', 'vacantes')}" if p["vacantes"] > 1 else "")
+            + (f", con sueldo de {p['sueldo_txt']} al mes." if p["sueldo_txt"] else "."),
+            p["req"]["frase"],
+            f"Postula hasta el {p['fin_txt']}." if p["fin_txt"] else "") if x)
 
         st = self.state["ofertas"].get(o["id"])
         if not cerrada:
@@ -955,7 +962,13 @@ def construir(sitio: Sitio, out: Path) -> None:
     ]
     top_entidades = sorted(((len(v), s) for s, v in sitio.por_entidad.items() if sitio.entidad_indexable[s]),
                            reverse=True)[:12]
+    # Cursos gratuitos: cuántas ofertas vigentes piden cada tema (portada y /cursos-gratis/)
+    pedidos = Counter(t["slug"] for o in sitio.vigentes if o["cursos"] for t in o["cursos"]["temas"])
+    temas_cursos = sorted(sitio.catalogo.temas, key=lambda t: -pedidos[t["slug"]])
+    con_cursos = sum(1 for o in sitio.vigentes if o["cursos"])
     escribir("/", "portada.html", True, sitio.vigentes[0]["lastmod"] if sitio.vigentes else None,
+             cursos_destacados=[t for t in temas_cursos if pedidos[t["slug"]]][:6], pedidos=pedidos,
+             con_cursos=con_cursos,
              titulo=f"Convocatorias CAS y trabajos en el Estado {sitio.anio} | Chamba al Toque",
              descripcion=armar([f"{plural(len(sitio.vigentes), 'convocatoria vigente', 'convocatorias vigentes')} "
                                 f"en entidades públicas del Perú, con sueldo, requisitos y fecha límite.",
@@ -1273,8 +1286,6 @@ def construir(sitio: Sitio, out: Path) -> None:
                  migas=[("Inicio", "/"), (p["h1"], None)], ld=[])
 
     # Cursos gratuitos con certificado, por tema, con cuántas ofertas vigentes lo piden
-    pedidos = Counter(t["slug"] for o in sitio.vigentes if o["cursos"] for t in o["cursos"]["temas"])
-    temas_cursos = sorted(sitio.catalogo.temas, key=lambda t: -pedidos[t["slug"]])
     escribir("/cursos-gratis/", "cursos.html", True, sitio.catalogo_actualizado,
              titulo=f"Cursos gratis con certificado para postular al Estado ({sitio.anio})",
              h1="Cursos gratis con certificado para postular al Estado",
@@ -1333,6 +1344,53 @@ def escribir_sitemaps(sitio: Sitio, out: Path) -> None:
     if not sitio.base_path:
         (out / "robots.txt").write_text(
             f"User-agent: *\nAllow: /\n\nSitemap: {sitio.abs('/sitemap.xml')}\n", encoding="utf-8")
+    (out / "llms.txt").write_text(llms_txt(sitio), encoding="utf-8")
+
+
+def llms_txt(sitio: Sitio) -> str:
+    """Guía para asistentes de IA (formato llmstxt.org): qué es el sitio y dónde está cada cosa."""
+    a = sitio.abs
+    temas = "\n".join(f"- [{t['nombre']}]({a(t['path'])}): {miles(len(t['ofertas']))} convocatorias"
+                      for t in sitio.temas if t["indexable"])
+    deps = ", ".join(f"[{n}]({a('/departamento/' + T.slug(n) + '/')})"
+                     for n in sorted({o["dep_txt"] for o in sitio.vigentes}, key=T.slug))
+    return f"""# Chamba al Toque
+
+> Convocatorias de trabajo vigentes en el Estado peruano (CAS, 728, 276 y prácticas), tomadas de
+> Talento Perú (SERVIR) y actualizadas dos veces al día. Hoy hay {miles(len(sitio.vigentes))} convocatorias
+> vigentes en {miles(len(sitio.por_entidad))} entidades. Cada convocatoria tiene su propia página con sueldo,
+> requisitos, fecha límite y el enlace oficial para postular. Postular es gratis: el sitio no cobra ni pide datos.
+
+Cada página de convocatoria (/oferta/<cargo-entidad-N.°>/) empieza con un resumen de una línea
+(cargo, entidad, lugar, sueldo, requisito principal y fecha límite) y trae datos estructurados
+schema.org/JobPosting. El N.° es el número de la convocatoria en Talento Perú. Las convocatorias
+cerradas siguen publicadas 30 días con un aviso de "cerrada".
+
+## Buscar convocatorias
+- [Portada]({a('/')}): últimas convocatorias publicadas
+- [Buscador]({a('/buscar/')}): por cargo o entidad
+- [Cierran pronto]({a('/por-vencer/')}): convocatorias que vencen en los próximos días
+- [Prácticas]({a('/practicas/')}): prácticas preprofesionales y profesionales
+- [Todas las entidades]({a('/entidad/')}) y [todos los departamentos]({a('/departamento/')})
+
+## Por perfil
+{temas}
+
+## Por departamento
+{deps}
+
+## Guías y cursos
+- [Cómo postular a un CAS, paso a paso]({a('/como-postular-cas/')})
+- [Cómo leer las bases]({a('/como-leer-las-bases/')})
+- [Hoja de vida documentada]({a('/hoja-de-vida-documentada/')})
+- [Errores al postular]({a('/errores-al-postular/')})
+- [Cursos gratis con certificado]({a('/cursos-gratis/')}): Ministerio de Trabajo (Capacíta-T) y ENAP-SERVIR,
+  según lo que piden las convocatorias (Excel, Word, gestión pública, inglés y otros)
+
+## Fuente y contacto
+- Fuente oficial: [Talento Perú (SERVIR)]({FUENTE_URL})
+- [Acerca de Chamba al Toque]({a('/acerca/')}) · Contacto: {CONTACTO}
+"""
 
 
 def verificar(sitio: Sitio, out: Path) -> list[str]:

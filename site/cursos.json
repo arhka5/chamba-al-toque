@@ -1,6 +1,24 @@
 {
- "actualizado": "2026-10-30T20:47:54",
+ "actualizado": "2026-11-03T16:35:08",
  "cursos": [
+  {
+   "fuente": "enap",
+   "titulo": "Prevención y gestión de conflictos sociales",
+   "url": "https://www.gob.pe/institucion/enap/campa%C3%B1as/100775-curso-mooc-prevencion-y-gestion-de-conflictos-sociales",
+   "horas": 24,
+   "certifica": "ENAP – SERVIR",
+   "categoria": "Gestión pública",
+   "hasta": "2026-11-29"
+  },
+  {
+   "fuente": "enap",
+   "titulo": "Modernización en la gestión pública",
+   "url": "https://www.gob.pe/institucion/enap/campa%C3%B1as/78568-curso-mooc-modernizacion-de-la-gestion-publica",
+   "horas": 24,
+   "certifica": "ENAP – SERVIR",
+   "categoria": "Gestión pública",
+   "hasta": "2026-11-16"
+  },
   {
    "fuente": "enap",
    "titulo": "Inteligencia Artificial para Servidores Públicos",
@@ -18,24 +36,6 @@
    "certifica": "ENAP – SERVIR",
    "categoria": "Gestión pública",
    "hasta": "2026-11-08"
-  },
-  {
-   "fuente": "enap",
-   "titulo": "Gestión de los recursos humanos para la generación de valor público",
-   "url": "https://www.gob.pe/institucion/enap/campa%C3%B1as/56570-curso-mooc-gestion-de-los-recursos-humanos-para-la-generacion-de-valor-publico",
-   "horas": 16,
-   "certifica": "ENAP – SERVIR",
-   "categoria": "Gestión pública",
-   "hasta": "2026-11-01"
-  },
-  {
-   "fuente": "enap",
-   "titulo": "Gestión Pública para la inclusión de las personas con discapacidad desde una perspectiva de derechos",
-   "url": "https://www.gob.pe/institucion/enap/campañas/66317-curso-mooc-gestion-publica-para-la-inclusion-de-las-personas-con-discapacidad",
-   "horas": 24,
-   "certifica": "ENAP – SERVIR",
-   "categoria": "Gestión pública",
-   "hasta": "2026-11-01"
   },
   {
    "fuente": "capacitat",
@@ -599,7 +599,7 @@
    "fuente": "capacitat",
    "titulo": "Venta emocional",
    "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/venta-emocional/",
-   "horas": 16,
+   "horas": 2,
    "certifica": "Ministerio de Trabajo (Capacíta-T)",
    "categoria": "Venta estratégica",
    "hasta": null
@@ -626,7 +626,7 @@
    "fuente": "capacitat",
    "titulo": "Representante de ventas en trabajo remoto",
    "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/representante-de-ventas-en-trabajo-remoto/",
-   "horas": 20,
+   "horas": 16,
    "certifica": "Ministerio de Trabajo (Capacíta-T)",
    "categoria": "Venta estratégica",
    "hasta": null
@@ -662,7 +662,7 @@
    "fuente": "capacitat",
    "titulo": "Pensamiento estratégico",
    "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/pensamiento-estrategico/",
-   "horas": 14,
+   "horas": 2,
    "certifica": "Ministerio de Trabajo (Capacíta-T)",
    "categoria": "Desarrollo de negocios",
    "hasta": null
@@ -671,7 +671,7 @@
    "fuente": "capacitat",
    "titulo": "Negocios e innovación",
    "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/negocios-e-innovacion/",
-   "horas": 2,
+   "horas": 14,
    "certifica": "Ministerio de Trabajo (Capacíta-T)",
    "categoria": "Desarrollo de negocios",
    "hasta": null
@@ -788,7 +788,7 @@
    "fuente": "capacitat",
    "titulo": "Gestión del capital de trabajo",
    "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/gestion-del-capital-de-trabajo/",
-   "horas": 8,
+   "horas": 9,
    "certifica": "Ministerio de Trabajo (Capacíta-T)",
    "categoria": "Finanzas para no financieros",
    "hasta": null
@@ -914,7 +914,7 @@
    "fuente": "capacitat",
    "titulo": "Diseño y creación de un emprendimiento social",
    "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/diseno-y-creacion-de-un-emprendimiento-social/",
-   "horas": 12,
+   "horas": 8,
    "certifica": "Ministerio de Trabajo (Capacíta-T)",
    "categoria": "Emprendimiento",
    "hasta": null
@@ -1067,7 +1067,7 @@
    "fuente": "capacitat",
    "titulo": "Salud y seguridad para ambientes de trabajo moderno – Lengua de Señas Peruana (LSP)",
    "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/salud-y-seguridad-para-ambientes-de-trabajo-moderno-lengua-de-senas-peruana-lsp/",
-   "horas": 9,
+   "horas": 2,
    "certifica": "Ministerio de Trabajo (Capacíta-T)",
    "categoria": "Desarrollo organizacional - Lengua de Señas Peruana (LSP)",
    "hasta": null
@@ -1166,7 +1166,7 @@
    "fuente": "capacitat",
    "titulo": "Construcción de marca – quechua",
    "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/construccion-de-marca-quechua/",
-   "horas": 7,
+   "horas": 14,
    "certifica": "Ministerio de Trabajo (Capacíta-T)",
    "categoria": "Emprendimiento - quechua",
    "hasta": null
@@ -1184,7 +1184,7 @@
    "fuente": "capacitat",
    "titulo": "Marketing en redes sociales – quechua",
    "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/marketing-en-redes-sociales-quechua/",
-   "horas": 15,
+   "horas": 2,
    "certifica": "Ministerio de Trabajo (Capacíta-T)",
    "categoria": "Contenido en redes sociales - quechua",
    "hasta": null
@@ -1355,7 +1355,7 @@
    "fuente": "capacitat",
    "titulo": "Trendhunting",
    "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/trendhunting/",
-   "horas": 9,
+   "horas": 4,
    "certifica": "Ministerio de Trabajo (Capacíta-T)",
    "categoria": "Innovación Empresarial",
    "hasta": null
@@ -1427,7 +1427,7 @@
    "fuente": "capacitat",
    "titulo": "Encuentra tu empleo con redes sociales",
    "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/encuentra-tu-empleo-con-redes-sociales/",
-   "horas": 19,
+   "horas": 8,
    "certifica": "Ministerio de Trabajo (Capacíta-T)",
    "categoria": "Empleabilidad eficaz",
    "hasta": null
@@ -1553,7 +1553,7 @@
    "fuente": "capacitat",
    "titulo": "Generación de nuevos negocios en la era digital",
    "url": "https://capacitacionlaboral.trabajo.gob.pe/cursos/generacion-de-nuevos-negocios-en-la-era-digital/",
-   "horas": 16,
+   "horas": 9,
    "certifica": "Ministerio de Trabajo (Capacíta-T)",
    "categoria": "Emprendimiento",
    "hasta": null

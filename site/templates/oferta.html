@@ -26,6 +26,7 @@
   {% endif %}
   <p class="o-entidad">{% if entidad_indexable.get(o.entidad_slug) %}<a href="{{ url('/entidad/' ~ o.entidad_slug ~ '/') }}">{{ o.entidad_txt }}</a>{% else %}{{ o.entidad_txt }}{% endif %}</p>
   <h1>{{ h1 }}</h1>
+  {% if not o.cerrada %}<p class="o-resumen">{{ o.resumen }}</p>{% endif %}
 
   <dl class="o-claves">
     <div><dt>Sueldo mensual</dt><dd class="o-sueldo">{{ o.sueldo_txt or 'No indicado en la convocatoria' }}</dd></div>

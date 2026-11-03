@@ -45,9 +45,19 @@
   <p class="mas"><a href="{{ url('/como-postular-cas/') }}">Cómo postular a una convocatoria CAS, paso a paso</a></p>
 </section>
 
+{% if cursos_destacados %}
+<section class="bloque">
+  <h2>Cursos gratis con certificado</h2>
+  <p>{{ miles(con_cursos) }} convocatorias vigentes piden cursos que puedes llevar gratis, en línea y con certificado del Ministerio de Trabajo o de SERVIR.</p>
+  <ul class="atajos">{% for t in cursos_destacados %}<li><a href="{{ url('/cursos-gratis/') }}#{{ t.slug }}">{{ t.nombre }} ({{ miles(pedidos[t.slug]) }})</a></li>{% endfor %}</ul>
+  <p class="mas"><a href="{{ url('/cursos-gratis/') }}">Ver todos los cursos gratis</a></p>
+</section>
+{% endif %}
+
 <section class="bloque">
   <h2>Guías para postular</h2>
   <ul class="atajos">
+    <li><a href="{{ url('/cursos-gratis/') }}">Cursos gratis con certificado</a></li>
     <li><a href="{{ url('/como-postular-cas/') }}">Cómo postular a un CAS</a></li>
     <li><a href="{{ url('/como-leer-las-bases/') }}">Cómo leer las bases</a></li>
     <li><a href="{{ url('/hoja-de-vida-documentada/') }}">Tu hoja de vida documentada</a></li>

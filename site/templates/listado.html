@@ -10,7 +10,7 @@
     {% if extra.tipo == 'departamento' %}
     <p class="l-intro">Hay {{ plural(r.n, 'convocatoria vigente', 'convocatorias vigentes') }} de entidades públicas en {{ r.lugar }}{% if r.min and r.min != r.max %}, con sueldos desde {{ r.min }} hasta {{ r.max }} al mes{% elif r.min %}, con un sueldo de {{ r.min }} al mes{% endif %}.{% if r.sin_exp %} {{ plural(r.sin_exp, 'no pide', 'no piden') }} experiencia.{% endif %}{% if r.secundaria %} {{ plural(r.secundaria, 'pide', 'piden') }} como máximo secundaria completa.{% endif %}{% if r.top|length > 1 %} Las entidades con más plazas son {% elif r.top %} La entidad con más plazas es {% endif %}{% if r.top %}{% for e in r.top %}{% if e.indexable %}<a href="{{ url('/entidad/' ~ e.slug ~ '/') }}">{{ e.nombre }}</a>{% else %}{{ e.nombre }}{% endif %}{{ ', ' if not loop.last and loop.revindex > 2 else (' y ' if not loop.last else '') }}{% endfor %}.{% endif %}</p>
     {% elif extra.tipo == 'practicas' %}
-    <p class="l-intro">Hay {{ plural(r.n, 'convocatoria de prácticas vigente', 'convocatorias de prácticas vigentes') }} en municipalidades, ministerios y otras entidades públicas{% if r.min and r.min != r.max %}, con subvenciones desde {{ r.min }} hasta {{ r.max }} al mes{% endif %}.{% if r.egresados %} {{ plural(r.egresados, 'es', 'son') }} para egresados (prácticas profesionales){% if r.estudiantes %} y {{ miles(r.estudiantes) }} para estudiantes (preprofesionales){% endif %}.{% endif %} Cada aviso enlaza a la web de la entidad, donde se postula.</p>
+    <p class="l-intro">{{ intro ~ ' ' if intro }}Hay {{ plural(r.n, 'convocatoria de prácticas vigente', 'convocatorias de prácticas vigentes') }} en municipalidades, ministerios y otras entidades públicas{% if r.min and r.min != r.max %}, con subvenciones desde {{ r.min }} hasta {{ r.max }} al mes{% endif %}.{% if r.egresados %} {{ plural(r.egresados, 'es', 'son') }} para egresados (prácticas profesionales){% if r.estudiantes %} y {{ miles(r.estudiantes) }} para estudiantes (preprofesionales){% endif %}.{% endif %} Cada aviso enlaza a la web de la entidad, donde se postula. ¿Primera vez? Lee <a href="{{ url('/como-postular-a-practicas/') }}">cómo postular a prácticas en el Estado</a>.</p>
     {% elif extra.tipo == 'entidad' %}
     <p class="l-intro">{{ extra.entidad }} tiene {{ plural(r.n, 'convocatoria vigente', 'convocatorias vigentes') }}.{% if extra.primera %} Las plazas más cercanas a cerrar vencen el {{ extra.primera }}.{% endif %}{% if r.min and r.min != r.max %} Los sueldos van de {{ r.min }} a {{ r.max }}.{% elif r.min %} El sueldo es de {{ r.min }} al mes.{% endif %} Esta información proviene de Talento Perú (SERVIR); las bases completas están en la web de la entidad.</p>
     {% if extra.hub %}<p class="l-intro">Mira también <a href="{{ url(extra.hub.path) }}">todas las convocatorias {{ extra.hub.de }}</a>, de todas sus sedes en una sola lista.</p>{% endif %}
@@ -26,6 +26,17 @@
   {% endif %}
   <p class="l-act">Actualizado el {{ actualizado_txt }}</p>
 </header>
+{% if extra.filtros and pagina == 1 %}
+<nav class="bloque l-filtros" aria-label="Prácticas por carrera, modalidad y departamento">
+  {% for g in extra.filtros if g.enlaces %}
+  {# En /practicas/ solo se abre "Por carrera"; en una subpágina todo plegado para que las prácticas queden arriba #}
+  <details{{ ' open' if not extra.actual and g.grupo == 'Por carrera' }}>
+  <summary>{{ g.grupo }} <small>({{ g.enlaces|length }})</small></summary>
+  <ul class="chips">{% for e in g.enlaces %}<li>{% if e.path == extra.actual %}<span aria-current="page">{{ e.nombre }} {{ e.n }}</span>{% else %}<a href="{{ url(e.path) }}">{{ e.nombre }} <small>{{ e.n }}</small></a>{% endif %}</li>{% endfor %}</ul>
+  </details>
+  {% endfor %}
+</nav>
+{% endif %}
 
 {% if extra.tipo == 'entidad_vacia' and total > ofertas|length %}
 <p class="mas-links"><a href="{{ url('/departamento/' ~ extra.dep.dep_slug ~ '/') }}">Ver las {{ miles(total) }} convocatorias de {{ extra.dep.dep_txt }}</a></p>
@@ -51,6 +62,8 @@
 </div>
 {% endif %}
 <p class="vacio">Revisa también <a href="{{ url('/convocatorias-cas/') }}">todas las convocatorias CAS</a> y <a href="{{ url('/nuevas/') }}">las nuevas de hoy</a>.</p>
+{% elif extra.tipo == 'practicas' %}
+<p class="vacio">Ahora no hay prácticas aquí. Revisa <a href="{{ url('/practicas/') }}">todas las prácticas en el Estado</a>.</p>
 {% else %}
 <p class="vacio">Ahora no hay convocatorias aquí. Revisa <a href="{{ url('/') }}">las últimas convocatorias</a>.</p>
 {% endif %}

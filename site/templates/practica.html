@@ -42,7 +42,7 @@
 
 <section class="bloque">
   <h2>Más prácticas</h2>
-  <p class="mas-links"><a href="{{ url('/practicas/') }}">Todas las prácticas en el Estado</a></p>
+  <p class="mas-links"><a href="{{ url('/practicas/') }}">Todas las prácticas en el Estado</a>{% for l in o.listados %} · <a href="{{ url(l.path) }}">{{ l.nombre if l.nombre.startswith('Prácticas') else 'Prácticas ' ~ ('en ' if l.nombre == o.dep_txt else 'de ') ~ l.nombre }}</a>{% endfor %} · <a href="{{ url('/como-postular-a-practicas/') }}">Cómo postular a prácticas</a></p>
   {% if otras %}
   <h3>{{ 'Prácticas abiertas' if o.cerrada else 'Otras prácticas' }} en {{ o.dep_txt }}</h3>
   <div class="rejilla">{% for x in otras %}{{ tarjeta(x, False, 4) }}{% endfor %}</div>

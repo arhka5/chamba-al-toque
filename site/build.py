@@ -39,6 +39,7 @@ POR_PAGINA = 25
 UMBRAL_ENTIDAD = 3
 UMBRAL_TEMA = 20
 UMBRAL_DEP_TEMA = 10
+UMBRAL_PRACTICAS = 3  # una subpágina de /practicas/ se indexa desde 3 avisos
 DIAS_CERRADA = 30
 DIAS_ENTIDAD_VACIA = 90  # la página de una entidad sin ofertas sigue (noindex) para no dar 404 desde Google
 MIN_PROPORCION = 0.5  # salvaguarda: no publicar si llega menos de la mitad
@@ -145,6 +146,10 @@ INFO = [
      "h1": "Errores comunes al postular al Estado (y cómo evitarlos)", "indexable": True, "lastmod": "2026-10-27",
      "desc": "Los errores que dejan fuera a más postulantes en las convocatorias del Estado: requisitos, "
              "plazos, anexos sin firmar, documentos ilegibles, bonificaciones y estafas."},
+    {"slug": "como-postular-a-practicas", "title": "Cómo postular a prácticas en el Estado ({anio}): guía",
+     "h1": "Cómo postular a prácticas en el Estado", "indexable": True, "lastmod": "2026-11-04",
+     "desc": "Prácticas preprofesionales y profesionales en entidades públicas: quién puede postular, qué "
+             "documentos preparar, cómo es la evaluación y qué beneficios da la ley (D. Leg. 1401)."},
     {"slug": "hoja-de-vida-documentada", "title": "Cómo armar tu hoja de vida documentada para el Estado ({anio})",
      "h1": "Cómo armar tu hoja de vida documentada para el Estado", "indexable": True, "lastmod": "2026-10-27",
      "desc": "Qué documentos juntar, cómo probar tu experiencia y en qué orden enviar tu hoja de vida "
@@ -653,6 +658,9 @@ class Sitio:
         p["modalidad_txt"] = ("Prácticas preprofesionales" if "pre" in modalidad else
                               "Prácticas profesionales" if "profesional" in modalidad else "Prácticas")
         p["carreras_txt"] = [T.nombre_propio(c) for c in o.get("carreras") or []]
+        # Mismas carreras que las ofertas (/carrera/…): "CARRERA TÉCNICA DE ADMINISTRACIÓN" -> administracion
+        p["carrera_slugs"] = T.carreras(" | ".join(o.get("carreras") or []), p["cargo_completo"])
+        p["dep_slug"] = T.slug(p["dep_txt"])
         p["conocimientos_txt"] = [T.oracion(x.strip(" .")) for c in o.get("conocimientos") or []
                                   for x in re.split(r"(?:^|\s)¿\s*", c) if x.strip(" .")]
         # "¿ apoyar en… ¿ otros…": viñetas mal codificadas en la fuente
@@ -1180,17 +1188,81 @@ def construir(sitio: Sitio, out: Path) -> None:
 
     # Prácticas
     pr = sitio.practicas
-    subv = [p["subvencion"] for p in pr if p.get("subvencion")]  # ya sin montos absurdos
-    r_pr = {"n": len(pr), "min": soles(min(subv)) if subv else "", "max": soles(max(subv)) if subv else "",
-            "egresados": sum(1 for p in pr if p["req"]["frase"].startswith("Para egresados")),
-            "estudiantes": sum(1 for p in pr if p["req"]["frase"].startswith("Para estudiantes"))}
+
+    def resumen_pr(lista: list[dict]) -> dict:
+        subv = [p["subvencion"] for p in lista if p.get("subvencion")]  # ya sin montos absurdos
+        return {"n": len(lista), "min": soles(min(subv)) if subv else "", "max": soles(max(subv)) if subv else "",
+                "egresados": sum(1 for p in lista if p["req"]["frase"].startswith("Para egresados")),
+                "estudiantes": sum(1 for p in lista if p["req"]["frase"].startswith("Para estudiantes")),
+                "plazas": sum(p["vacantes"] for p in lista)}
+
+    # Subpáginas /practicas/<carrera|departamento|modalidad>/: la gente (y ChatGPT) busca
+    # "prácticas de derecho en el Estado", "prácticas en Tacna", "prácticas preprofesionales".
+    sub_pr = []
+    for c in T.CARRERAS:
+        lista = [p for p in pr if c["slug"] in p["carrera_slugs"]]
+        sub_pr.append({"slug": c["slug"], "grupo": "Por carrera", "nombre": c["nombre"], "lista": lista,
+                       "donde": f"para estudiantes y egresados de {c['nombre']} en el Estado",
+                       "h1": f"Prácticas de {c['nombre']} en el Estado {sitio.anio}",
+                       "titulo": f"Prácticas de {c['nombre']} en el Estado {sitio.anio}",
+                       "intro": f"Prácticas en entidades públicas que piden estudiantes o egresados de "
+                                f"{c['nombre'].lower()}. Muchas aceptan varias carreras: revisa el perfil completo."})
+    for slug_dep, nombre_dep in sorted({(p["dep_slug"], p["dep_txt"]) for p in pr}):
+        lista = [p for p in pr if p["dep_slug"] == slug_dep]
+        sub_pr.append({"slug": slug_dep, "grupo": "Por departamento", "nombre": nombre_dep, "lista": lista,
+                       "donde": f"en entidades públicas de {nombre_dep}",
+                       "h1": f"Prácticas en el Estado en {nombre_dep} {sitio.anio}",
+                       "titulo": f"Prácticas en el Estado en {nombre_dep} {sitio.anio}",
+                       "intro": f"Prácticas en municipalidades, ministerios y otras entidades públicas con sede en "
+                                f"{nombre_dep}."})
+    for slug_m, nombre_m, quien in (("preprofesionales", "Prácticas preprofesionales", "estudiantes"),
+                                    ("profesionales", "Prácticas profesionales", "egresados")):
+        lista = [p for p in pr if p["modalidad_txt"] == nombre_m]
+        sub_pr.append({"slug": slug_m, "grupo": "Por modalidad", "nombre": nombre_m, "lista": lista,
+                       "donde": f"para {quien} en el Estado",
+                       "h1": f"{nombre_m} en el Estado {sitio.anio}",
+                       "titulo": f"{nombre_m} en el Estado {sitio.anio}",
+                       "intro": f"{nombre_m} en entidades públicas: son para {quien}."})
+    slugs_pr = [s["slug"] for s in sub_pr]
+    assert len(slugs_pr) == len(set(slugs_pr)) and "pagina" not in slugs_pr, "slug repetido en /practicas/"
+    # Una subpágina que se queda vacía sigue publicada (noindex) DIAS_ENTIDAD_VACIA días: Google ya la conoce.
+    vistas_pr = sitio.state.setdefault("practicas_sub", {})
+    for s in sub_pr:
+        if s["lista"]:
+            vistas_pr[s["slug"]] = sitio.hoy.isoformat()
+    for slug_, visto in list(vistas_pr.items()):
+        if (sitio.hoy - date.fromisoformat(visto)).days > DIAS_ENTIDAD_VACIA or slug_ not in slugs_pr:
+            del vistas_pr[slug_]
+    sub_pr = [s for s in sub_pr if s["slug"] in vistas_pr]
+    filtros_pr = [{"grupo": g, "enlaces": [{"nombre": s["nombre"], "path": f"/practicas/{s['slug']}/",
+                                             "n": len(s["lista"])}
+                                            for s in sorted((x for x in sub_pr if x["grupo"] == g and x["lista"]),
+                                                            key=lambda x: (-len(x["lista"]), x["nombre"]))]}
+                  for g in ("Por carrera", "Por modalidad", "Por departamento")]
+    for p in pr:  # para enlazar desde cada práctica a sus listados
+        p["listados"] = [{"nombre": s["nombre"], "path": f"/practicas/{s['slug']}/"} for s in sub_pr
+                         if p in s["lista"] and len(s["lista"]) >= UMBRAL_PRACTICAS]
+
+    r_pr = resumen_pr(pr)
     listado("/practicas/", pr, len(pr) > 0, f"Prácticas en el Estado {sitio.anio}: preprofesionales y profesionales",
             f"Prácticas en entidades públicas {sitio.anio}",
             armar([f"{plural(len(pr), 'convocatoria de prácticas vigente', 'convocatorias de prácticas vigentes')} "
                    "en entidades públicas del Perú.",
                    f"Subvención desde {r_pr['min']} hasta {r_pr['max']} al mes." if r_pr["min"] else "",
                    f"Actualizado el {hoy_txt}."]),
-            [("Inicio", "/"), ("Prácticas", None)], extra={"tipo": "practicas", "resumen": r_pr})
+            [("Inicio", "/"), ("Prácticas", None)], extra={"tipo": "practicas", "resumen": r_pr, "filtros": filtros_pr})
+    for s in sub_pr:
+        r = resumen_pr(s["lista"])
+        listado(f"/practicas/{s['slug']}/", s["lista"], len(s["lista"]) >= UMBRAL_PRACTICAS,
+                elegir(f"{s['titulo']}: {plural(r['n'], 'convocatoria', 'convocatorias')}" if r["n"] else "", s["titulo"]),
+                s["h1"],
+                armar([f"{plural(r['n'], 'convocatoria de prácticas vigente', 'convocatorias de prácticas vigentes')}"
+                       f" {s['donde']}.",
+                       f"Subvención desde {r['min']} hasta {r['max']} al mes." if r["min"] and r["min"] != r["max"]
+                       else (f"Subvención de {r['min']} al mes." if r["min"] else ""),
+                       f"Actualizado el {hoy_txt}."]),
+                [("Inicio", "/"), ("Prácticas", "/practicas/"), (s["nombre"], None)], intro=s["intro"],
+                extra={"tipo": "practicas", "resumen": r, "filtros": filtros_pr, "actual": f"/practicas/{s['slug']}/"})
     for p in pr:
         migas = [("Inicio", "/"), ("Prácticas", "/practicas/"), (p["cargo_txt"], None)]
         h1 = f"{p['titulo_txt']} en {p['entidad_txt']}"
@@ -1354,6 +1426,9 @@ def llms_txt(sitio: Sitio) -> str:
                       for t in sitio.temas if t["indexable"])
     deps = ", ".join(f"[{n}]({a('/departamento/' + T.slug(n) + '/')})"
                      for n in sorted({o["dep_txt"] for o in sitio.vigentes}, key=T.slug))
+    practicas_carreras = ", ".join(
+        f"[{c['nombre']}]({a('/practicas/' + c['slug'] + '/')})" for c in T.CARRERAS
+        if sum(1 for p in sitio.practicas if c["slug"] in p["carrera_slugs"]) >= UMBRAL_PRACTICAS) or "ninguna hoy"
     return f"""# Chamba al Toque
 
 > Convocatorias de trabajo vigentes en el Estado peruano (CAS, 728, 276 y prácticas), tomadas de
@@ -1371,6 +1446,7 @@ cerradas siguen publicadas 30 días con un aviso de "cerrada".
 - [Buscador]({a('/buscar/')}): por cargo o entidad
 - [Cierran pronto]({a('/por-vencer/')}): convocatorias que vencen en los próximos días
 - [Prácticas]({a('/practicas/')}): prácticas preprofesionales y profesionales
+  ([preprofesionales]({a('/practicas/preprofesionales/')}), [profesionales]({a('/practicas/profesionales/')}) y por carrera: {practicas_carreras})
 - [Todas las entidades]({a('/entidad/')}) y [todos los departamentos]({a('/departamento/')})
 
 ## Por perfil
@@ -1383,6 +1459,7 @@ cerradas siguen publicadas 30 días con un aviso de "cerrada".
 - [Cómo postular a un CAS, paso a paso]({a('/como-postular-cas/')})
 - [Cómo leer las bases]({a('/como-leer-las-bases/')})
 - [Hoja de vida documentada]({a('/hoja-de-vida-documentada/')})
+- [Cómo postular a prácticas en el Estado]({a('/como-postular-a-practicas/')})
 - [Errores al postular]({a('/errores-al-postular/')})
 - [Cursos gratis con certificado]({a('/cursos-gratis/')}): Ministerio de Trabajo (Capacíta-T) y ENAP-SERVIR,
   según lo que piden las convocatorias (Excel, Word, gestión pública, inglés y otros)

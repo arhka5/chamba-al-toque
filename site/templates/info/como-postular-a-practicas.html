@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block contenido %}
+<article class="texto">
+<h1>{{ h1 }}</h1>
+<p>Las entidades del Estado (ministerios, municipalidades, gobiernos regionales, Indecopi, la Defensoría del Pueblo, la Sunarp y muchas más) convocan practicantes todo el año. Las prácticas se rigen por el Decreto Legislativo 1401 y su reglamento, que fijan cómo se convoca, cuánto dura y qué beneficios tiene. Postular es gratis y se hace ante la entidad que convoca. Hoy hay {{ miles(total_practicas) }} convocatorias de prácticas vigentes en <a href="{{ url('/practicas/') }}">nuestra lista</a>.</p>
+
+<h2>Preprofesionales o profesionales: cuál te toca</h2>
+<ul>
+  <li><strong><a href="{{ url('/practicas/preprofesionales/') }}">Prácticas preprofesionales</a>:</strong> para estudiantes de universidad o instituto. Normalmente piden una carta de presentación de tu centro de estudios y que estés en los últimos ciclos.</li>
+  <li><strong><a href="{{ url('/practicas/profesionales/') }}">Prácticas profesionales</a>:</strong> para egresados recientes de universidad o instituto. La ley limita cuánto tiempo después de egresar puedes hacerlas y cuánto pueden durar.</li>
+</ul>
+<p>Cada aviso dice cuál es en el campo «modalidad» y a quién busca («estudiante» o «egresado»). Si no encajas en lo que pide, la entidad te descalifica en la revisión curricular.</p>
+
+<h2>1. Busca por tu carrera</h2>
+<p>La mayoría de convocatorias piden carreras concretas: Derecho, Administración, Contabilidad, Economía, Ingeniería de Sistemas, Ingeniería Industrial y otras. Empieza por la tuya en la lista de <a href="{{ url('/practicas/') }}">prácticas por carrera y por departamento</a>. Muchas aceptan varias carreras, así que revisa el perfil completo antes de descartarla.</p>
+
+<h2>2. Lee las bases</h2>
+<p>Desde el aviso, el botón «Ver convocatoria y postular» te lleva a la web de la entidad. En las bases revisa:</p>
+<ul>
+  <li><strong>El perfil:</strong> carrera, ciclo o condición de egresado, conocimientos (Office, idiomas, normas) y cursos.</li>
+  <li><strong>El cronograma:</strong> la fecha y la hora límite para enviar tus documentos, y las fechas de evaluación y entrevista.</li>
+  <li><strong>La forma de postular:</strong> correo, formulario web o mesa de partes virtual. Sigue al pie de la letra el formato que piden (nombre del archivo, asunto del correo, un solo PDF).</li>
+  <li><strong>La subvención y el horario:</strong> el monto mensual y las horas por día.</li>
+</ul>
+<p>Si es tu primera vez con unas bases del Estado, esta guía ayuda: <a href="{{ url('/como-leer-las-bases/') }}">cómo leer las bases de una convocatoria</a>.</p>
+
+<h2>3. Prepara tus documentos</h2>
+<ul>
+  <li>Currículum o formato de hoja de vida de la entidad, si lo pide.</li>
+  <li>Constancia de estudios o de egresado (o el documento que pidan las bases) y, para preprofesionales, la carta de presentación de tu universidad o instituto.</li>
+  <li>Certificados de los cursos que pide el perfil. Si te falta alguno (Excel, Word, gestión pública), hay <a href="{{ url('/cursos-gratis/') }}">cursos gratis con certificado</a> del Estado.</li>
+  <li>Anexos y declaraciones juradas firmados.</li>
+</ul>
+<p>Revisa que todo se lea bien y esté firmado: un anexo sin firma basta para quedar fuera. Más consejos en <a href="{{ url('/errores-al-postular/') }}">errores comunes al postular al Estado</a>.</p>
+
+<h2>4. Evaluación y entrevista</h2>
+<p>Lo usual es una evaluación curricular (si cumples el perfil) y una entrevista, a veces virtual. Algunas entidades agregan una prueba de conocimientos. Los resultados se publican en la web de la entidad en las fechas del cronograma: revísala tú, porque no siempre avisan por correo.</p>
+
+<h2>Lo que la ley te da como practicante</h2>
+<ul>
+  <li>Una subvención económica mensual que no puede ser menor a la remuneración mínima vital si cumples el horario completo.</li>
+  <li>Seguro de salud (EsSalud o un seguro privado) a cargo de la entidad.</li>
+  <li>Una subvención adicional de media subvención cada seis meses y 15 días de descanso cuando las prácticas duran más de un año.</li>
+  <li>Un certificado al terminar.</li>
+</ul>
+<p>Los detalles (horas máximas por día, duración total, casos especiales) están en el Decreto Legislativo 1401 y su reglamento, y cada convocatoria los precisa en sus bases. Ante cualquier duda, manda lo que digan las bases.</p>
+
+<h2>Cuidado con las estafas</h2>
+<p>Ninguna entidad pública cobra por postular a prácticas ni por «asegurar» una vacante. Si alguien te pide dinero, es una estafa. Confirma siempre la convocatoria en <a href="{{ practicas_url }}" rel="noopener">Talento Perú (SERVIR)</a> o en la web oficial de la entidad.</p>
+
+<p class="mas-links"><a href="{{ url('/practicas/') }}">Ver las {{ miles(total_practicas) }} prácticas vigentes en el Estado</a></p>
+</article>
+{% endblock %}

@@ -191,3 +191,12 @@ main{padding-bottom:32px}
 .compartir details{margin:10px 0;padding:8px 12px;border:1px solid var(--linea);border-radius:6px;background:var(--caja)}
 .compartir summary{min-height:40px;display:flex;align-items:center;font-weight:700;cursor:pointer}
 .copiar{min-height:44px;padding:0 20px;border:0;border-radius:6px;background:var(--sol);color:var(--sobre-sol);font:inherit;font-weight:800;cursor:pointer}
+/* Filtros de prácticas: chips compactos */
+.l-filtros details{margin:0 0 10px}
+.l-filtros summary{cursor:pointer;font-weight:700;padding:8px 0;min-height:40px;color:var(--pri)}
+.l-filtros summary small{font-weight:400;color:var(--mute)}
+.chips{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 0;padding:0}
+.chips a,.chips span{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:4px 12px;border:1px solid var(--pri);border-radius:999px;text-decoration:none;font-size:.9rem;line-height:1.2}
+.chips a:hover{background:var(--suave)}
+.chips small{font-size:.8rem;opacity:.75}
+.chips span[aria-current]{background:var(--pri);color:var(--papel);font-weight:700}

@@ -23,6 +23,9 @@
     {% else %}
     <p class="l-intro">{{ intro }} Hay {{ plural(r.n, 'convocatoria vigente', 'convocatorias vigentes') }}{% if r.min and r.min != r.max %}, con sueldos desde {{ r.min }} hasta {{ r.max }} al mes{% endif %}.</p>
     {% endif %}
+    {% if r.mediana and extra.tipo != 'practicas' %}
+    <p class="l-sueldo"><strong>Sueldo típico: {{ r.mediana }} al mes.</strong> Es la mediana de las {{ miles(r.n_sueldo) }} convocatorias con sueldo publicado: la mitad paga eso o más. <a href="{{ url('/sueldos-en-el-estado/') }}">Sueldos por carrera</a></p>
+    {% endif %}
   {% endif %}
   <p class="l-act">Actualizado el {{ actualizado_txt }}</p>
 </header>

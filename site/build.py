@@ -19,6 +19,7 @@ from collections import Counter, defaultdict
 from datetime import date, datetime, timedelta, timezone
 from html import escape as escapar_html
 from pathlib import Path
+from statistics import median
 from urllib.parse import quote, urlparse
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -40,6 +41,8 @@ UMBRAL_ENTIDAD = 3
 UMBRAL_TEMA = 20
 UMBRAL_DEP_TEMA = 10
 UMBRAL_PRACTICAS = 3  # una subpágina de /practicas/ se indexa desde 3 avisos
+UMBRAL_SUELDO = 3  # "sueldo típico" (mediana) en un listado desde 3 ofertas con sueldo
+UMBRAL_SUELDO_TABLA = 5  # una fila de /sueldos-en-el-estado/ desde 5 ofertas con sueldo
 DIAS_CERRADA = 30
 DIAS_ENTIDAD_VACIA = 90  # la página de una entidad sin ofertas sigue (noindex) para no dar 404 desde Google
 MIN_PROPORCION = 0.5  # salvaguarda: no publicar si llega menos de la mitad
@@ -755,6 +758,9 @@ class Sitio:
             "max_n": max(sueldos) if sueldos else None,
             "min": soles(min(sueldos)) if sueldos else "",
             "max": soles(max(sueldos)) if sueldos else "",
+            "n_sueldo": len(sueldos),
+            # Mediana redondeada: el "sueldo típico" que cita quien pregunta "¿cuánto paga el Estado a un…?"
+            "mediana": soles(round(median(sueldos))) if len(sueldos) >= UMBRAL_SUELDO else "",
             "sin_exp": sin_exp,
             "secundaria": secu,
             "top": top_ent,
@@ -1129,6 +1135,7 @@ def construir(sitio: Sitio, out: Path) -> None:
                 armar([f"{plural(r['n'], 'convocatoria vigente', 'convocatorias vigentes')} del Estado que piden "
                        f"formación en {c['nombre'].lower()}"
                        + (f", con sueldos desde {r['min']} hasta {r['max']} al mes." if r["min"] and r["min"] != r["max"] else "."),
+                       f"Sueldo típico: {r['mediana']}." if r["mediana"] else "",
                        f"Actualizado el {hoy_txt}."]),
                 [("Inicio", "/"), ("Carreras", "/carrera/"), (c["nombre"], None)],
                 intro=f"Convocatorias cuyo perfil pide estudios de {c['nombre'].lower()}, según el campo de "
@@ -1141,6 +1148,45 @@ def construir(sitio: Sitio, out: Path) -> None:
                                           for c in sitio.carreras if c["indexable"]]}],
                intro="Según la formación académica que pide cada aviso. Una convocatoria puede aparecer en "
                      "varias carreras.")
+
+    # Sueldos: medianas por carrera, perfil, régimen y departamento, con los datos del día
+    def fila_sueldo(nombre: str, path: str | None, ofertas: list[dict]) -> dict | None:
+        s = sorted(o["sueldo"] for o in ofertas if o.get("sueldo"))
+        if len(s) < UMBRAL_SUELDO_TABLA:
+            return None
+        return {"nombre": nombre, "path": path, "n": len(s), "mediana_n": median(s),
+                "mediana": soles(round(median(s))), "min": soles(round(s[0])), "max": soles(round(s[-1]))}
+
+    def tabla_sueldos(filas) -> list[dict]:
+        return sorted((f for f in filas if f), key=lambda f: -f["mediana_n"])
+
+    por_regimen = defaultdict(list)
+    for o in sitio.vigentes:
+        if o.get("regimen") in REGIMENES:
+            por_regimen[REGIMENES[o["regimen"]][0]].append(o)
+    sueldos_todos = sorted(o["sueldo"] for o in sitio.vigentes if o.get("sueldo"))
+    if len(sueldos_todos) >= UMBRAL_SUELDO_TABLA:
+        med = soles(round(median(sueldos_todos)))
+        t_carr = tabla_sueldos(fila_sueldo(c["nombre"], c["path"], c["ofertas"]) for c in sitio.carreras if c["indexable"])
+        t_perfil = tabla_sueldos(fila_sueldo(t["nombre"], t["path"] if t["indexable"] else None, t["ofertas"])
+                                 for t in sitio.temas)
+        t_reg = tabla_sueldos(fila_sueldo(n, None, v) for n, v in por_regimen.items())
+        t_dep = tabla_sueldos(fila_sueldo(d["nombre"], d["path"], sitio.por_dep[d["slug"]]) for d in departamentos)
+        mejor_pagadas = sorted((o for o in sitio.vigentes if o.get("sueldo")), key=lambda o: -o["sueldo"])[:10]
+        migas = [("Inicio", "/"), ("Sueldos en el Estado", None)]
+        escribir("/sueldos-en-el-estado/", "sueldos.html", True,
+                 lastmod_listado("/sueldos-en-el-estado/", sitio.vigentes),
+                 titulo=con_marca(f"Sueldos en el Estado por carrera {sitio.anio}: cuánto pagan"),
+                 h1=f"Sueldos en el Estado peruano por carrera y departamento ({sitio.anio})",
+                 descripcion=armar([f"Sueldo típico en las {miles(len(sueldos_todos))} convocatorias vigentes "
+                                    f"del Estado con sueldo publicado: {med} al mes.",
+                                    "Tablas por carrera, perfil, régimen y departamento.",
+                                    f"Datos de Talento Perú al {hoy_txt}."]),
+                 migas=migas, ld=[sitio.breadcrumbs(migas)],
+                 n_total=len(sitio.vigentes), n_sueldo=len(sueldos_todos), mediana=med,
+                 minimo=soles(round(sueldos_todos[0])), maximo=soles(round(sueldos_todos[-1])),
+                 t_carr=t_carr, t_perfil=t_perfil, t_reg=t_reg, t_dep=t_dep, mejor_pagadas=mejor_pagadas,
+                 umbral=UMBRAL_SUELDO_TABLA)
 
     # Cierran hoy: cambia cada día, se indexa como página fija
     hoy_lista = sorted((o for o in sitio.vigentes if o["dias"] == 0), key=lambda o: o["cargo_txt"])
@@ -1461,6 +1507,8 @@ cerradas siguen publicadas 30 días con un aviso de "cerrada".
 - [Hoja de vida documentada]({a('/hoja-de-vida-documentada/')})
 - [Cómo postular a prácticas en el Estado]({a('/como-postular-a-practicas/')})
 - [Errores al postular]({a('/errores-al-postular/')})
+- [Sueldos en el Estado por carrera]({a('/sueldos-en-el-estado/')}): sueldo típico (mediana) de las convocatorias
+  vigentes por carrera, perfil, régimen y departamento, recalculado cada día
 - [Cursos gratis con certificado]({a('/cursos-gratis/')}): Ministerio de Trabajo (Capacíta-T) y ENAP-SERVIR,
   según lo que piden las convocatorias (Excel, Word, gestión pública, inglés y otros)
 

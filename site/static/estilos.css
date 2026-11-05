@@ -150,6 +150,15 @@ main{padding-bottom:32px}
 .o-confianza p{margin:0}
 .o-fuente{font-size:.85rem;color:var(--mute)}
 .texto{max-width:42rem;padding-top:20px}
+.texto-ancho{max-width:48rem}
+.tabla-caja{overflow-x:auto;margin:8px 0 20px}
+.tabla{width:100%;border-collapse:collapse;font-size:.95rem}
+.tabla th,.tabla td{padding:8px 10px;border-bottom:1px solid var(--linea);text-align:left;vertical-align:top}
+.tabla thead th{font-size:.85rem;color:var(--mute);border-bottom:2px solid var(--linea)}
+.tabla td:nth-child(2),.tabla td:nth-child(4){white-space:nowrap}
+.tabla tbody th{font-weight:600}
+.tabla .nw{white-space:nowrap}
+.l-sueldo{margin:6px 0;padding:10px 14px;max-width:68ch;background:var(--suave);border-left:4px solid var(--pri);border-radius:4px}
 .video{margin:16px 0 20px}
 .video-portada,.video iframe{display:block;width:100%;aspect-ratio:16/9;border:2px solid var(--linea);border-radius:8px}
 .video-portada{position:relative;padding:0;background:#0e1416;cursor:pointer;overflow:hidden}

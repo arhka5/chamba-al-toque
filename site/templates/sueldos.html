@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% macro tabla(filas, primera) %}
+<div class="tabla-caja">
+<table class="tabla">
+  <thead><tr><th scope="col">{{ primera }}</th><th scope="col">Sueldo típico</th><th scope="col">Rango</th><th scope="col">Ofertas</th></tr></thead>
+  <tbody>
+  {% for f in filas %}
+  <tr><th scope="row">{% if f.path %}<a href="{{ url(f.path) }}">{{ f.nombre }}</a>{% else %}{{ f.nombre }}{% endif %}</th><td><strong>{{ f.mediana }}</strong></td><td><span class="nw">{{ f.min }}</span> a <span class="nw">{{ f.max }}</span></td><td>{{ miles(f.n) }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endmacro %}
+{% block contenido %}
+<article class="texto texto-ancho">
+<h1>{{ h1 }}</h1>
+<p>El sueldo típico en el Estado peruano hoy es de <strong>{{ mediana }} al mes</strong>: es la mediana de las {{ miles(n_sueldo) }} convocatorias vigentes con sueldo publicado en Talento Perú (de {{ miles(n_total) }} en total). La mitad paga eso o más; el rango va de {{ minimo }} a {{ maximo }}.</p>
+<p>Las tablas se calculan cada día con las convocatorias vigentes: no son promedios históricos ni escalas oficiales. El «sueldo típico» es la mediana (la mitad de las ofertas paga más y la otra mitad menos), que no se deja arrastrar por unos pocos sueldos muy altos. Es el monto mensual bruto que publica cada aviso. Solo salen las filas con {{ umbral }} o más ofertas con sueldo.</p>
+<p class="l-act">Actualizado el {{ actualizado_txt }}</p>
+
+{% if t_carr %}
+<h2 id="carrera">Sueldos por carrera</h2>
+<p>Según la formación que pide cada aviso. Una convocatoria que acepta varias carreras cuenta en cada una.</p>
+{{ tabla(t_carr, 'Carrera') }}
+{% endif %}
+
+{% if t_perfil %}
+<h2 id="perfil">Sueldos por perfil</h2>
+<p>Cuánto pagan los trabajos sin experiencia, los que piden solo secundaria y otros perfiles.</p>
+{{ tabla(t_perfil, 'Perfil') }}
+{% endif %}
+
+{% if t_reg %}
+<h2 id="regimen">Sueldos por régimen</h2>
+<p>CAS, 728 y 276 son los regímenes laborales del Estado. Si dudas cuál te conviene, revisa <a href="{{ url('/como-postular-cas/') }}">cómo postular a un CAS</a>.</p>
+{{ tabla(t_reg, 'Régimen') }}
+{% endif %}
+
+{% if t_dep %}
+<h2 id="departamento">Sueldos por departamento</h2>
+{{ tabla(t_dep, 'Departamento') }}
+{% endif %}
+
+{% if mejor_pagadas %}
+<h2 id="mejor-pagadas">Las 10 convocatorias mejor pagadas hoy</h2>
+<ol>
+  {% for o in mejor_pagadas %}
+  <li><a href="{{ url(o.path) }}">{{ o.cargo_txt }}</a> en {{ o.entidad_txt }} ({{ o.dep_txt }}): <strong>{{ o.sueldo_txt }}</strong> al mes.</li>
+  {% endfor %}
+</ol>
+{% endif %}
+
+<h2>Y las prácticas</h2>
+<p>Las prácticas no pagan sueldo sino una subvención, que por ley no puede ser menor a la remuneración mínima vital si cumples el horario completo. Mira las <a href="{{ url('/practicas/') }}">prácticas vigentes en el Estado</a> y <a href="{{ url('/como-postular-a-practicas/') }}">cómo postular</a>.</p>
+</article>
+{% endblock %}

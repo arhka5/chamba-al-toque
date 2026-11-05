@@ -3,6 +3,7 @@
 <header class="l-cab">
   <h1>{{ h1 }}</h1>
   {% if intro %}<p class="l-intro">{{ intro }}</p>{% endif %}
+  {% if path == '/carrera/' %}<p class="l-intro">¿Cuánto paga cada carrera? Mira los <a href="{{ url('/sueldos-en-el-estado/') }}">sueldos en el Estado por carrera</a>.</p>{% endif %}
   <p class="l-act">Actualizado el {{ actualizado_txt }}.</p>
 </header>
 {% for g in grupos %}

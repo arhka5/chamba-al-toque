@@ -43,6 +43,7 @@ UMBRAL_DEP_TEMA = 10
 UMBRAL_PRACTICAS = 3  # una subpágina de /practicas/ se indexa desde 3 avisos
 UMBRAL_SUELDO = 3  # "sueldo típico" (mediana) en un listado desde 3 ofertas con sueldo
 UMBRAL_SUELDO_TABLA = 5  # una fila de /sueldos-en-el-estado/ desde 5 ofertas con sueldo
+UMBRAL_PERFIL = 5  # "cómo convoca" una entidad (vigentes + cerradas recientes) desde 5 convocatorias
 DIAS_CERRADA = 30
 DIAS_ENTIDAD_VACIA = 90  # la página de una entidad sin ofertas sigue (noindex) para no dar 404 desde Google
 MIN_PROPORCION = 0.5  # salvaguarda: no publicar si llega menos de la mitad
@@ -318,6 +319,13 @@ def de_articulo(entidad: str) -> str:
     return "del " + con[3:] if con.startswith("el ") else "de " + con
 
 
+def articulos(entidad: str) -> dict:
+    """Formas con artículo para el perfil: 'el Poder Judicial', 'El Poder Judicial', 'al Poder Judicial'."""
+    con = con_articulo(entidad)
+    return {"ent_art": con, "ent_Art": con[:1].upper() + con[1:],
+            "ent_a": "al " + con[3:] if con.startswith("el ") else "a " + con}
+
+
 def destacadas(ofertas: list[dict], n: int, por_entidad: int = 1, por_dep: int | None = None) -> list[dict]:
     """Las n ofertas más atractivas para difundir, sin repetir entidad (ni saturar un
     departamento): buen sueldo y pocos requisitos, que es lo que más se comparte."""
@@ -468,6 +476,17 @@ class Sitio:
                 continue
             self.entidades_vacias[slug_] = st
 
+        # Perfil de cada entidad con lo que publicó en las últimas semanas (vigentes + cerradas):
+        # cuánto paga, qué cargos, qué piden. Es contenido propio que no está en ninguna ficha.
+        self.cerradas_por_entidad = defaultdict(list)
+        for o in self.cerradas:
+            self.cerradas_por_entidad[o["entidad_slug"]].append(o)
+        self.perfiles = {}
+        for slug_ in set(self.por_entidad) | set(self.entidades_vacias):
+            perfil = self.perfil_entidad(self.por_entidad.get(slug_, []) + self.cerradas_por_entidad.get(slug_, []))
+            if perfil:
+                self.perfiles[slug_] = perfil
+
         self.temas = []
         for t in TEMAS:
             lista = [o for o in self.vigentes if t["filtro"](o)]
@@ -482,6 +501,10 @@ class Sitio:
                 self.carreras.append({**{k: v for k, v in c.items() if not k.startswith("re")}, "ofertas": lista,
                                       "indexable": len(lista) >= UMBRAL_TEMA, "path": f"/carrera/{c['slug']}/"})
         self.carreras.sort(key=lambda c: -len(c["ofertas"]))
+        con_pagina = {c["slug"] for c in self.carreras}
+        for perfil in self.perfiles.values():  # el perfil enlaza solo las carreras que hoy tienen página
+            for c in perfil["carreras"]:
+                c["enlace"] = c["slug"] in con_pagina
 
         self.hubs = []
         for h in HUBS:
@@ -765,6 +788,55 @@ class Sitio:
             "secundaria": secu,
             "top": top_ent,
             "lugar": lugar,
+        }
+
+    def perfil_entidad(self, todas: list[dict]) -> dict | None:
+        """Cómo convoca una entidad, con sus convocatorias vigentes y las cerradas que aún guarda el estado."""
+        if len(todas) < UMBRAL_PERFIL:
+            return None
+        n = len(todas)
+        pct = lambda k: round(100 * k / n)  # noqa: E731
+        vistos = [self.state["ofertas"].get(o["id"], {}).get("first_seen") for o in todas]
+        desde = min((v for v in vistos if v), default=None)
+        sueldos = [o["sueldo"] for o in todas if o.get("sueldo")]
+
+        por_cargo = defaultdict(list)
+        for o in todas:
+            por_cargo[o["cargo_txt"]].append(o)
+        cargos = []
+        for cargo, lista in sorted(por_cargo.items(), key=lambda kv: (-len(kv[1]), kv[0]))[:8]:
+            su = [o["sueldo"] for o in lista if o.get("sueldo")]
+            cargos.append({"cargo": cargo, "n": len(lista), "plazas": sum(o["vacantes"] for o in lista),
+                           "sueldo": soles(round(median(su))) if su else ""})
+
+        nombres_carrera = {c["slug"]: c["nombre"] for c in T.CARRERAS}
+        carreras = Counter(c for o in todas for c in o.get("carreras") or [])
+        formacion = Counter(o["req"]["formacion"] for o in todas if o["req"].get("formacion"))
+        regimen = Counter(REGIMENES[o["regimen_corto"]][0] if o["regimen_corto"] in REGIMENES else "Otros regímenes"
+                          for o in todas)
+        lugares = Counter(o["lugar_txt"] for o in todas if o.get("lugar_txt"))
+        webs = Counter(urlparse(o["url_bases"]).netloc for o in todas
+                       if (o.get("url_bases") or "").startswith("http") and urlparse(o["url_bases"]).netloc)
+        sin_exp = sum(1 for o in todas if o["req"]["sin_experiencia"])
+        poca = sum(1 for o in todas if o["req"].get("hasta_un_anio"))
+        secundaria = sum(1 for o in todas if o["req"]["solo_secundaria"])
+        return {
+            "n": n,
+            "plazas": sum(o["vacantes"] for o in todas),
+            "desde_txt": fecha_larga(desde) if desde else "",
+            "mediana": soles(round(median(sueldos))) if len(sueldos) >= UMBRAL_SUELDO else "",
+            "min": soles(min(sueldos)) if sueldos else "",
+            "max": soles(max(sueldos)) if sueldos else "",
+            "n_sueldo": len(sueldos),
+            "cargos": cargos,
+            "carreras": [{"nombre": nombres_carrera.get(s, s), "slug": s, "n": k} for s, k in carreras.most_common(6)],
+            "formacion": [{"nombre": f, "pct": pct(k)} for f, k in formacion.most_common(4)],
+            "regimen": [{"nombre": r, "pct": pct(k)} for r, k in regimen.most_common(4)],
+            "lugares": [{"nombre": lu, "n": k} for lu, k in lugares.most_common(5)],
+            "web": webs.most_common(1)[0][0] if webs else "",
+            "sin_exp_pct": pct(sin_exp),
+            "poca_pct": pct(poca),
+            "secundaria_pct": pct(secundaria),
         }
 
     def similares(self, o: dict, n: int = 6) -> list[dict]:
@@ -1074,7 +1146,9 @@ def construir(sitio: Sitio, out: Path) -> None:
         nombre = ofertas[0]["entidad_txt"]
         dep = Counter((o["dep_txt"], o["dep_slug"]) for o in ofertas).most_common(1)[0][0]
         r = sitio.resumen_listado(ofertas, None)
-        titulo = elegir(f"Convocatorias CAS {nombre} {sitio.anio}: {cifras(r)}" if mayoria_cas(ofertas) else "",
+        pf = sitio.perfiles.get(s)
+        titulo = elegir(f"Convocatorias {nombre} {sitio.anio}: sueldos, requisitos y plazas" if pf else "",
+                        f"Convocatorias CAS {nombre} {sitio.anio}: {cifras(r)}" if mayoria_cas(ofertas) else "",
                         f"Convocatorias {nombre} {sitio.anio}: {cifras(r)}",
                         f"Convocatorias {nombre} {sitio.anio}: {plural(r['plazas'], 'plaza', 'plazas')}",
                         f"Convocatorias {nombre} {sitio.anio}")
@@ -1082,14 +1156,15 @@ def construir(sitio: Sitio, out: Path) -> None:
         primera = min((o["fin"] for o in ofertas if o.get("fin")), default=None)
         desc = armar([
             f"{plural(len(ofertas), 'convocatoria vigente', 'convocatorias vigentes')} en {nombre} ({dep[0]}).",
-            f"Sueldos desde {r['min']}." if r["min"] else "",
+            f"Sueldo típico: {pf['mediana']}." if pf and pf["mediana"] else "",
+            f"Sueldos desde {r['min']}." if r["min"] and not (pf and pf["mediana"]) else "",
             f"Cargos: {cargos}." if cargos else "",
             f"Cierran desde el {fecha_corta(primera)}." if primera else "",
         ])
         listado(f"/entidad/{s}/", ofertas, sitio.entidad_indexable[s], titulo, f"Convocatorias de {nombre} {sitio.anio}",
                 desc, [("Inicio", "/"), (dep[0], f"/departamento/{dep[1]}/"), (nombre, None)],
                 extra={"tipo": "entidad", "resumen": r, "entidad": nombre, "primera": fecha_larga(primera),
-                       "hub": sitio.hub_de_entidad.get(s)})
+                       "hub": sitio.hub_de_entidad.get(s), "perfil": sitio.perfiles.get(s), **articulos(nombre)})
     for s, st in sitio.entidades_vacias.items():
         migas = [("Inicio", "/"), (st["dep_txt"], f"/departamento/{st['dep_slug']}/"), (st["nombre"], None)]
         del_dep = destacadas(sitio.por_dep.get(st["dep_slug"], []), 12)
@@ -1097,7 +1172,8 @@ def construir(sitio: Sitio, out: Path) -> None:
                  titulo=f"Convocatorias de {st['nombre']} (sin convocatorias abiertas)",
                  h1=f"Convocatorias de {st['nombre']}", descripcion=f"Ahora no hay convocatorias abiertas de {st['nombre']}.",
                  ofertas=del_dep, pagina=1, paginas=1, base_listado=f"/entidad/{s}/", migas=migas, intro="",
-                 extra={"tipo": "entidad_vacia", "entidad": st["nombre"], "dep": st},
+                 extra={"tipo": "entidad_vacia", "entidad": st["nombre"], "dep": st, "perfil": sitio.perfiles.get(s),
+                        **articulos(st["nombre"])},
                  total=len(sitio.por_dep.get(st["dep_slug"], [])), ld=[sitio.breadcrumbs(migas)])
 
     # Índices: /departamento/ y /entidad/ (las migas y el pie llevan aquí)

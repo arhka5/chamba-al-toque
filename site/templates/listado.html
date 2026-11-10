@@ -71,6 +71,45 @@
 <p class="vacio">Ahora no hay convocatorias aquí. Revisa <a href="{{ url('/') }}">las últimas convocatorias</a>.</p>
 {% endif %}
 
+{% set pf = extra.perfil %}
+{% if pf and pagina == 1 %}
+<section class="bloque perfil-entidad">
+  <h2>¿Cuánto paga {{ extra.ent_art }}?</h2>
+  <p>Desde el {{ pf.desde_txt }}, {{ extra.ent_art }} publicó {{ plural(pf.n, 'convocatoria', 'convocatorias') }}{% if pf.plazas > pf.n %} con {{ miles(pf.plazas) }} plazas{% endif %} en Talento Perú.{% if pf.mediana %} El <strong>sueldo típico fue de {{ pf.mediana }} al mes</strong> (la mitad pagó eso o más){% if pf.min != pf.max %}; el más bajo, {{ pf.min }}, y el más alto, {{ pf.max }}{% endif %}.{% elif pf.min %} Los sueldos publicados van de {{ pf.min }} a {{ pf.max }} al mes.{% endif %}</p>
+  {% if pf.cargos|length > 1 %}
+  <table class="tabla">
+    <caption>Cargos que más convoca</caption>
+    <thead><tr><th scope="col">Cargo</th><th scope="col">Convocatorias</th><th scope="col">Sueldo típico</th></tr></thead>
+    <tbody>{% for c in pf.cargos %}<tr><td>{{ c.cargo }}</td><td>{{ c.n }}{% if c.plazas > c.n %} ({{ c.plazas }} plazas){% endif %}</td><td>{{ c.sueldo or 'sin dato' }}</td></tr>{% endfor %}</tbody>
+  </table>
+  {% endif %}
+
+  <h2>¿Qué piden para trabajar en {{ extra.ent_art }}?</h2>
+  <ul>
+    {% if pf.sin_exp_pct %}<li>{{ pf.sin_exp_pct }} % de sus convocatorias no pidió experiencia{% if pf.poca_pct > pf.sin_exp_pct %} y {{ pf.poca_pct }} % pidió un año o menos{% endif %}.</li>
+    {% elif pf.poca_pct %}<li>Casi todas piden experiencia, pero {{ pf.poca_pct }} % pidió un año o menos.</li>
+    {% else %}<li>Todas sus convocatorias pidieron más de un año de experiencia.</li>{% endif %}
+    {% if pf.secundaria_pct %}<li>{{ pf.secundaria_pct }} % pidió como máximo secundaria completa.</li>{% endif %}
+    {% if pf.formacion %}<li>Formación que más pide: {% for f in pf.formacion %}{{ f.nombre|lower }} ({{ f.pct }} %){{ ', ' if not loop.last }}{% endfor %}.</li>{% endif %}
+    {% if pf.carreras %}<li>Carreras que más pide: {% for c in pf.carreras %}{% if c.enlace %}<a href="{{ url('/carrera/' ~ c.slug ~ '/') }}">{{ c.nombre }}</a>{% else %}{{ c.nombre }}{% endif %} ({{ c.n }}){{ ', ' if not loop.last }}{% endfor %}.</li>{% endif %}
+  </ul>
+
+  {% if pf.regimen %}
+  <h2>¿Bajo qué régimen contrata?</h2>
+  <p>{% for r in pf.regimen %}{{ r.nombre }}: {{ r.pct }} %{{ '; ' if not loop.last else '.' }}{% endfor %} El régimen define beneficios y duración del contrato: revísalo en las bases antes de postular.</p>
+  {% endif %}
+
+  {% if pf.lugares|length > 1 %}
+  <h2>¿Dónde están sus plazas?</h2>
+  <ul>{% for lu in pf.lugares %}<li>{{ lu.nombre }}: {{ plural(lu.n, 'convocatoria', 'convocatorias') }}</li>{% endfor %}</ul>
+  {% endif %}
+
+  <h2>¿Cómo postular {{ extra.ent_a }}?</h2>
+  <p>Las bases, el cronograma y el formulario están en la web de la entidad{% if pf.web %} (<strong>{{ pf.web }}</strong>){% endif %}; Talento Perú (SERVIR) solo publica el aviso. Si es una convocatoria CAS, sigue <a href="{{ url('/como-postular-cas/') }}">los pasos para postular a una convocatoria CAS</a> y arma tu <a href="{{ url('/hoja-de-vida-documentada/') }}">hoja de vida documentada</a>.</p>
+  <p class="l-act">Datos de las convocatorias publicadas desde el {{ pf.desde_txt }}; se actualizan cada día.</p>
+</section>
+{% endif %}
+
 {% if extra.tipo == 'hub' and pagina == 1 %}
 <nav class="bloque" aria-label="Entidades más buscadas">
   <h2>Otras entidades muy buscadas</h2>

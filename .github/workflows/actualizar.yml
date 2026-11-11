@@ -98,7 +98,9 @@ jobs:
           TELEGRAM_CHAT: ${{ vars.TELEGRAM_CHAT }}
 
       - name: Avisar a Google de ofertas nuevas y cerradas (Indexing API)
-        # Igual que Telegram: si falla, el sitio ya está publicado y se reintenta en la próxima corrida.
+        # APAGADO 11-nov-2026 (usuario): Google hundió todo toca.pe el 8-nov y las fichas ya llevan
+        # googlebot noindex; miles de avisos por la API solo suman señales de spam. Para reactivar, borrar el if.
+        if: false
         continue-on-error: true
         run: |
           pip install -q google-auth==2.35.0

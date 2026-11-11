@@ -72,9 +72,15 @@ def urls_del_sitio_publicado(base: str) -> dict[str, str]:
         with urllib.request.urlopen(url, timeout=60) as r:
             return r.read().decode("utf-8")
     salida = {}
-    for hijo in re.findall(r"<sitemap><loc>([^<]+)</loc>", bajar(base.rstrip("/") + "/sitemap.xml")):
-        for loc, lastmod in URL_LASTMOD.findall(bajar(hijo)):
-            salida[loc] = lastmod or ""
+    # sitemap-fichas.xml: las ofertas, fuera del sitemap que lee Google desde el 11-nov (solo para Bing)
+    for indice in ("sitemap.xml", "sitemap-fichas.xml"):
+        try:
+            hijos = re.findall(r"<sitemap><loc>([^<]+)</loc>", bajar(base.rstrip("/") + "/" + indice))
+        except urllib.error.HTTPError:
+            continue
+        for hijo in hijos:
+            for loc, lastmod in URL_LASTMOD.findall(bajar(hijo)):
+                salida[loc] = lastmod or ""
     return salida
 
 
